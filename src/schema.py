@@ -58,10 +58,11 @@ class ChronosEvent:
     process: Optional[str] = None
     session_id: Optional[str] = None
     raw_ref: Optional[str] = None                     # pointer back to original line/record
-    offset_inferred: bool = False                     # True if timezone offset was assumed
-    offset_confidence: Optional[str] = None           # correlated | prior | prior_confirmed | defaulted_utc
-    inferred_utc_offset_minutes: Optional[int] = None # Inferred offset in minutes
+    offset_inferred: bool = False                     # True if timezone offset was not explicit in the raw string
+    offset_confidence: str = "explicit"                # explicit | correlated | prior | defaulted_utc
+    inferred_utc_offset_minutes: Optional[int] = None  # offset actually applied, once known
     clock_skew_flag: bool = False
+    estimated_skew_seconds: Optional[float] = None     # residual drift detected after offset correction
     attack_techniques: List[str] = field(default_factory=list)
     correlation_group_id: Optional[str] = None
     severity: str = "info"                            # info | low | medium | high | critical
@@ -77,16 +78,15 @@ class ChronosEvent:
     def to_json(self) -> str:
         return json.dumps(self.to_dict(), default=str)
 
+    @property
+    def id(self) -> str:
+        return self.event_id
+
     @staticmethod
     def generate_id(source: str, raw: str) -> str:
         """Deterministic-ish ID from source + raw content hash + uuid for uniqueness."""
         h = hashlib.sha256(f"{source}:{raw}".encode()).hexdigest()[:12]
         return f"{h}-{uuid.uuid4().hex[:8]}"
-
-
-    @property
-    def id(self) -> str:
-        return self.event_id
 
 
 @dataclass

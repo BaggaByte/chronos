@@ -1,6 +1,6 @@
 [
   {
-    "event_id": "d35ff2881056-917d8e8b",
+    "event_id": "d35ff2881056-4d58908f",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 08:31:22",
@@ -17,6 +17,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [
       "T1021",
       "T1078"
@@ -29,7 +30,7 @@
     }
   },
   {
-    "event_id": "3942afa4a313-a9529996",
+    "event_id": "3942afa4a313-39676dd8",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 09:16:22",
@@ -46,6 +47,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [
       "T1021",
       "T1078"
@@ -58,7 +60,7 @@
     }
   },
   {
-    "event_id": "95623c7c6191-d0fee733",
+    "event_id": "95623c7c6191-15c83449",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 09:30:22",
@@ -75,6 +77,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [
       "T1021",
       "T1078"
@@ -87,7 +90,7 @@
     }
   },
   {
-    "event_id": "48ad62cd39f3-2d36ec3b",
+    "event_id": "48ad62cd39f3-d5d1df53",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 10:13:22",
@@ -104,6 +107,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [
       "T1021",
       "T1078"
@@ -116,7 +120,7 @@
     }
   },
   {
-    "event_id": "1a74aa4d443a-0df35fb9",
+    "event_id": "1a74aa4d443a-b2ba7153",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 10:19:22",
@@ -133,11 +137,12 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [
       "T1021",
       "T1078"
     ],
-    "correlation_group_id": "cg-d12cedd1c4",
+    "correlation_group_id": "cg-7a63e6fac6",
     "severity": "medium",
     "extra": {
       "port": "51234",
@@ -145,7 +150,7 @@
     }
   },
   {
-    "event_id": "d225db9a4c61-ff98ad2e",
+    "event_id": "d225db9a4c61-be463a23",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 10:19:22",
@@ -162,16 +167,17 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [
       "T1021",
       "T1078"
     ],
-    "correlation_group_id": "cg-d12cedd1c4",
+    "correlation_group_id": "cg-7a63e6fac6",
     "severity": "medium",
     "extra": {}
   },
   {
-    "event_id": "8ebd4f377a93-530d089d",
+    "event_id": "8ebd4f377a93-81c215e7",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 10:24:22",
@@ -188,6 +194,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [
       "T1021",
       "T1078"
@@ -200,7 +207,7 @@
     }
   },
   {
-    "event_id": "ed84fe478933-318f222f",
+    "event_id": "ed84fe478933-f705b557",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 10:39:22",
@@ -217,6 +224,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [
       "T1021",
       "T1078"
@@ -229,7 +237,7 @@
     }
   },
   {
-    "event_id": "7491fb59b422-c84d8023",
+    "event_id": "7491fb59b422-96ec302c",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 11:54:22",
@@ -246,17 +254,18 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [
       "T1560"
     ],
-    "correlation_group_id": "cg-d12cedd1c4",
+    "correlation_group_id": "cg-7a63e6fac6",
     "severity": "high",
     "extra": {
       "command": "/bin/tar czf /tmp/designs.tgz /opt/aero/designs"
     }
   },
   {
-    "event_id": "691b3e8a64f4-b021e235",
+    "event_id": "691b3e8a64f4-b167b6db",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:22",
@@ -273,6 +282,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -281,7 +291,7 @@
     }
   },
   {
-    "event_id": "3f53204d0208-c5ae39db",
+    "event_id": "3f53204d0208-0d59a6f4",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:23",
@@ -298,6 +308,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -306,7 +317,7 @@
     }
   },
   {
-    "event_id": "979720d9a20e-866a63a2",
+    "event_id": "979720d9a20e-a15903ba",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:24",
@@ -323,6 +334,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -331,7 +343,7 @@
     }
   },
   {
-    "event_id": "341cbc171fa0-6faa7d07",
+    "event_id": "341cbc171fa0-3c4a1866",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:25",
@@ -348,6 +360,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -356,7 +369,7 @@
     }
   },
   {
-    "event_id": "21b4cfafbe6f-c9a6b5cb",
+    "event_id": "21b4cfafbe6f-5b4ee141",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:26",
@@ -373,6 +386,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -381,7 +395,7 @@
     }
   },
   {
-    "event_id": "30a06ca35c20-ca66fda3",
+    "event_id": "30a06ca35c20-97cced89",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:27",
@@ -398,6 +412,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -406,7 +421,7 @@
     }
   },
   {
-    "event_id": "31b0f743645a-13897780",
+    "event_id": "31b0f743645a-afbf48b8",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:28",
@@ -423,6 +438,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -431,7 +447,7 @@
     }
   },
   {
-    "event_id": "d904214635b0-4966bdc1",
+    "event_id": "d904214635b0-5b571a4a",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:29",
@@ -448,6 +464,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -456,7 +473,7 @@
     }
   },
   {
-    "event_id": "5128a30dd12f-673ccc8d",
+    "event_id": "5128a30dd12f-f4457262",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:30",
@@ -473,6 +490,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -481,7 +499,7 @@
     }
   },
   {
-    "event_id": "f5daf34593e7-3cfb3197",
+    "event_id": "f5daf34593e7-c75c28c0",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:31",
@@ -498,6 +516,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -506,7 +525,7 @@
     }
   },
   {
-    "event_id": "a954ff289271-0c194485",
+    "event_id": "a954ff289271-850ed705",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:32",
@@ -523,6 +542,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -531,7 +551,7 @@
     }
   },
   {
-    "event_id": "c2b19c56be4b-3cc987f7",
+    "event_id": "c2b19c56be4b-86826eb9",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:33",
@@ -548,6 +568,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -556,7 +577,7 @@
     }
   },
   {
-    "event_id": "aae45787d188-73c2f142",
+    "event_id": "aae45787d188-d7693bf5",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:34",
@@ -573,6 +594,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -581,7 +603,7 @@
     }
   },
   {
-    "event_id": "272a7e0b258a-92accca7",
+    "event_id": "272a7e0b258a-035dcf60",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:35",
@@ -598,6 +620,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -606,7 +629,7 @@
     }
   },
   {
-    "event_id": "f7f9a262b81f-beadbb98",
+    "event_id": "f7f9a262b81f-9ef5d74f",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:36",
@@ -623,6 +646,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -631,7 +655,7 @@
     }
   },
   {
-    "event_id": "8986d5682a23-cb6a194a",
+    "event_id": "8986d5682a23-3112105b",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:37",
@@ -648,6 +672,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -656,7 +681,7 @@
     }
   },
   {
-    "event_id": "2d772f197d9d-9c2498c5",
+    "event_id": "2d772f197d9d-6ff4f816",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:38",
@@ -673,6 +698,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -681,7 +707,7 @@
     }
   },
   {
-    "event_id": "097599ee24c4-497838a5",
+    "event_id": "097599ee24c4-7f463dd2",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:39",
@@ -698,6 +724,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -706,7 +733,7 @@
     }
   },
   {
-    "event_id": "bdfcbf583788-3dab905f",
+    "event_id": "bdfcbf583788-af221190",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:40",
@@ -723,6 +750,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -731,7 +759,7 @@
     }
   },
   {
-    "event_id": "e75c4e324c6a-05af8ecb",
+    "event_id": "e75c4e324c6a-ce4d6115",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:41",
@@ -748,6 +776,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -756,7 +785,7 @@
     }
   },
   {
-    "event_id": "b28617c7f204-d018758f",
+    "event_id": "b28617c7f204-c90bef67",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:42",
@@ -773,6 +802,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -781,7 +811,7 @@
     }
   },
   {
-    "event_id": "28f8dbd7d06c-e676ee31",
+    "event_id": "28f8dbd7d06c-42c13d46",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:43",
@@ -798,6 +828,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -806,7 +837,7 @@
     }
   },
   {
-    "event_id": "fe0468f204be-4856928e",
+    "event_id": "fe0468f204be-6c5c312c",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:44",
@@ -823,6 +854,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -831,7 +863,7 @@
     }
   },
   {
-    "event_id": "a4f84098b921-5423dc1c",
+    "event_id": "a4f84098b921-40fa92bf",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:45",
@@ -848,6 +880,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -856,7 +889,7 @@
     }
   },
   {
-    "event_id": "2957368ec0d6-e7177f73",
+    "event_id": "2957368ec0d6-76f557a0",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:46",
@@ -873,6 +906,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -881,7 +915,7 @@
     }
   },
   {
-    "event_id": "a37813f78bc3-66254be7",
+    "event_id": "a37813f78bc3-93a75371",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:47",
@@ -898,6 +932,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -906,7 +941,7 @@
     }
   },
   {
-    "event_id": "4a7fd677b200-0931fa1b",
+    "event_id": "4a7fd677b200-7334c0a5",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:48",
@@ -923,6 +958,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -931,7 +967,7 @@
     }
   },
   {
-    "event_id": "b8e46fde2dc3-f78044b9",
+    "event_id": "b8e46fde2dc3-66257b04",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:49",
@@ -948,6 +984,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -956,7 +993,7 @@
     }
   },
   {
-    "event_id": "7224f663f049-a7a2ebc4",
+    "event_id": "7224f663f049-bcfe429c",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:50",
@@ -973,6 +1010,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -981,7 +1019,7 @@
     }
   },
   {
-    "event_id": "74845b783283-0a91804f",
+    "event_id": "74845b783283-32ed7edd",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:51",
@@ -998,6 +1036,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1006,7 +1045,7 @@
     }
   },
   {
-    "event_id": "fec246a1870c-0a0652e2",
+    "event_id": "fec246a1870c-0cb7d992",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:52",
@@ -1023,6 +1062,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1031,7 +1071,7 @@
     }
   },
   {
-    "event_id": "109507c8eff0-29eb354e",
+    "event_id": "109507c8eff0-623b2f3c",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:53",
@@ -1048,6 +1088,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1056,7 +1097,7 @@
     }
   },
   {
-    "event_id": "19924256351c-b8076233",
+    "event_id": "19924256351c-cf817e75",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:54",
@@ -1073,6 +1114,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1081,7 +1123,7 @@
     }
   },
   {
-    "event_id": "191485934b74-f580a64b",
+    "event_id": "191485934b74-55af8887",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:55",
@@ -1098,6 +1140,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1106,7 +1149,7 @@
     }
   },
   {
-    "event_id": "d6aac90eb6fa-3b916f1a",
+    "event_id": "d6aac90eb6fa-2c3f6ce7",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:56",
@@ -1123,6 +1166,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1131,7 +1175,7 @@
     }
   },
   {
-    "event_id": "ed64fe06a3c0-27f90641",
+    "event_id": "ed64fe06a3c0-13d2c0ee",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:57",
@@ -1148,6 +1192,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1156,7 +1201,7 @@
     }
   },
   {
-    "event_id": "2028f349d6d2-7294407c",
+    "event_id": "2028f349d6d2-864d3960",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:58",
@@ -1173,6 +1218,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1181,7 +1227,7 @@
     }
   },
   {
-    "event_id": "be21ea813d91-fecadcde",
+    "event_id": "be21ea813d91-51d75810",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:59",
@@ -1198,6 +1244,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1206,7 +1253,7 @@
     }
   },
   {
-    "event_id": "f62631fd4c74-ca163948",
+    "event_id": "f62631fd4c74-17c714ed",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:25:00",
@@ -1223,6 +1270,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1231,7 +1279,7 @@
     }
   },
   {
-    "event_id": "4249e8584164-3fb3b70c",
+    "event_id": "4249e8584164-901f0363",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:25:01",
@@ -1248,6 +1296,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1256,7 +1305,7 @@
     }
   },
   {
-    "event_id": "d2c245fe537a-35db5fb4",
+    "event_id": "d2c245fe537a-64e14696",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:46:22",
@@ -1273,6 +1322,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [
       "T1021",
       "T1078"
@@ -1285,7 +1335,7 @@
     }
   },
   {
-    "event_id": "69b6b196c553-4590f1d7",
+    "event_id": "69b6b196c553-f4c4db60",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 14:38:22",
@@ -1302,6 +1352,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [
       "T1021",
       "T1078"
@@ -1314,7 +1365,7 @@
     }
   },
   {
-    "event_id": "19a85d25e7c6-bb341f80",
+    "event_id": "19a85d25e7c6-c93ba76c",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:09:14:22 +0100",
@@ -1331,11 +1382,12 @@
     "offset_confidence": "explicit",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [
       "T1190",
       "T1566"
     ],
-    "correlation_group_id": "cg-d12cedd1c4",
+    "correlation_group_id": "cg-7a63e6fac6",
     "severity": "medium",
     "extra": {
       "method": "GET",
@@ -1346,7 +1398,7 @@
     }
   },
   {
-    "event_id": "03b1f270d770-78d45da6",
+    "event_id": "03b1f270d770-ce9cdc7c",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:09:17:34 +0100",
@@ -1363,11 +1415,12 @@
     "offset_confidence": "explicit",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [
       "T1190",
       "T1566"
     ],
-    "correlation_group_id": "cg-d12cedd1c4",
+    "correlation_group_id": "cg-7a63e6fac6",
     "severity": "medium",
     "extra": {
       "method": "POST",
@@ -1378,7 +1431,7 @@
     }
   },
   {
-    "event_id": "608bafcf7657-01051a01",
+    "event_id": "608bafcf7657-9fc79b1d",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:09:27:22 +0100",
@@ -1395,6 +1448,7 @@
     "offset_confidence": "explicit",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1407,7 +1461,7 @@
     }
   },
   {
-    "event_id": "c623d6f736ac-96c03280",
+    "event_id": "c623d6f736ac-a0ed6f50",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:09:29:22 +0100",
@@ -1424,6 +1478,7 @@
     "offset_confidence": "explicit",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1436,7 +1491,7 @@
     }
   },
   {
-    "event_id": "445ca4a19c7f-235a50fb",
+    "event_id": "445ca4a19c7f-2c1c85ab",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:09:30:22 +0100",
@@ -1453,6 +1508,7 @@
     "offset_confidence": "explicit",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1465,7 +1521,7 @@
     }
   },
   {
-    "event_id": "077c313702ea-46c1cac0",
+    "event_id": "077c313702ea-133d7bba",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:09:58:22 +0100",
@@ -1482,6 +1538,7 @@
     "offset_confidence": "explicit",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1494,7 +1551,7 @@
     }
   },
   {
-    "event_id": "6fc9e0e1d582-e8213a8e",
+    "event_id": "6fc9e0e1d582-5af463e9",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:10:01:22 +0100",
@@ -1511,6 +1568,7 @@
     "offset_confidence": "explicit",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1523,7 +1581,7 @@
     }
   },
   {
-    "event_id": "6164ce8c277b-978e7161",
+    "event_id": "6164ce8c277b-f7aae674",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:10:06:22 +0100",
@@ -1540,6 +1598,7 @@
     "offset_confidence": "explicit",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1552,7 +1611,7 @@
     }
   },
   {
-    "event_id": "346006cb1d81-d7bf7d72",
+    "event_id": "346006cb1d81-6c8dbb5d",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:10:55:22 +0100",
@@ -1569,6 +1628,7 @@
     "offset_confidence": "explicit",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1581,7 +1641,7 @@
     }
   },
   {
-    "event_id": "ae1460b9e0d1-cbf342f6",
+    "event_id": "ae1460b9e0d1-22e50d55",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:11:05:22 +0100",
@@ -1598,6 +1658,7 @@
     "offset_confidence": "explicit",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1610,7 +1671,7 @@
     }
   },
   {
-    "event_id": "f66aef05ef67-2f705138",
+    "event_id": "f66aef05ef67-7865abf3",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:11:13:22 +0100",
@@ -1627,6 +1688,7 @@
     "offset_confidence": "explicit",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1639,7 +1701,7 @@
     }
   },
   {
-    "event_id": "bc648bb58a4b-d6b14edd",
+    "event_id": "bc648bb58a4b-269711f9",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:12:50:22 +0100",
@@ -1656,6 +1718,7 @@
     "offset_confidence": "explicit",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1668,7 +1731,7 @@
     }
   },
   {
-    "event_id": "4a42a871e364-7949e41f",
+    "event_id": "4a42a871e364-b9e92dfd",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:13:32:22 +0100",
@@ -1685,6 +1748,7 @@
     "offset_confidence": "explicit",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1697,7 +1761,7 @@
     }
   },
   {
-    "event_id": "7fcd8adfb4b3-6a996ef4",
+    "event_id": "7fcd8adfb4b3-905c87f3",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:13:53:22 +0100",
@@ -1714,6 +1778,7 @@
     "offset_confidence": "explicit",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1726,7 +1791,7 @@
     }
   },
   {
-    "event_id": "11b98202b684-2e281a37",
+    "event_id": "11b98202b684-19acb535",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:14:01:22 +0100",
@@ -1743,6 +1808,7 @@
     "offset_confidence": "explicit",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1755,7 +1821,7 @@
     }
   },
   {
-    "event_id": "9bbab7ba2909-10eb1515",
+    "event_id": "9bbab7ba2909-73d3cde0",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:14:16:22 +0100",
@@ -1772,6 +1838,7 @@
     "offset_confidence": "explicit",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1784,7 +1851,7 @@
     }
   },
   {
-    "event_id": "b526291a89e6-e91c4169",
+    "event_id": "b526291a89e6-1946f3f6",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:14:22:22 +0100",
@@ -1801,6 +1868,7 @@
     "offset_confidence": "explicit",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1813,7 +1881,7 @@
     }
   },
   {
-    "event_id": "e295fc5be91b-dbf04bcb",
+    "event_id": "e295fc5be91b-9c932573",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:14:46:22 +0100",
@@ -1830,6 +1898,7 @@
     "offset_confidence": "explicit",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1842,7 +1911,7 @@
     }
   },
   {
-    "event_id": "870901621e52-91641ace",
+    "event_id": "870901621e52-a15c4a5c",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:15:00:22 +0100",
@@ -1859,6 +1928,7 @@
     "offset_confidence": "explicit",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1871,7 +1941,7 @@
     }
   },
   {
-    "event_id": "fbcf23981691-ebbc3ac3",
+    "event_id": "fbcf23981691-f0355eba",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:15:20:22 +0100",
@@ -1888,6 +1958,7 @@
     "offset_confidence": "explicit",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1900,7 +1971,7 @@
     }
   },
   {
-    "event_id": "0f50245a4c59-20626d06",
+    "event_id": "0f50245a4c59-81d1cbd9",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:15:31:22 +0100",
@@ -1917,6 +1988,7 @@
     "offset_confidence": "explicit",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1929,7 +2001,7 @@
     }
   },
   {
-    "event_id": "4424d3cb91c5-cc650713",
+    "event_id": "4424d3cb91c5-d0d93e97",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:15:33:22 +0100",
@@ -1946,6 +2018,7 @@
     "offset_confidence": "explicit",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -1958,7 +2031,7 @@
     }
   },
   {
-    "event_id": "5788f053bb50-a7b21f66",
+    "event_id": "5788f053bb50-2f83d3b8",
     "source_type": "cisco_syslog",
     "host": "fw-edge-01",
     "raw_timestamp": "Sep 12 01:17:34",
@@ -1975,8 +2048,9 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": -420,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
-    "correlation_group_id": "cg-d12cedd1c4",
+    "correlation_group_id": "cg-7a63e6fac6",
     "severity": "info",
     "extra": {
       "raw_msg": "%ASA-6-302013: Built inbound TCP connection 88421 for outside:203.0.113.77/44345 (203.0.113.77/44345) to inside:10.10.5.20/443 (10.10.5.20/443)",
@@ -1984,7 +2058,7 @@
     }
   },
   {
-    "event_id": "3e56a52c4b37-6b498a3c",
+    "event_id": "3e56a52c4b37-8546be34",
     "source_type": "cisco_syslog",
     "host": "fw-edge-01",
     "raw_timestamp": "Sep 12 02:36:22",
@@ -2001,8 +2075,9 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": -420,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
-    "correlation_group_id": "cg-d12cedd1c4",
+    "correlation_group_id": "cg-7a63e6fac6",
     "severity": "info",
     "extra": {
       "raw_msg": "%ASA-6-302013: Built inbound TCP connection 88500 for outside:203.0.113.77/51900 (203.0.113.77/51900) to inside:10.10.6.40/3389 (10.10.6.40/3389)",
@@ -2010,7 +2085,7 @@
     }
   },
   {
-    "event_id": "e79888fc6e56-d811e42c",
+    "event_id": "e79888fc6e56-4a97c6b5",
     "source_type": "cisco_syslog",
     "host": "fw-edge-01",
     "raw_timestamp": "Sep 12 03:19:22",
@@ -2027,6 +2102,7 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": -420,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [],
     "correlation_group_id": null,
     "severity": "info",
@@ -2036,7 +2112,7 @@
     }
   },
   {
-    "event_id": "5ad0a289219c-57eb4f02",
+    "event_id": "5ad0a289219c-4877365e",
     "source_type": "evtx",
     "host": "WIN-ENG-07",
     "raw_timestamp": "2025-09-12T05:37:09",
@@ -2053,8 +2129,9 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": -240,
     "clock_skew_flag": true,
+    "estimated_skew_seconds": 47.0,
     "attack_techniques": [],
-    "correlation_group_id": "cg-d12cedd1c4",
+    "correlation_group_id": "cg-7a63e6fac6",
     "severity": "info",
     "extra": {
       "LogonType": 10,
@@ -2062,7 +2139,7 @@
     }
   },
   {
-    "event_id": "7f84033a95af-7414edd8",
+    "event_id": "7f84033a95af-bac65b07",
     "source_type": "evtx",
     "host": "WIN-ENG-07",
     "raw_timestamp": "2025-09-12T05:37:13",
@@ -2079,8 +2156,9 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": -240,
     "clock_skew_flag": true,
+    "estimated_skew_seconds": 47.0,
     "attack_techniques": [],
-    "correlation_group_id": "cg-d12cedd1c4",
+    "correlation_group_id": "cg-7a63e6fac6",
     "severity": "info",
     "extra": {
       "PrivilegeList": "SeDebugPrivilege SeImpersonatePrivilege",
@@ -2088,7 +2166,7 @@
     }
   },
   {
-    "event_id": "a0bbd6bd602d-ac7c8fe3",
+    "event_id": "a0bbd6bd602d-8b7f12d5",
     "source_type": "evtx",
     "host": "WIN-ENG-07",
     "raw_timestamp": "2025-09-12T05:39:20",
@@ -2105,10 +2183,11 @@
     "offset_confidence": "correlated",
     "inferred_utc_offset_minutes": -240,
     "clock_skew_flag": true,
+    "estimated_skew_seconds": 47.0,
     "attack_techniques": [
       "T1003"
     ],
-    "correlation_group_id": "cg-d12cedd1c4",
+    "correlation_group_id": "cg-7a63e6fac6",
     "severity": "high",
     "extra": {
       "CommandLine": "mimi.exe privilege::debug sekurlsa::logonpasswords",
@@ -2116,7 +2195,7 @@
     }
   },
   {
-    "event_id": "34069da5a717-e8c6a24d",
+    "event_id": "34069da5a717-3fbf8d50",
     "source_type": "aws_cloudtrail",
     "host": "sts.amazonaws.com",
     "raw_timestamp": "2025-09-12T12:10:22Z",
@@ -2133,10 +2212,11 @@
     "offset_confidence": "explicit",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [
       "T1082"
     ],
-    "correlation_group_id": "cg-d12cedd1c4",
+    "correlation_group_id": "cg-7a63e6fac6",
     "severity": "info",
     "extra": {
       "aws_region": "us-east-1",
@@ -2146,7 +2226,7 @@
     }
   },
   {
-    "event_id": "94cfa8d91334-ed7f6095",
+    "event_id": "94cfa8d91334-63d2861c",
     "source_type": "aws_cloudtrail",
     "host": "s3.amazonaws.com",
     "raw_timestamp": "2025-09-12T12:12:22Z",
@@ -2163,10 +2243,11 @@
     "offset_confidence": "explicit",
     "inferred_utc_offset_minutes": 0,
     "clock_skew_flag": false,
+    "estimated_skew_seconds": null,
     "attack_techniques": [
       "T1041"
     ],
-    "correlation_group_id": "cg-d12cedd1c4",
+    "correlation_group_id": "cg-7a63e6fac6",
     "severity": "high",
     "extra": {
       "aws_region": "us-east-1",

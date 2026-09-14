@@ -1,6 +1,6 @@
 {
   "title": "Chronos Forensic Summary \u2013 Aerospace Exfiltration Incident",
-  "generated_at": "2026-09-14T13:52:57.287258Z",
+  "generated_at": "2026-09-14T13:54:13.496052Z",
   "total_events": 81,
   "attacker_thread_events": 12,
   "benign_events_excluded": 69,
@@ -27,9 +27,9 @@
   "gaps": [
     {
       "type": "time_gap",
-      "group_id": "cg-d12cedd1c4",
-      "from_event": "5788f053bb50-a7b21f66",
-      "to_event": "3e56a52c4b37-6b498a3c",
+      "group_id": "cg-7a63e6fac6",
+      "from_event": "5788f053bb50-2f83d3b8",
+      "to_event": "3e56a52c4b37-8546be34",
       "from_ts": "2025-09-12T08:17:34+00:00",
       "to_ts": "2025-09-12T09:36:22+00:00",
       "gap_seconds": 4728,
@@ -41,24 +41,24 @@
     },
     {
       "type": "time_gap",
-      "group_id": "cg-d12cedd1c4",
-      "from_event": "a0bbd6bd602d-ac7c8fe3",
-      "to_event": "1a74aa4d443a-0df35fb9",
+      "group_id": "cg-7a63e6fac6",
+      "from_event": "a0bbd6bd602d-8b7f12d5",
+      "to_event": "1a74aa4d443a-b2ba7153",
       "from_ts": "2025-09-12T09:39:20+00:00",
       "to_ts": "2025-09-12T10:19:22+00:00",
       "gap_seconds": 2402,
       "threshold_seconds": 381,
       "hosts": [
-        "WIN-ENG-07",
-        "lin-db-03"
+        "lin-db-03",
+        "WIN-ENG-07"
       ],
       "severity": "medium"
     },
     {
       "type": "time_gap",
-      "group_id": "cg-d12cedd1c4",
-      "from_event": "d225db9a4c61-ff98ad2e",
-      "to_event": "7491fb59b422-c84d8023",
+      "group_id": "cg-7a63e6fac6",
+      "from_event": "d225db9a4c61-be463a23",
+      "to_event": "7491fb59b422-96ec302c",
       "from_ts": "2025-09-12T10:19:22+00:00",
       "to_ts": "2025-09-12T11:54:22+00:00",
       "gap_seconds": 5700,
@@ -70,16 +70,16 @@
     },
     {
       "type": "time_gap",
-      "group_id": "cg-d12cedd1c4",
-      "from_event": "7491fb59b422-c84d8023",
-      "to_event": "34069da5a717-e8c6a24d",
+      "group_id": "cg-7a63e6fac6",
+      "from_event": "7491fb59b422-96ec302c",
+      "to_event": "34069da5a717-3fbf8d50",
       "from_ts": "2025-09-12T11:54:22+00:00",
       "to_ts": "2025-09-12T12:10:22+00:00",
       "gap_seconds": 960,
       "threshold_seconds": 381,
       "hosts": [
-        "sts.amazonaws.com",
-        "lin-db-03"
+        "lin-db-03",
+        "sts.amazonaws.com"
       ],
       "severity": "medium"
     }

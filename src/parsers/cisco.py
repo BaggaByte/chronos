@@ -24,7 +24,7 @@ CISCO_LINE = re.compile(
 CONN_RE = re.compile(
     r"(?P<dir>inbound|outbound)\s+TCP\s+connection\s+\d+\s+for\s+"
     r"(?P<from_if>\w+):(?P<src_ip>[\d.]+)/(?P<src_port>\d+).*?"
-    r"to\s+(?P<to_if>\w+):(?P<dst_target>[^/\s]+)/(?P<dst_port>\d+)(?:\s+\((?P<dst_ip_paren>[\d.]+)/\d+\))?",
+    r"to\s+(?P<to_if>\w+):(?P<dst_ip>[\d.]+)/(?P<dst_port>\d+)",
     re.IGNORECASE,
 )
 
@@ -52,9 +52,7 @@ class CiscoSyslogParser(BaseParser):
         cm = CONN_RE.search(msg)
         if cm:
             src_ip = cm.group("src_ip")
-            paren_ip = cm.group("dst_ip_paren")
-            target = cm.group("dst_target")
-            dst_ip = paren_ip if paren_ip else (target if re.match(r"^[\d.]+$", target) else None)
+            dst_ip = cm.group("dst_ip")
             action = f"built_{cm.group('dir')}_tcp"
         return ChronosEvent(
             event_id=ChronosEvent.generate_id("cisco", line),
