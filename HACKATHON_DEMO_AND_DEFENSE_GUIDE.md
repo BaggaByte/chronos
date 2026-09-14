@@ -229,9 +229,9 @@ Switch to the browser at `http://localhost:5173`:
 ### Step 4: Show Automated Test Suite (30 seconds)
 Run in terminal:
 ```bash
-python -m unittest discover tests
+pytest
 ```
-> *"To ensure enterprise reliability, we have 20 automated unit and integration tests covering parser edge cases, leap years, timezone offsets, clock skew, and multi-hop correlation recall. All 20 tests pass cleanly in under 0.2 seconds."*
+> *"To ensure enterprise reliability, we have 24 automated unit and integration tests covering parser edge cases, blind offset inference, leap years, timezone offsets, hardware clock skew (+47s), and multi-hop correlation recall. All 24 tests pass cleanly in under 2 seconds."*
 
 ---
 
@@ -321,15 +321,15 @@ Below are the exact technical questions experienced security, forensic, and clou
 | Metric | Chronos Result | Forensic Implication |
 |---|---|---|
 | **Raw Sources Parsed** | 5 distinct formats | Linux, Windows, Apache, Cisco, AWS |
-| **Pipeline Processing Time** | **< 0.15 seconds** | Instantaneous triage for rapid IR |
-| **Raw Events Ingested** | 80 events | Realistic sample including noise |
+| **Pipeline Processing Time** | **< 0.20 seconds** | Instantaneous triage for rapid IR |
+| **Raw Events Ingested** | 81 events | Realistic sample including noise |
 | **Benign Events Filtered** | 69 events | No false-alarm inundation for analysts |
-| **Attacker Narrative Events** | 11 events | 100% ground-truth precision & recall |
+| **Attacker Narrative Events** | 12 events | 100% ground-truth precision & recall |
 | **Compromised Hosts Identified** | 4 hosts | `web-portal-01`, `WIN-ENG-07`, `lin-db-03`, `s3` |
-| **ATT&CK Techniques Tagged** | 7 techniques | T1190, T1003, T1078, T1021, T1548, T1560, T1041 |
-| **Statistical Anomalies** | 1 spike ($Z=3.06$), 1 gap | Brute-force storm + 42m staging pause |
+| **ATT&CK Techniques Tagged** | 8 techniques | T1190, T1566, T1003, T1078, T1021, T1082, T1560, T1041 |
+| **Statistical Anomalies** | 3 spikes ($Z=3.17$), 4 gaps | Brute-force storm + operator dwell gaps |
 | **Evidentiary Integrity** | 100% match (0 mismatches) | SHA-256 pre-parse verification |
-| **Automated Tests** | **20 / 20 passing** | Unit & E2E integration verification |
+| **Automated Tests** | **24 / 24 passing** | Unit & E2E integration verification |
 
 ---
 

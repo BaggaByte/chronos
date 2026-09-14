@@ -4,14 +4,14 @@ __pycache__/
 *$py.class
 *.so
 .Python
-build/
+/build/
 develop-eggs/
-dist/
+/dist/
 downloads/
 eggs/
 .eggs/
-lib/
-lib64/
+/lib/
+/lib64/
 parts/
 sdist/
 var/
@@ -45,6 +45,10 @@ dist/
 ui/artifacts/chronos/
 .node_modules.lock
 
+# Crucial: Never ignore frontend source library
+!ui/src/lib/
+!ui/src/lib/**
+
 # Databases (recreatable via scripts/run_pipeline.py)
 *.db
 *.db-journal
@@ -58,6 +62,7 @@ ui/artifacts/chronos/
 .env.*.local
 .vscode/
 .idea/
+*.swp
 *.swp
 *.swo
 .DS_Store

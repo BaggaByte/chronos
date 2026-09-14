@@ -1,16 +1,12 @@
 # Chronos Forensics Engine – core dependencies
-# Python >= 3.10 recommended (zoneinfo is stdlib)
+# Python >= 3.10 recommended (zoneinfo is in stdlib)
+
+# Core pipeline dependencies
+pyyaml>=6.0
+pytest>=7.0.0
 
 # Optional – only needed for real binary EVTX files
-# python-evtx>=0.7.4
+python-evtx>=0.7.4
 
-# Optional – richer date parsing edge cases
-# python-dateutil>=2.8.2
-
-# Optional – FastAPI backend for the interactive UI
-# fastapi>=0.110
-# uvicorn>=0.27
-
-# Optional – PDF export
-# reportlab>=4.0
-# fpdf2>=2.7
+# Optional – PDF report generation
+fpdf2>=2.7.0

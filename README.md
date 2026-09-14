@@ -194,18 +194,18 @@ http://localhost:8080
 Chronos includes an automated test suite verifying all parsing, UTC normalization, clock-skew, and multi-host correlation logic:
 
 ```bash
-# Run all tests
-python -m unittest discover tests
+# Run all 24 tests via pytest
+pytest
 
-# Or run individual modules
-python tests/test_parsers_and_norm.py
-python tests/test_correlation.py
-python tests/test_e2e_pipeline.py
+# Or via Python module execution
+python -m pytest
 ```
 
-### Test Suite Coverage:
-- `test_parsers_and_norm.py`: Validates all 5 log formats, time offset inference, missing year handling, and clock-skew flags.
-- `test_correlation.py`: Confirms multi-hop entity joining correctly isolates attacker groups from benign background activity.
+### Test Suite Coverage (24/24 Passing):
+- `test_offset_inference.py`: Validates blind cross-host network flow correlation, 15-minute candidate offset grid search, and hardware clock-skew isolation (+47s).
+- `test_parsers_and_norm.py`: Validates all 5 log formats, time offset inference, missing year handling, and explicit confidence tags.
+- `test_correlation.py`: Confirms 4D multi-hop entity joining correctly isolates attacker groups from benign background activity.
+- `test_correlation_independent.py`: Tests correlation engine invariants independently with randomized orders.
 - `test_e2e_pipeline.py`: Validates end-to-end processing, ATT&CK technique tagging accuracy, and export generation.
 
 ---
