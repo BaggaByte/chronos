@@ -2,32 +2,32 @@
   "Events": [
     {
       "EventID": 4624,
-      "TimeCreated": "2025-09-12T05:37:09",
+      "TimeCreated": "2026-09-14T10:38:48",
       "Computer": "WIN-ENG-07",
       "SubjectUserName": "j.mitchell",
       "IpAddress": "203.0.113.77",
       "LogonType": 10,
       "ProcessName": "C:\\Windows\\System32\\winlogon.exe",
-      "utc_true": "2025-09-12T09:36:22+00:00",
+      "utc_true": "2026-09-14T14:38:01+00:00",
       "action": "Successful logon"
     },
     {
       "EventID": 4672,
-      "TimeCreated": "2025-09-12T05:37:13",
+      "TimeCreated": "2026-09-14T10:38:52",
       "Computer": "WIN-ENG-07",
       "SubjectUserName": "j.mitchell",
       "PrivilegeList": "SeDebugPrivilege SeImpersonatePrivilege",
-      "utc_true": "2025-09-12T09:36:26+00:00",
+      "utc_true": "2026-09-14T14:38:05+00:00",
       "action": "Special privileges assigned"
     },
     {
       "EventID": 4688,
-      "TimeCreated": "2025-09-12T05:39:20",
+      "TimeCreated": "2026-09-14T10:40:59",
       "Computer": "WIN-ENG-07",
       "SubjectUserName": "j.mitchell",
       "NewProcessName": "C:\\Users\\j.mitchell\\AppData\\Local\\Temp\\mimi.exe",
       "CommandLine": "mimi.exe privilege::debug sekurlsa::logonpasswords",
-      "utc_true": "2025-09-12T09:38:33+00:00",
+      "utc_true": "2026-09-14T14:40:12+00:00",
       "action": "Process creation (credential dump)"
     }
   ]

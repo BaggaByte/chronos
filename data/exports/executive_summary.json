@@ -1,21 +1,21 @@
 {
   "title": "Chronos Forensic Summary \u2013 Aerospace Exfiltration Incident",
-  "generated_at": "2026-09-14T16:27:24.015684Z",
-  "total_events": 85,
+  "generated_at": "2026-09-14T17:14:02.715141Z",
+  "total_events": 81,
   "attacker_thread_events": 12,
-  "benign_events_excluded": 73,
+  "benign_events_excluded": 69,
   "techniques_observed": {
     "T1190": 2,
     "T1566": 2,
-    "T1021": 14,
-    "T1078": 14,
+    "T1021": 10,
+    "T1078": 10,
     "T1003": 1,
     "T1560": 1,
     "T1082": 1,
     "T1041": 1,
     "T1110": 40
   },
-  "primary_narrative": "2025-09-12 08:14:22 UTC | web-portal-01 | - | 203.0.113.77 | GET /login [T1190,T1566]\n2025-09-12 08:17:34 UTC | web-portal-01 | j.mitchell | 203.0.113.77 | POST /login [T1190,T1566]\n2025-09-12 08:17:34 UTC | fw-edge-01 | - | 203.0.113.77 | built_inbound_tcp\n2025-09-12 09:36:22 UTC | fw-edge-01 | - | 203.0.113.77 | built_inbound_tcp\n2025-09-12 09:37:09 UTC | WIN-ENG-07 | j.mitchell | 203.0.113.77 | Successful logon\n2025-09-12 09:37:13 UTC | WIN-ENG-07 | j.mitchell | - | Special privileges assigned\n2025-09-12 09:39:20 UTC | WIN-ENG-07 | j.mitchell | - | Process creation (credential dump) [T1003]\n2025-09-12 10:19:22 UTC | lin-db-03 | j.mitchell | 203.0.113.77 | ssh_accepted_publickey [T1021,T1078]\n2025-09-12 10:19:22 UTC | lin-db-03 | j.mitchell | - | session_opened [T1021,T1078]\n2025-09-12 11:54:22 UTC | lin-db-03 | j.mitchell | - | sudo [T1560]\n2025-09-12 12:10:22 UTC | sts.amazonaws.com | j.mitchell | 203.0.113.77 | GetCallerIdentity [T1082]\n2025-09-12 12:12:22 UTC | s3.amazonaws.com | j.mitchell | 203.0.113.77 | PutObject [T1041]",
+  "primary_narrative": "2026-09-14 13:16:01 UTC | web-portal-01 | - | 203.0.113.77 | GET /login [T1190,T1566]\n2026-09-14 13:19:13 UTC | web-portal-01 | j.mitchell | 203.0.113.77 | POST /login [T1190,T1566]\n2026-09-14 13:19:13 UTC | fw-edge-01 | - | 203.0.113.77 | built_inbound_tcp\n2026-09-14 14:38:01 UTC | fw-edge-01 | - | 203.0.113.77 | built_inbound_tcp\n2026-09-14 14:38:48 UTC | WIN-ENG-07 | j.mitchell | 203.0.113.77 | Successful logon\n2026-09-14 14:38:52 UTC | WIN-ENG-07 | j.mitchell | - | Special privileges assigned\n2026-09-14 14:40:59 UTC | WIN-ENG-07 | j.mitchell | - | Process creation (credential dump) [T1003]\n2026-09-14 15:21:01 UTC | lin-db-03 | j.mitchell | 203.0.113.77 | ssh_accepted_publickey [T1021,T1078]\n2026-09-14 15:21:01 UTC | lin-db-03 | j.mitchell | - | session_opened [T1021,T1078]\n2026-09-14 16:56:01 UTC | lin-db-03 | j.mitchell | - | sudo [T1560]\n2026-09-14 17:12:01 UTC | sts.amazonaws.com | j.mitchell | 203.0.113.77 | GetCallerIdentity [T1082]\n2026-09-14 17:14:01 UTC | s3.amazonaws.com | j.mitchell | 203.0.113.77 | PutObject [T1041]",
   "key_iocs": {
     "src_ips": [
       "203.0.113.77"
@@ -28,11 +28,11 @@
   "gaps": [
     {
       "type": "time_gap",
-      "group_id": "cg-72b420d040",
-      "from_event": "5788f053bb50-4b8ec904",
-      "to_event": "3e56a52c4b37-ecdd1d7a",
-      "from_ts": "2025-09-12T08:17:34+00:00",
-      "to_ts": "2025-09-12T09:36:22+00:00",
+      "group_id": "cg-bf56bfbb9b",
+      "from_event": "35ac0167dbd3-8ae7e23e",
+      "to_event": "68798171b257-7f924126",
+      "from_ts": "2026-09-14T13:19:13+00:00",
+      "to_ts": "2026-09-14T14:38:01+00:00",
       "gap_seconds": 4728,
       "threshold_seconds": 381,
       "hosts": [
@@ -42,11 +42,11 @@
     },
     {
       "type": "time_gap",
-      "group_id": "cg-72b420d040",
-      "from_event": "a0bbd6bd602d-05294139",
-      "to_event": "1a74aa4d443a-b9b058bb",
-      "from_ts": "2025-09-12T09:39:20+00:00",
-      "to_ts": "2025-09-12T10:19:22+00:00",
+      "group_id": "cg-bf56bfbb9b",
+      "from_event": "1cabe729a5d0-ece3bc99",
+      "to_event": "d7527c7e10b2-70eb17b2",
+      "from_ts": "2026-09-14T14:40:59+00:00",
+      "to_ts": "2026-09-14T15:21:01+00:00",
       "gap_seconds": 2402,
       "threshold_seconds": 381,
       "hosts": [
@@ -57,11 +57,11 @@
     },
     {
       "type": "time_gap",
-      "group_id": "cg-72b420d040",
-      "from_event": "d225db9a4c61-5bb5c950",
-      "to_event": "7491fb59b422-fb1d21fd",
-      "from_ts": "2025-09-12T10:19:22+00:00",
-      "to_ts": "2025-09-12T11:54:22+00:00",
+      "group_id": "cg-bf56bfbb9b",
+      "from_event": "38e818c466d4-cff9855a",
+      "to_event": "4aa7b1c2b60f-cf2e4ee2",
+      "from_ts": "2026-09-14T15:21:01+00:00",
+      "to_ts": "2026-09-14T16:56:01+00:00",
       "gap_seconds": 5700,
       "threshold_seconds": 381,
       "hosts": [
@@ -71,11 +71,11 @@
     },
     {
       "type": "time_gap",
-      "group_id": "cg-72b420d040",
-      "from_event": "7491fb59b422-fb1d21fd",
-      "to_event": "34069da5a717-f98463ae",
-      "from_ts": "2025-09-12T11:54:22+00:00",
-      "to_ts": "2025-09-12T12:10:22+00:00",
+      "group_id": "cg-bf56bfbb9b",
+      "from_event": "4aa7b1c2b60f-cf2e4ee2",
+      "to_event": "34069da5a717-f1fc15e6",
+      "from_ts": "2026-09-14T16:56:01+00:00",
+      "to_ts": "2026-09-14T17:12:01+00:00",
       "gap_seconds": 960,
       "threshold_seconds": 381,
       "hosts": [
@@ -89,59 +89,68 @@
     {
       "type": "execution_spike",
       "host": "web-portal-01",
-      "bin_start_utc": "2025-09-12T08:25:00+00:00",
+      "bin_start_utc": "2026-09-14T13:15:00+00:00",
       "count": 2,
-      "z_score": 2.92,
-      "mean": 1.1,
+      "z_score": 2.25,
+      "mean": 1.16,
       "severity": "medium"
     },
     {
       "type": "execution_spike",
       "host": "web-portal-01",
-      "bin_start_utc": "2025-09-12T14:30:00+00:00",
+      "bin_start_utc": "2026-09-14T13:30:00+00:00",
       "count": 2,
-      "z_score": 2.92,
-      "mean": 1.1,
+      "z_score": 2.25,
+      "mean": 1.16,
+      "severity": "medium"
+    },
+    {
+      "type": "execution_spike",
+      "host": "web-portal-01",
+      "bin_start_utc": "2026-09-14T14:00:00+00:00",
+      "count": 2,
+      "z_score": 2.25,
+      "mean": 1.16,
       "severity": "medium"
     },
     {
       "type": "execution_spike",
       "host": "lin-db-03",
-      "bin_start_utc": "2025-09-12T13:20:00+00:00",
-      "count": 38,
-      "z_score": 3.32,
-      "mean": 4.23,
+      "bin_start_utc": "2026-09-14T18:25:00+00:00",
+      "count": 40,
+      "z_score": 3.01,
+      "mean": 4.64,
       "severity": "medium"
     }
   ],
   "chain_of_custody": [
     {
       "source": "auth.log",
-      "sha256": "0dad9cdeda0a8f0dad019b4ff759b4467b7938346cfa2a501e9ba5bf0f643219",
-      "events": 55,
+      "sha256": "b8bea194f1c0b5a1bd010f67fe2c0eb745176c977c25ec6f1d9282769904df96",
+      "events": 51,
       "parser": "0.1.0"
     },
     {
       "source": "access.log",
-      "sha256": "13705031f03780414906f49cd786f0f9b86a526761e6dffa9ed3cb9cbe544df3",
+      "sha256": "ff6e3fc91eec63d660829abd3f06a60c420acb4d9a990664052f756597eec71c",
       "events": 22,
       "parser": "0.1.0"
     },
     {
       "source": "cisco.log",
-      "sha256": "5fff2646554f573c33b154e701625ae5b7df88189f29c1420ed15167a80c31d6",
+      "sha256": "7a1c72344f8baa0b4cd79779f6d645be9e9ba8749942346ed9fffdd3d3c3ec58",
       "events": 3,
       "parser": "0.1.0"
     },
     {
       "source": "windows_events.json",
-      "sha256": "77e3e3fd635a08272772457a33c89425f259f7b4cac69d1cbafdf8698708e905",
+      "sha256": "5c996051df5f8766a1015be1cd299ed7e9c561941e4881760e2ef57bd7fe0394",
       "events": 3,
       "parser": "0.1.0"
     },
     {
       "source": "cloudtrail.jsonl",
-      "sha256": "20d363548742f3cd01f17c1b33ae8276041503cc6ba25a26f7fa2160f15e8f3f",
+      "sha256": "2c02f605cf9fb3ff8f89a230b5eea440673b0d283ef2610b70cf5300f46ea9c9",
       "events": 2,
       "parser": "0.1.0"
     }

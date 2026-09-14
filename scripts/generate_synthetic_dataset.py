@@ -66,7 +66,13 @@ CLOCK_SKEW_SECONDS = {
 }
 
 # Incident timeline anchors (true UTC)
-T0 = datetime(2025, 9, 12, 8, 14, 22, tzinfo=timezone.utc)  # phishing email opened
+DEFAULT_T0 = datetime(2025, 9, 12, 8, 14, 22, tzinfo=timezone.utc)  # default anchor
+T0 = DEFAULT_T0
+
+
+def set_t0(new_t0: datetime):
+    global T0
+    T0 = new_t0
 
 
 def ensure_dir(p: Path) -> None:
@@ -493,7 +499,16 @@ def add_benign_noise(scale: int = 1) -> Tuple[List, List, List, List, List]:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Generate Chronos synthetic dataset")
     parser.add_argument("--scale", type=int, default=1, help="Noise/spike multiplier (1=demo, 50=scale run)")
+    parser.add_argument("--now", action="store_true", help="Generate timestamps starting from current real-world date and time")
     args = parser.parse_args()
+
+    if args.now:
+        now_utc = datetime.now(timezone.utc)
+        # Anchor scenario start to ~3.5 hours ago so exfiltration finishes right around now
+        dynamic_t0 = (now_utc - timedelta(hours=3, minutes=58)).replace(microsecond=0)
+        set_t0(dynamic_t0)
+        print(f"[*] Time anchor set to current time: {dynamic_t0.isoformat()}")
+
     ensure_dir(OUTPUT_DIR)
     print(f"[*] Generating synthetic aerospace-breach dataset (scale={args.scale}) → {OUTPUT_DIR}")
 

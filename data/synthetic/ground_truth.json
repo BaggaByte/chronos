@@ -24,21 +24,21 @@
         "T1566",
         "T1190"
       ],
-      "start_utc": "2025-09-12T08:14:22+00:00"
+      "start_utc": "2026-09-14T13:16:01+00:00"
     },
     {
       "name": "Credential Dumping",
       "techniques": [
         "T1003"
       ],
-      "start_utc": "2025-09-12T09:36:22+00:00"
+      "start_utc": "2026-09-14T14:38:01+00:00"
     },
     {
       "name": "Lateral Movement",
       "techniques": [
         "T1021"
       ],
-      "start_utc": "2025-09-12T10:19:22+00:00"
+      "start_utc": "2026-09-14T15:21:01+00:00"
     },
     {
       "name": "Data Staging & Exfiltration",
@@ -46,7 +46,7 @@
         "T1560",
         "T1041"
       ],
-      "start_utc": "2025-09-12T11:54:22+00:00"
+      "start_utc": "2026-09-14T16:56:01+00:00"
     }
   ],
   "expected_correlation_keys": {

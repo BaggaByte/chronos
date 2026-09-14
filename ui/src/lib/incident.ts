@@ -81,12 +81,20 @@ export type ForensicReport = {
 export const events = eventsJson as ChronosEvent[];
 export const report = reportJson as ForensicReport;
 
-export const primaryGroup =
+export const primaryGroup: CorrelationGroup =
   report.correlation_groups && report.correlation_groups.length > 0
     ? report.correlation_groups.reduce((max, g) =>
         g.event_count > max.event_count ? g : max,
       )
-    : report.correlation_groups?.[0];
+    : {
+        group_id: "PENDING",
+        keys: { src_ip: "-", users: "-", hosts: "-", sessions: "" },
+        event_count: 0,
+        techniques: [],
+        start: "",
+        end: "",
+        narrative: "No events ingested. Run Chronos pipeline to populate incident timeline.",
+      };
 
 export const attackerEvents = events
   .filter((e) => e.correlation_group_id === primaryGroup?.group_id)
@@ -96,12 +104,14 @@ const firstDateStr = attackerEvents[0]?.utc_timestamp
   ? attackerEvents[0].utc_timestamp.slice(0, 10).replace(/-/g, "")
   : "20250912";
 
-export const CASE_ID = primaryGroup?.group_id
+export const CASE_ID = primaryGroup?.group_id && primaryGroup.group_id !== "PENDING"
   ? `CASE-${firstDateStr}-${primaryGroup.group_id.toUpperCase()}`
-  : "CASE-20250912-CORR-001";
-export const CASE_TITLE = "Multi-Stage Attack & Exfiltration Timeline";
-export const ATTACKER_IP = primaryGroup?.keys?.src_ip || "203.0.113.77";
-export const COMPROMISED_USER = primaryGroup?.keys?.users || "j.mitchell";
+  : "CASE-STANDBY-000";
+export const CASE_TITLE = primaryGroup?.group_id !== "PENDING"
+  ? "Multi-Stage Attack & Exfiltration Timeline"
+  : "Standby – Awaiting Incident Telemetry Ingestion";
+export const ATTACKER_IP = primaryGroup?.keys?.src_ip || "-";
+export const COMPROMISED_USER = primaryGroup?.keys?.users || "-";
 
 export const dwellDurationSeconds =
   attackerEvents.length > 1

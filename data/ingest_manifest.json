@@ -1,45 +1,45 @@
 [
   {
     "source_path": "D:\\Hackathon\\chronos\\chronos\\data\\synthetic\\auth.log",
-    "sha256": "0dad9cdeda0a8f0dad019b4ff759b4467b7938346cfa2a501e9ba5bf0f643219",
+    "sha256": "b8bea194f1c0b5a1bd010f67fe2c0eb745176c977c25ec6f1d9282769904df96",
     "source_type": "auth.log",
-    "ingest_time_utc": "2026-09-14T16:27:23.938409Z",
+    "ingest_time_utc": "2026-09-14T17:14:02.614172Z",
     "parser_version": "0.1.0",
-    "event_count": 55,
+    "event_count": 51,
     "notes": ""
   },
   {
     "source_path": "D:\\Hackathon\\chronos\\chronos\\data\\synthetic\\access.log",
-    "sha256": "13705031f03780414906f49cd786f0f9b86a526761e6dffa9ed3cb9cbe544df3",
+    "sha256": "ff6e3fc91eec63d660829abd3f06a60c420acb4d9a990664052f756597eec71c",
     "source_type": "apache",
-    "ingest_time_utc": "2026-09-14T16:27:23.940926Z",
+    "ingest_time_utc": "2026-09-14T17:14:02.616277Z",
     "parser_version": "0.1.0",
     "event_count": 22,
     "notes": ""
   },
   {
     "source_path": "D:\\Hackathon\\chronos\\chronos\\data\\synthetic\\cisco.log",
-    "sha256": "5fff2646554f573c33b154e701625ae5b7df88189f29c1420ed15167a80c31d6",
+    "sha256": "7a1c72344f8baa0b4cd79779f6d645be9e9ba8749942346ed9fffdd3d3c3ec58",
     "source_type": "cisco_syslog",
-    "ingest_time_utc": "2026-09-14T16:27:23.942298Z",
+    "ingest_time_utc": "2026-09-14T17:14:02.617646Z",
     "parser_version": "0.1.0",
     "event_count": 3,
     "notes": ""
   },
   {
     "source_path": "D:\\Hackathon\\chronos\\chronos\\data\\synthetic\\windows_events.json",
-    "sha256": "77e3e3fd635a08272772457a33c89425f259f7b4cac69d1cbafdf8698708e905",
+    "sha256": "5c996051df5f8766a1015be1cd299ed7e9c561941e4881760e2ef57bd7fe0394",
     "source_type": "evtx",
-    "ingest_time_utc": "2026-09-14T16:27:23.943059Z",
+    "ingest_time_utc": "2026-09-14T17:14:02.618733Z",
     "parser_version": "0.1.0",
     "event_count": 3,
     "notes": ""
   },
   {
     "source_path": "D:\\Hackathon\\chronos\\chronos\\data\\synthetic\\cloudtrail.jsonl",
-    "sha256": "20d363548742f3cd01f17c1b33ae8276041503cc6ba25a26f7fa2160f15e8f3f",
+    "sha256": "2c02f605cf9fb3ff8f89a230b5eea440673b0d283ef2610b70cf5300f46ea9c9",
     "source_type": "aws_cloudtrail",
-    "ingest_time_utc": "2026-09-14T16:27:23.943888Z",
+    "ingest_time_utc": "2026-09-14T17:14:02.620852Z",
     "parser_version": "0.1.0",
     "event_count": 2,
     "notes": ""

@@ -12,7 +12,7 @@ from __future__ import annotations
 import json
 import sys
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 # Ensure UTF-8 output on Windows consoles
@@ -81,7 +81,13 @@ def run_pipeline(data_dir: Path = DATA_DIR) -> bool:
     print("=" * 70)
 
     prior_map, asset_ip_map = load_asset_inventory()
-    default_year = 2025
+    default_year = datetime.now(timezone.utc).year
+    gt = load_ground_truth(data_dir)
+    if gt and "stages" in gt and gt["stages"]:
+        try:
+            default_year = int(gt["stages"][0]["start_utc"][:4])
+        except Exception:
+            pass
 
     # ------------------------------------------------------------------
     # 1. Ingestion & Integrity (explicit manifest module)

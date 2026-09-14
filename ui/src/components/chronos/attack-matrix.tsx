@@ -2,10 +2,10 @@ import { report, TECHNIQUE_META } from "@/lib/incident";
 import { Badge } from "@/components/ui/badge";
 
 export function AttackMatrix() {
-  const entries = Object.entries(report.technique_counts).sort(
+  const entries = Object.entries(report.technique_counts || {}).sort(
     (a, b) => b[1] - a[1],
   );
-  const max = Math.max(...entries.map(([, n]) => n));
+  const max = entries.length > 0 ? Math.max(...entries.map(([, n]) => n)) : 1;
   return (
     <div className="rounded-lg border border-border bg-surface p-3 shadow-panel sm:p-4">
       <h2 className="text-sm font-medium text-fg">ATT&CK techniques</h2>
