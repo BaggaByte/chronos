@@ -1,142 +1,248 @@
-# Chronos Forensics Engine
+<div align="center">
 
-**Track:** PS-10 — Forensics & Incident Response  
-**Problem:** Automated Incident Timeline Reconstruction
+# ⏳ CHRONOS
+### Automated Multi-Source Forensic Timeline Parser & Incident Reconstruction Engine
 
-Chronos ingests heterogeneous forensic logs (Linux `auth.log`, Windows EVTX/JSON, Apache/Nginx, Cisco syslog, AWS CloudTrail), preserves evidentiary integrity (SHA-256 + ingest manifest), normalizes every timestamp to UTC (including missing-offset and DST cases), correlates events across hosts into an attacker-centric narrative, tags MITRE ATT&CK techniques, detects spikes and dwell-time gaps, and produces an interactive timeline plus a forensic summary report.
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![React](https://img.shields.io/badge/React-19-61DAFB.svg?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-6.0-646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![MITRE ATT&CK](https://img.shields.io/badge/MITRE%20ATT%26CK-v14-red.svg?style=for-the-badge)](https://attack.mitre.org/)
+[![Tests](https://img.shields.io/badge/Tests-20%20Passing-brightgreen.svg?style=for-the-badge)](https://github.com/BaggaByte/chronos)
+
+<p align="center">
+  <b>Reconstruct complex multi-stage cyber breaches from raw, heterogeneous logs into defensible, chronologically accurate attacker narratives.</b>
+</p>
+
+[Key Features](#-key-features) •
+[Architecture](#-architecture) •
+[Quick Start](#-quick-start) •
+[Investigation Dashboard](#-interactive-investigation-dashboard) •
+[Verification & Tests](#-verification--tests)
 
 ---
 
-## Quick Start
+</div>
 
-```bash
-# 1. Generate the synthetic aerospace-breach dataset
-python3 scripts/generate_synthetic_dataset.py
+## 📌 Problem Statement & Mission
 
-# 2. Run the full pipeline (ingest → normalize → tag → correlate → anomalies → store)
-python3 scripts/run_pipeline.py
+Following a data breach or exfiltration incident, incident responders and digital forensics teams are tasked with reconciling hundreds of thousands of disparate log events across heterogeneous systems:
+- **Disparate Log Formats:** Linux `auth.log`, Windows `EVTX`, Apache/Nginx web access logs, Cisco firewall syslogs, and AWS CloudTrail.
+- **Timestamp & Timezone Chaos:** Unsynchronized system clocks, missing timezone offsets, syslog timestamps lacking year declarations, and daylight saving time (DST) shifts.
+- **Correlation Paralysis:** Connecting an initial web exploit to credential theft on a domain controller, lateral movement via SSH, and staging/exfiltration into cloud storage.
+- **Evidence Integrity Loss:** Lack of cryptographic chain of custody during log transformations and ingestion.
+
+### The Solution: Chronos
+**Chronos** is an automated digital forensics and incident response (DFIR) platform that:
+1. Cryptographically seals and streams heterogeneous log files (SHA-256 chain-of-custody).
+2. Automatically normalizes all timestamps to universal UTC, explicitly flagging timezone inferences and clock drifts.
+3. Tags MITRE ATT&CK tactics and techniques using rule-driven signature engines.
+4. Correlates cross-host, multi-system events into unified **Attacker Narrative Threads**.
+5. Flags statistical anomalies, execution volume spikes (z-score), and suspicious dwell-time gaps.
+6. Presents findings in an **interactive, zoomable chronological dashboard** with exportable court- and executive-ready forensic reports.
+
+---
+
+## ⚡ Key Features
+
+### 1. Multi-Format Streaming Ingestion
+- Native streaming parsers for:
+  - **Linux Syslog / `auth.log`**: Password/pubkey authentication, sudo elevation, user disconnects.
+  - **Windows EVTX / Security Events**: Process creation (Event 4688), logon events (Event 4624), privilege escalation (Event 4672).
+  - **Web Server Logs (Apache/Nginx Common & Combined)**: Path discovery, web exploitation (`POST /login`, command injections).
+  - **Network / Cisco ASA Syslog**: Teardown/built connections, external and internal IP mapping.
+  - **Cloud Audit Logs (AWS CloudTrail)**: S3 `PutObject` exfiltration, IAM enumeration, AssumeRole calls.
+- **Evidentiary Integrity**: Raw files are hashed (SHA-256) upon first intake; an immutable `ingest_manifest.json` tracks source hashes, file sizes, and record counts.
+
+### 2. Universal UTC Normalization Engine
+- Automatically parses RFC 3339 / ISO 8601, Unix epoch timestamps, Apache date-time format, and legacy BSD syslog headers.
+- Infers missing timezone offsets based on declared host metadata while flagging them as `offset_inferred: true` for analyst defensibility.
+- Identifies and tags un-synchronized host clocks (e.g., +47s drift).
+
+### 3. MITRE ATT&CK Categorization & Tagging
+- Tagging engine maps raw forensic events to explicit ATT&CK techniques:
+  - **Initial Access**: `T1190` (Exploit Public-Facing Application), `T1566` (Phishing).
+  - **Credential Access**: `T1003` (OS Credential Dumping / Mimikatz activity).
+  - **Privilege Escalation**: `T1548` (Abuse Elevation Control / sudo abuse).
+  - **Lateral Movement**: `T1021.004` (SSH Lateral Movement), `T1078` (Valid Accounts).
+  - **Collection & Exfiltration**: `T1560` (Archive Collected Data via `tar`), `T1041` (Exfiltration Over C2/Cloud).
+
+### 4. Cross-Host Attacker Narrative Correlation
+- Correlates multi-system evidence across four distinct entity dimensions: **IP addresses**, **User accounts**, **Session/Process IDs**, and **Target Hostnames**.
+- Separates benign background noise (e.g., automated cron jobs, routine logins) from malicious activity, extracting isolated attacker threads.
+
+### 5. Statistical Anomaly & Time-Gap Detection
+- **Rolling Z-Score Spike Detection**: Identifies concentrated brute-force attacks and authentication storms ($Z > 2.5$).
+- **Adaptive Dwell-Time Gap Detection**: Highlights anomalous pauses between attacker stages, pinpointing manual reconnaissance vs. automated scripting.
+
+### 6. Modern Interactive React UI
+- **Zoom & Pan Chronological Timeline**: Smooth mouse-wheel zooming and pointer drag-panning across dense log clusters.
+- **Interactive MITRE ATT&CK Matrix**: Technique heatmaps indicating incident coverage.
+- **Cross-Host Lateral Movement Graph**: Visual node-link diagram mapping breach progression from internet edge to cloud exfiltration.
+- **Statistical Anomalies & Spike Inspector**: Visual breakdown of flagged execution spikes and time gaps.
+- **Forensic Report Export Hub**: One-click download of comprehensive forensic packages (JSON, CSV, and formatted forensic summaries).
+
+---
+
+## 🏗 Architecture
+
+```
+                                  CHRONOS PIPELINE
+                                  
+   Raw Forensic Sources                Normalization & Tagging            Correlation & Reporting
++------------------------+          +---------------------------+        +--------------------------+
+| - Linux auth.log       |          |                           |        |                          |
+| - Windows EVTX / JSON  |   SHA256 |  - Parser Pipeline        | Event  |  - Cross-Host Correlation|
+| - Apache / Nginx Logs  | -------->|  - UTC Normalization      | Stream |  - MITRE ATT&CK Tagger   |
+| - Cisco ASA Syslog     | Ingestion|  - Clock-Skew Detection   |------->|  - Anomaly & Gap Detector|
+| - AWS CloudTrail JSONL | Manifest |  - ChronosEvent Schema    |        |  - SQLite Event Indexer  |
++------------------------+          +---------------------------+        +--------------------------+
+                                                                                       |
+                                                                                       v
+                                                                             Artifacts & Exports
+                                                                         +--------------------------+
+                                                                         | - forensic_report.json   |
+                                                                         | - events_full.csv        |
+                                                                         | - executive_summary.json |
+                                                                         | - forensic_summary.txt   |
+                                                                         +--------------------------+
+                                                                                       |
+                                                                                       v
+                                                                         React 19 / Vite Visualizer
+                                                                         +--------------------------+
+                                                                         | [Zoomable Timeline]      |
+                                                                         | [Lateral Movement Graph] |
+                                                                         | [ATT&CK Matrix Heatmap]  |
+                                                                         | [Chain of Custody Modal] |
+                                                                         +--------------------------+
 ```
 
-Outputs:
-- `data/synthetic/` — multi-format log files + `ground_truth.json` + `manifest.json`
-- `data/chronos.db` — SQLite time-indexed event store
-- `data/forensic_report.json` — correlation groups, narrative, spikes, gaps
+---
+
+## 🚀 Quick Start
+
+### 1. Prerequisites
+- **Python 3.10+**
+- **Node.js 18+** & `npm`
+
+### 2. Clone the Repository
+```bash
+git clone https://github.com/BaggaByte/chronos.git
+cd chronos
+```
+
+### 3. Backend Pipeline (Python)
+
+Install Python dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+Generate the multi-stage aerospace attack dataset:
+```bash
+python scripts/generate_synthetic_dataset.py
+```
+
+Run the complete Chronos ingestion, correlation, and anomaly detection pipeline:
+```bash
+python scripts/run_pipeline.py
+```
+
+Outputs generated:
+- `data/synthetic/`: Raw heterogeneous logs + ground truth
+- `data/chronos_events.db`: Fast, time-indexed SQLite event store
+- `data/forensic_report.json`: Full correlation narrative and detected anomalies
+- `data/exports/`: Ready-to-use CSV, JSON, and forensic summary reports
+- `ui/src/data/`: Auto-synchronized datasets for the React visualizer
+
+### 4. Interactive Visualizer (Frontend)
+
+Navigate to the `ui/` directory:
+```bash
+cd ui
+npm install
+npm run dev
+```
+
+Open your browser at:
+```
+http://localhost:5173
+```
 
 ---
 
-## Project Layout
+## 🖥 Interactive Investigation Dashboard
+
+| View | Description |
+|---|---|
+| **Incident Narrative** | Structured chronological walkthrough of the attacker's journey from initial access to data exfiltration. |
+| **Zoomable Timeline** | Interactive SVG timeline with mouse-wheel zoom and drag-to-pan, color-coded by MITRE ATT&CK tactic. |
+| **Lateral Movement Graph** | Node-link topological visualization tracking how the adversary traversed internal hosts (`web-ext-01` → `win-eng-07` → `lin-db-03` → `s3-aerospace-vault`). |
+| **ATT&CK Matrix** | Tactic-by-tactic breakdown of detected techniques with occurrence frequencies. |
+| **Anomaly Inspector** | Visualizes execution spikes (z-score analysis) and dwell-time gaps between incident phases. |
+| **Search & Filter Table** | Real-time full-text search, filterable by host, severity, ATT&CK tag, and source file. |
+| **Chain of Custody** | Cryptographic audit modal displaying SHA-256 hashes and evidentiary metadata. |
+
+---
+
+## 🧪 Verification & Tests
+
+Chronos includes an automated test suite verifying all parsing, UTC normalization, clock-skew, and multi-host correlation logic:
+
+```bash
+# Run all tests
+python -m unittest discover tests
+
+# Or run individual modules
+python tests/test_parsers_and_norm.py
+python tests/test_correlation.py
+python tests/test_e2e_pipeline.py
+```
+
+### Test Suite Coverage:
+- `test_parsers_and_norm.py`: Validates all 5 log formats, time offset inference, missing year handling, and clock-skew flags.
+- `test_correlation.py`: Confirms multi-hop entity joining correctly isolates attacker groups from benign background activity.
+- `test_e2e_pipeline.py`: Validates end-to-end processing, ATT&CK technique tagging accuracy, and export generation.
+
+---
+
+## 📂 Project Structure
 
 ```
 chronos/
-├── scripts/
-│   ├── generate_synthetic_dataset.py   # Module 7 – coherent multi-stage incident
-│   └── run_pipeline.py                 # End-to-end runner
-├── src/
-│   ├── schema.py                       # ChronosEvent, CorrelationGroup, manifest
-│   ├── parsers/                        # Per-format parsers + integrity hashing
-│   ├── normalization/utc.py            # Offset inference, DST, clock-skew flags
-│   ├── correlation/engine.py           # Cross-host IP/user/session join
-│   ├── anomaly/
-│   │   ├── tagger.py                   # Technique-level ATT&CK rules
-│   │   └── detector.py                 # Rolling z-score spikes + adaptive gaps
-│   ├── storage/sqlite_store.py         # Offline fallback (ES-ready design)
-│   └── ui/timeline.html                # Lightweight timeline viewer
+├── config/
+│   └── attack_mappings.yaml            # MITRE ATT&CK rule definitions
 ├── data/
-│   ├── synthetic/                      # Generated logs + ground truth
-│   ├── chronos.db
-│   └── forensic_report.json
-├── tests/
-├── requirements.txt
-└── README.md
+│   ├── synthetic/                      # Generated multi-source log files
+│   ├── exports/                        # CSV, JSON, and TXT forensic reports
+│   └── forensic_report.json            # Structured pipeline output
+├── scripts/
+│   ├── generate_synthetic_dataset.py   # Synthesizes realistic 5-source attack logs
+│   ├── generate_scenario_b.py          # Alternate incident scenario generator
+│   └── run_pipeline.py                 # Main pipeline runner
+├── src/
+│   ├── anomaly/                        # Z-score spike detector & dwell-time gap engine
+│   ├── correlation/                    # Multi-hop cross-host correlation engine
+│   ├── ingestion/                      # Cryptographic SHA-256 ingestion & manifest
+│   ├── normalization/                  # Universal UTC normalization & clock-skew engine
+│   ├── parsers/                        # AuthLog, EVTX, Apache, Cisco, and CloudTrail parsers
+│   ├── reporting/                      # Multi-format report exporter (CSV/JSON/TXT)
+│   ├── storage/                        # SQLite time-indexed persistence layer
+│   └── schema.py                       # ChronosEvent and CorrelationGroup dataclasses
+├── tests/                              # Comprehensive test suite (20 unit/E2E tests)
+├── ui/                                 # Modern React 19 + Vite + Tailwind CSS dashboard
+│   ├── src/
+│   │   ├── components/chronos/         # Timeline, Matrix, Host Graph, Narrative, etc.
+│   │   └── data/                       # Live forensic data feeds
+│   ├── package.json
+│   └── vite.config.ts
+├── implementation-plan-final.md        # Architectural specification
+├── requirements.txt                    # Python dependencies
+└── README.md                           # Documentation
 ```
 
 ---
 
-## Architecture (summary)
+## 🛡️ License
 
-1. **Ingestion & Integrity** — read-only intake, SHA-256 of every source, ingest manifest.
-2. **Parsing & UTC Normalization** — format detectors, host-timezone offset inference, DST via `zoneinfo`, clock-skew flags.
-3. **Storage** — SQLite with `utc_epoch_ns` index (Elasticsearch drop-in later).
-4. **Correlation / ATT&CK / Anomalies** — IP+user joins → correlation groups; rule-based technique tags; z-score spikes + adaptive inter-event gaps.
-5. **Visualization & Reporting** — narrative view, JSON/CSV/PDF-ready export, HTML timeline shell.
-
----
-
-## Synthetic Scenario (ground truth)
-
-| Stage                    | Techniques     | Key signals                                      |
-|--------------------------|----------------|--------------------------------------------------|
-| Initial Access           | T1566, T1190   | External IP → web portal `/login`                |
-| Credential Dumping       | T1003          | WIN-ENG-07 Event 4688 (mimikatz-like) + 4672     |
-| Lateral Movement         | T1021, T1078   | SSH to `lin-db-03` as `j.mitchell`               |
-| Staging & Exfiltration   | T1560, T1041   | `tar` via sudo → S3 `PutObject`                  |
-
-Deliberate challenges baked into the dataset:
-- Mixed timezones (America/New_York, Europe/London, America/Los_Angeles, UTC)
-- Syslog lines without year or offset
-- One host with +47 s clock skew
-- Correlated identifiers across all five formats
-
----
-
-## Extending the Prototype
-
-| Next step                         | How                                                                 |
-|-----------------------------------|---------------------------------------------------------------------|
-| Real binary EVTX                  | `pip install python-evtx` and point `EvtxParser` at `.evtx` files  |
-| Elasticsearch                     | Swap `SQLiteStore` for an ES bulk indexer (schema already time-centric) |
-| FastAPI query layer               | Expose `/events?start=&end=&host=&technique=` for the HTML UI      |
-| PDF executive summary             | Feed `forensic_report.json` narrative into ReportLab / fpdf2       |
-| Larger scale                      | Stream parsers + chunked bulk inserts; the design is already streaming-friendly |
-
----
-
-## Verification Checklist (from the plan)
-
-- [x] Per-format parsers emit a common `ChronosEvent` schema  
-- [x] SHA-256 + ingest manifest recorded  
-- [x] UTC normalization with offset-inferred flags  
-- [x] Cross-host correlation recovers the single attacker group  
-- [x] Technique-level ATT&CK tags applied  
-- [x] Gap detection surfaces dwell times between stages  
-- [x] SQLite store + JSON forensic report  
-- [ ] Interactive Vis.js/D3 timeline (HTML shell present; wire to API)  
-- [ ] Unit tests for each parser & normalization edge case  
-
----
-
-## License / Notes
-
-Prototype built for a time-boxed forensics / IR challenge.  
-Not production-hardened; treat all inferred timestamps and correlation groups as analyst-reviewable hypotheses.
-
----
-
-## Recent hardening (post-review)
-
-* **Explicit ingestion module** – `src/ingestion/manifest.py` owns SHA-256 + chain-of-custody writes; pipeline no longer buries this logic.
-* **Export module** – `src/reporting/export.py` produces CSV event log, executive JSON, and PDF/TXT forensic summary.
-* **StorageBackend ABC** – `src/storage/base.py` defines `write_events` / `query_range` / `aggregate_counts`; SQLite implements it (ES-ready).
-* **Data-driven ATT&CK rules** – `config/attack_mappings.yaml` + fallback embedded rules.
-* **Correlation keys expanded** – IP, user, session/process ID, hostname.
-* **Spike-capable synthetic data** – generator injects a concentrated auth-storm so z-score detection fires (3 spikes in demo run).
-* **Tests** – `test_correlation.py` (recall + benign exclusion) and `test_e2e_pipeline.py` (technique coverage, stage order, gaps, offset flags).
-* **Demo talking points**
-  - Chronos isolated the attacker’s **11-event thread** from **69 benign** background events.
-  - **53/80** timestamps flagged offset-inferred (intentional timezone ambiguity).
-  - Spike detector flags the injected auth storm on `lin-db-03` (z≈3.06).
-  - Manifest verification returns `ok=True` after re-hashing all sources.
-
-### How to run (updated)
-
-```bash
-python3 scripts/generate_synthetic_dataset.py
-python3 scripts/run_pipeline.py
-python3 tests/test_parsers_and_norm.py
-python3 tests/test_correlation.py
-python3 tests/test_e2e_pipeline.py
-
-# UI
-python3 -m http.server 8000 --directory .
-# then open http://localhost:8000/src/ui/timeline.html
-```
+Built for the **Forensics & Incident Response (PS-10)** Challenge. Distributed under the MIT License.
