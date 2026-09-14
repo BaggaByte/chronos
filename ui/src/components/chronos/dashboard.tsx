@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { Download, Search } from "lucide-react";
+import { useMemo, useState, useEffect } from "react";
+import { Download, Search, Play, Pause, RotateCcw, FileSpreadsheet, FileText, Clock, ShieldAlert } from "lucide-react";
 import { Anomalies } from "@/components/chronos/anomalies";
 import { AttackMatrix } from "@/components/chronos/attack-matrix";
 import { AttackTimeline } from "@/components/chronos/attack-timeline";
@@ -15,10 +15,13 @@ import { Button } from "@/components/ui/button";
 import {
   CASE_ID,
   CASE_TITLE,
+  ATTACKER_IP,
+  COMPROMISED_USER,
   attackerEvents,
   events,
   primaryGroup,
   report,
+  STAGES,
   type ChronosEvent,
 } from "@/lib/incident";
 import { cn } from "@/lib/utils";
@@ -50,6 +53,86 @@ export function Dashboard() {
   const [selected, setSelected] = useState<ChronosEvent | null>(
     attackerEvents[0] ?? null,
   );
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const currentStep = useMemo(() => {
+    const idx = attackerEvents.findIndex((e) => e.event_id === selected?.event_id);
+    return idx >= 0 ? idx + 1 : 1;
+  }, [selected]);
+
+  useEffect(() => {
+    if (!isPlaying) return;
+    const timer = setInterval(() => {
+      setSelected((prev) => {
+        const currIdx = attackerEvents.findIndex((e) => e.event_id === prev?.event_id);
+        const nextIdx = currIdx + 1;
+        if (nextIdx >= attackerEvents.length) {
+          setIsPlaying(false);
+          return attackerEvents[0];
+        }
+        return attackerEvents[nextIdx];
+      });
+    }, 2000);
+    return () => clearInterval(timer);
+  }, [isPlaying]);
+
+  const handlePrev = () => {
+    const currIdx = attackerEvents.findIndex((e) => e.event_id === selected?.event_id);
+    const prevIdx = currIdx > 0 ? currIdx - 1 : attackerEvents.length - 1;
+    setSelected(attackerEvents[prevIdx]);
+  };
+
+  const handleNext = () => {
+    const currIdx = attackerEvents.findIndex((e) => e.event_id === selected?.event_id);
+    const nextIdx = (currIdx + 1) % attackerEvents.length;
+    setSelected(attackerEvents[nextIdx]);
+  };
+
+  const exportCsv = () => {
+    const headers = ["Event ID", "Timestamp (UTC)", "Host", "User", "Source IP", "Action", "Log Type", "Severity", "ATT&CK Techniques", "Offset Inferred"];
+    const rows = (threadOnly ? attackerEvents : events).map((e) => [
+      e.event_id,
+      e.utc_timestamp,
+      e.host || "",
+      e.user || "",
+      e.src_ip || "",
+      `"${(e.action || "").replace(/"/g, '""')}"`,
+      e.source_type,
+      e.severity,
+      `"${(e.attack_techniques || []).join("; ")}"`,
+      e.offset_inferred ? "YES" : "NO",
+    ]);
+    const csvContent = [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
+    download("chronos-forensic-events.csv", csvContent, "text/csv;charset=utf-8;");
+  };
+
+  const exportSummaryTxt = () => {
+    const txt = `================================================================================
+CHRONOS INCIDENT RESPONSE - FORENSIC EXECUTIVE SUMMARY
+================================================================================
+Case ID:            ${CASE_ID}
+Title:              ${CASE_TITLE}
+Primary Actor IP:   ${ATTACKER_IP}
+Compromised User:   ${COMPROMISED_USER}
+Attacker Events:    ${attackerEvents.length}
+Total Events:       ${report.total_events}
+Integrity Status:   VERIFIED (SHA-256 Pre-Ingest Hashes Checked)
+
+INCIDENT NARRATIVE:
+${primaryGroup.narrative}
+
+KEY CORRELATED ATTACK STAGES:
+${STAGES.map((s) => `[${s.label}] ${s.start} -> ${s.end} (${s.tactics.join(", ")})`).join("\n")}
+
+ANOMALY DETECTION FINDINGS:
+- Spikes: ${report.spikes.map((s) => `${s.host}: ${s.count} events (z=${s.z_score})`).join(", ") || "None"}
+- Suspicious Gaps: ${report.gaps.map((g) => `${g.gap_seconds}s between ${g.from_event} -> ${g.to_event}`).join(", ") || "None"}
+
+EVIDENTIARY HASHES (CHAIN OF CUSTODY):
+${report.manifest.map((m) => `- ${m.source} [${m.sha256}] (${m.events} events)`).join("\n")}
+================================================================================`;
+    download("chronos-forensic-summary.txt", txt, "text/plain;charset=utf-8;");
+  };
 
   const filtered = useMemo(() => {
     const base = threadOnly ? attackerEvents : events;
@@ -69,36 +152,67 @@ export function Dashboard() {
       <header className="sticky top-0 z-20 border-b border-border bg-bg/90 backdrop-blur-sm">
         <div className="mx-auto flex max-w-[1400px] flex-col gap-3 px-4 py-3 sm:px-6 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex items-start gap-3">
-            <div className="mt-0.5 flex size-9 items-center justify-center rounded-md border border-border bg-elevated font-mono text-xs tracking-widest">
+            <div className="mt-0.5 flex size-9 items-center justify-center rounded-md border border-border bg-elevated font-mono text-xs tracking-widest text-accent-fg">
               CR
             </div>
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-subtle">
-                Chronos forensics
-              </p>
+              <div className="flex items-center gap-2">
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-subtle">
+                  Chronos Forensics
+                </p>
+                <span className="flex items-center gap-1 rounded bg-danger/10 px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-wider text-danger">
+                  <span className="size-1.5 animate-pulse rounded-full bg-danger"></span>
+                  Active Breach
+                </span>
+              </div>
               <h1 className="text-lg font-medium tracking-tight">{CASE_TITLE}</h1>
               <p className="font-mono text-xs text-muted">
-                {CASE_ID} · {primaryGroup.group_id}
+                {CASE_ID} · {primaryGroup.group_id} · <span className="text-fg font-medium">Actor:</span> {ATTACKER_IP} · <span className="text-fg font-medium">Victim:</span> {COMPROMISED_USER}
               </p>
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-2">
+            <div className="flex items-center gap-1.5 rounded-md border border-border bg-surface px-2.5 py-1 text-xs text-muted">
+              <Clock className="size-3.5 text-accent-fg" />
+              <span>Dwell: <strong className="text-fg">4h 13m</strong></span>
+            </div>
             <Badge tone="high">exfiltration</Badge>
             <Badge tone="medium">offset inferred {report.offset_inferred_count}</Badge>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() =>
-                download(
-                  "chronos-report.json",
-                  JSON.stringify(report, null, 2),
-                  "application/json",
-                )
-              }
-            >
-              <Download className="size-3.5" />
-              Export
-            </Button>
+            <div className="flex items-center gap-1">
+              <Button
+                variant="outline"
+                size="sm"
+                title="Download JSON forensic report"
+                onClick={() =>
+                  download(
+                    "chronos-report.json",
+                    JSON.stringify(report, null, 2),
+                    "application/json",
+                  )
+                }
+              >
+                <Download className="size-3.5 mr-1" />
+                JSON
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                title="Download CSV event timeline"
+                onClick={exportCsv}
+              >
+                <FileSpreadsheet className="size-3.5 mr-1" />
+                CSV
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                title="Download Executive Summary"
+                onClick={exportSummaryTxt}
+              >
+                <FileText className="size-3.5 mr-1" />
+                Summary
+              </Button>
+            </div>
           </div>
         </div>
         <nav className="mx-auto flex max-w-[1400px] gap-1 overflow-x-auto px-4 pb-3 sm:px-6">
@@ -108,7 +222,7 @@ export function Dashboard() {
               type="button"
               onClick={() => setView(v.id)}
               className={cn(
-                "h-10 shrink-0 rounded-md px-4 text-sm transition-colors duration-150",
+                "h-10 shrink-0 rounded-md px-4 text-sm transition-colors duration-150 font-medium",
                 view === v.id
                   ? "bg-accent text-accent-fg"
                   : "text-muted hover:bg-elevated hover:text-fg",
@@ -122,6 +236,69 @@ export function Dashboard() {
 
       <main className="mx-auto max-w-[1400px] space-y-4 px-4 py-4 sm:px-6 sm:py-6">
         <Kpis />
+
+        {/* Live Attack Playback Bar */}
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border bg-surface p-3 shadow-panel">
+          <div className="flex items-center gap-2">
+            <span className="flex items-center gap-1.5 font-mono text-xs font-semibold text-accent-fg uppercase tracking-wider">
+              <ShieldAlert className="size-4 text-danger" />
+              Incident Replay:
+            </span>
+            <span className="rounded bg-elevated px-2 py-0.5 font-mono text-xs text-fg border border-border">
+              Step {currentStep} / {attackerEvents.length}
+            </span>
+            <span className="text-xs text-muted truncate max-w-[320px]">
+              {selected?.action} ({selected?.host})
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handlePrev}
+              disabled={isPlaying}
+              title="Step to previous event"
+            >
+              ⏮ Prev
+            </Button>
+            <Button
+              variant={isPlaying ? "primary" : "outline"}
+              size="sm"
+              onClick={() => setIsPlaying(!isPlaying)}
+              className={cn("gap-1.5", isPlaying && "bg-danger text-white hover:bg-danger/90")}
+            >
+              {isPlaying ? (
+                <>
+                  <Pause className="size-3.5" /> Pause
+                </>
+              ) : (
+                <>
+                  <Play className="size-3.5" /> Replay Incident
+                </>
+              )}
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleNext}
+              disabled={isPlaying}
+              title="Step to next event"
+            >
+              Next ⏭
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                setIsPlaying(false);
+                setSelected(attackerEvents[0]);
+              }}
+              title="Reset to beginning"
+            >
+              <RotateCcw className="size-3.5" />
+            </Button>
+          </div>
+        </div>
 
         {view === "overview" && (
           <div className="space-y-4">

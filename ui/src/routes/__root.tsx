@@ -21,8 +21,6 @@ export const Route = createRootRoute({
     links: [
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
       { rel: "stylesheet", href: appCss },
-      { rel: "manifest", href: "/__grok/manifest.webmanifest" },
-      { rel: "apple-touch-icon", href: "/__grok/icon-180.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       {
         rel: "preconnect",
@@ -35,6 +33,11 @@ export const Route = createRootRoute({
       },
     ],
   }),
+  notFoundComponent: () => (
+    <div className="flex min-h-screen items-center justify-center bg-bg text-muted">
+      <p>Page Not Found</p>
+    </div>
+  ),
   component: () => (
     <html lang="en" className="antialiased" suppressHydrationWarning>
       <head>
