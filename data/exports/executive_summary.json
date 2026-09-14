@@ -1,6 +1,6 @@
 {
   "title": "Chronos Forensic Summary \u2013 Aerospace Exfiltration Incident",
-  "generated_at": "2026-09-14T13:48:00.578622Z",
+  "generated_at": "2026-09-14T13:49:24.763470Z",
   "total_events": 81,
   "attacker_thread_events": 12,
   "benign_events_excluded": 69,
@@ -27,9 +27,9 @@
   "gaps": [
     {
       "type": "time_gap",
-      "group_id": "cg-4b57a93913",
-      "from_event": "5788f053bb50-e738b607",
-      "to_event": "3e56a52c4b37-328ab144",
+      "group_id": "cg-d5d92dc6d2",
+      "from_event": "5788f053bb50-b2ba9545",
+      "to_event": "3e56a52c4b37-8aa771c2",
       "from_ts": "2025-09-12T08:17:34+00:00",
       "to_ts": "2025-09-12T09:36:22+00:00",
       "gap_seconds": 4728,
@@ -41,24 +41,24 @@
     },
     {
       "type": "time_gap",
-      "group_id": "cg-4b57a93913",
-      "from_event": "a0bbd6bd602d-da15d139",
-      "to_event": "1a74aa4d443a-550b54c6",
+      "group_id": "cg-d5d92dc6d2",
+      "from_event": "a0bbd6bd602d-1b56cb2f",
+      "to_event": "1a74aa4d443a-2ebc179e",
       "from_ts": "2025-09-12T09:39:20+00:00",
       "to_ts": "2025-09-12T10:19:22+00:00",
       "gap_seconds": 2402,
       "threshold_seconds": 381,
       "hosts": [
-        "lin-db-03",
-        "WIN-ENG-07"
+        "WIN-ENG-07",
+        "lin-db-03"
       ],
       "severity": "medium"
     },
     {
       "type": "time_gap",
-      "group_id": "cg-4b57a93913",
-      "from_event": "d225db9a4c61-af6913b3",
-      "to_event": "7491fb59b422-ca9bccc7",
+      "group_id": "cg-d5d92dc6d2",
+      "from_event": "d225db9a4c61-1179a9f0",
+      "to_event": "7491fb59b422-d9e266b1",
       "from_ts": "2025-09-12T10:19:22+00:00",
       "to_ts": "2025-09-12T11:54:22+00:00",
       "gap_seconds": 5700,
@@ -70,9 +70,9 @@
     },
     {
       "type": "time_gap",
-      "group_id": "cg-4b57a93913",
-      "from_event": "7491fb59b422-ca9bccc7",
-      "to_event": "34069da5a717-1e7ca3d1",
+      "group_id": "cg-d5d92dc6d2",
+      "from_event": "7491fb59b422-d9e266b1",
+      "to_event": "34069da5a717-844e5bac",
       "from_ts": "2025-09-12T11:54:22+00:00",
       "to_ts": "2025-09-12T12:10:22+00:00",
       "gap_seconds": 960,

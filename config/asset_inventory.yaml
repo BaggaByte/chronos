@@ -1,19 +1,30 @@
-# Analyst-supplied infrastructure inventory (prior knowledge)
-# Used only as fallback when cross-source correlation cannot pin an offset
+# Chronos — Asset Inventory (analyst-supplied prior)
+#
+# This is NOT the answer key. It is the kind of thing a real security team
+# actually knows about its own infrastructure — configured timezone and
+# internal IP, from a CMDB / asset register — as opposed to ground_truth.json,
+# which encodes the true attack timeline for after-the-fact grading only and
+# is never read by the pipeline.
+#
+# Chronos uses this file only as:
+#   1. A fallback when cross-host network-flow correlation finds no tight
+#      anchor for a host (see src/normalization/tz_infer.py).
+#   2. A cross-check against correlation results — if the two disagree,
+#      Chronos trusts the correlation evidence and flags the mismatch
+#      (a stale CMDB entry is a realistic failure mode).
+#
+# Hosts NOT listed here (e.g. attacker-controlled or unknown external
+# infrastructure) must be resolved by correlation alone, or are flagged
+# low-confidence if that isn't possible.
+
 hosts:
-  web-portal-01:
-    role: DMZ Web Application
-    timezone: Europe/London
-    internal_ip: 10.10.5.20
-  fw-edge-01:
-    role: Perimeter Firewall
-    timezone: America/Los_Angeles
-    internal_ip: 10.10.1.1
   WIN-ENG-07:
-    role: Engineer Workstation
     timezone: America/New_York
     internal_ip: 10.10.6.40
   lin-db-03:
-    role: Core Database Server
     timezone: UTC
     internal_ip: 10.10.8.33
+  web-portal-01:
+    timezone: Europe/London
+  fw-edge-01:
+    timezone: America/Los_Angeles

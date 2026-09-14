@@ -3,7 +3,7 @@
     "source_path": "D:\\Hackathon\\chronos\\chronos\\data\\synthetic\\auth.log",
     "sha256": "425c70284e7df8f90718953b4fd9dba26a4a5a8e63e5356925fb65f612214d97",
     "source_type": "auth.log",
-    "ingest_time_utc": "2026-09-14T13:48:00.476582Z",
+    "ingest_time_utc": "2026-09-14T13:49:24.663515Z",
     "parser_version": "0.1.0",
     "event_count": 51,
     "notes": ""
@@ -12,7 +12,7 @@
     "source_path": "D:\\Hackathon\\chronos\\chronos\\data\\synthetic\\access.log",
     "sha256": "13705031f03780414906f49cd786f0f9b86a526761e6dffa9ed3cb9cbe544df3",
     "source_type": "apache",
-    "ingest_time_utc": "2026-09-14T13:48:00.478264Z",
+    "ingest_time_utc": "2026-09-14T13:49:24.666102Z",
     "parser_version": "0.1.0",
     "event_count": 22,
     "notes": ""
@@ -21,7 +21,7 @@
     "source_path": "D:\\Hackathon\\chronos\\chronos\\data\\synthetic\\cisco.log",
     "sha256": "5fff2646554f573c33b154e701625ae5b7df88189f29c1420ed15167a80c31d6",
     "source_type": "cisco_syslog",
-    "ingest_time_utc": "2026-09-14T13:48:00.479310Z",
+    "ingest_time_utc": "2026-09-14T13:49:24.667955Z",
     "parser_version": "0.1.0",
     "event_count": 3,
     "notes": ""
@@ -30,7 +30,7 @@
     "source_path": "D:\\Hackathon\\chronos\\chronos\\data\\synthetic\\windows_events.json",
     "sha256": "77e3e3fd635a08272772457a33c89425f259f7b4cac69d1cbafdf8698708e905",
     "source_type": "evtx",
-    "ingest_time_utc": "2026-09-14T13:48:00.480468Z",
+    "ingest_time_utc": "2026-09-14T13:49:24.669333Z",
     "parser_version": "0.1.0",
     "event_count": 3,
     "notes": ""
@@ -39,7 +39,7 @@
     "source_path": "D:\\Hackathon\\chronos\\chronos\\data\\synthetic\\cloudtrail.jsonl",
     "sha256": "20d363548742f3cd01f17c1b33ae8276041503cc6ba25a26f7fa2160f15e8f3f",
     "source_type": "aws_cloudtrail",
-    "ingest_time_utc": "2026-09-14T13:48:00.481477Z",
+    "ingest_time_utc": "2026-09-14T13:49:24.670362Z",
     "parser_version": "0.1.0",
     "event_count": 2,
     "notes": ""
