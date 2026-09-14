@@ -67,3 +67,24 @@ rules:
     match:
       source_type: [aws_cloudtrail]
       action: "GetCallerIdentity"
+
+  - id: ssh_brute_force_failed_pass
+    techniques: [T1110]
+    description: "SSH password authentication failure / brute force attempt"
+    match:
+      source_type: [auth.log]
+      action_contains: "ssh_failed_password"
+
+  - id: suricata_brute_force_alert
+    techniques: [T1110]
+    description: "Suricata NIDS brute force / scan alert"
+    match:
+      source_type: [suricata]
+      action_contains_any: ["brute", "hydra", "password_fail", "login_failed"]
+
+  - id: suricata_scan_alert
+    techniques: [T1595]
+    description: "Suricata network reconnaissance scan"
+    match:
+      source_type: [suricata]
+      action_contains_any: ["scan", "probing", "sweep"]

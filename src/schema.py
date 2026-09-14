@@ -21,6 +21,7 @@ class SourceType(str, Enum):
     NGINX = "nginx"
     CISCO_SYSLOG = "cisco_syslog"
     AWS_CLOUDTRAIL = "aws_cloudtrail"
+    SURICATA = "suricata"
 
 
 class ATTACKTechnique(str, Enum):
@@ -35,6 +36,8 @@ class ATTACKTechnique(str, Enum):
     T1059 = "T1059"  # Command and Scripting Interpreter
     T1082 = "T1082"  # System Information Discovery
     T1105 = "T1105"  # Ingress Tool Transfer
+    T1110 = "T1110"  # Brute Force / Password Spray
+    T1595 = "T1595"  # Active Scanning
     UNKNOWN = "UNKNOWN"
 
 

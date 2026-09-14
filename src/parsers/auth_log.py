@@ -27,6 +27,14 @@ SSH_ACCEPTED = re.compile(
     re.IGNORECASE,
 )
 
+SSH_FAILED = re.compile(
+    r"^(?P<ts>\w{3}\s+\d{1,2}\s+\d{2}:\d{2}:\d{2})\s+"
+    r"(?P<host>\S+)\s+"
+    r"(?P<proc>sshd\[\d+\]):\s+"
+    r"Failed\s+password\s+for\s+(?:invalid\s+user\s+)?(?P<user>\S+)\s+from\s+(?P<ip>\S+)\s+port\s+(?P<port>\d+)",
+    re.IGNORECASE,
+)
+
 SESSION_OPEN = re.compile(
     r"^(?P<ts>\w{3}\s+\d{1,2}\s+\d{2}:\d{2}:\d{2})\s+"
     r"(?P<host>\S+)\s+"
@@ -62,6 +70,12 @@ class AuthLogParser(BaseParser):
                 if event:
                     yield event
 
+    def parse_line(self, line: str, lineno: int = 0) -> Optional[ChronosEvent]:
+        line = line.rstrip("\n")
+        if not line.strip():
+            return None
+        return self._parse_line(line, lineno)
+
     def _parse_line(self, line: str, lineno: int) -> Optional[ChronosEvent]:
         m = SSH_ACCEPTED.match(line)
         if m:
@@ -76,6 +90,23 @@ class AuthLogParser(BaseParser):
                 process=m.group("proc"),
                 raw_ref=f"line:{lineno}",
                 extra={"port": m.group("port"), "method": m.group("method")},
+            )
+
+        m = SSH_FAILED.match(line)
+        if m:
+            return ChronosEvent(
+                event_id=ChronosEvent.generate_id("auth.log", line),
+                source_type=self.source_type,
+                host=m.group("host"),
+                raw_timestamp=m.group("ts"),
+                user=m.group("user"),
+                src_ip=m.group("ip"),
+                action="ssh_failed_password",
+                process=m.group("proc"),
+                severity="medium",
+                attack_techniques=["T1110"],
+                raw_ref=f"line:{lineno}",
+                extra={"port": m.group("port")},
             )
 
         m = SESSION_OPEN.match(line)

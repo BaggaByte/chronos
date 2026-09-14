@@ -1,18 +1,19 @@
 {
   "title": "Chronos Forensic Summary \u2013 Aerospace Exfiltration Incident",
-  "generated_at": "2026-09-14T14:47:45.458904Z",
-  "total_events": 83,
+  "generated_at": "2026-09-14T16:27:24.015684Z",
+  "total_events": 85,
   "attacker_thread_events": 12,
-  "benign_events_excluded": 71,
+  "benign_events_excluded": 73,
   "techniques_observed": {
     "T1190": 2,
     "T1566": 2,
-    "T1021": 12,
-    "T1078": 12,
+    "T1021": 14,
+    "T1078": 14,
     "T1003": 1,
     "T1560": 1,
     "T1082": 1,
-    "T1041": 1
+    "T1041": 1,
+    "T1110": 40
   },
   "primary_narrative": "2025-09-12 08:14:22 UTC | web-portal-01 | - | 203.0.113.77 | GET /login [T1190,T1566]\n2025-09-12 08:17:34 UTC | web-portal-01 | j.mitchell | 203.0.113.77 | POST /login [T1190,T1566]\n2025-09-12 08:17:34 UTC | fw-edge-01 | - | 203.0.113.77 | built_inbound_tcp\n2025-09-12 09:36:22 UTC | fw-edge-01 | - | 203.0.113.77 | built_inbound_tcp\n2025-09-12 09:37:09 UTC | WIN-ENG-07 | j.mitchell | 203.0.113.77 | Successful logon\n2025-09-12 09:37:13 UTC | WIN-ENG-07 | j.mitchell | - | Special privileges assigned\n2025-09-12 09:39:20 UTC | WIN-ENG-07 | j.mitchell | - | Process creation (credential dump) [T1003]\n2025-09-12 10:19:22 UTC | lin-db-03 | j.mitchell | 203.0.113.77 | ssh_accepted_publickey [T1021,T1078]\n2025-09-12 10:19:22 UTC | lin-db-03 | j.mitchell | - | session_opened [T1021,T1078]\n2025-09-12 11:54:22 UTC | lin-db-03 | j.mitchell | - | sudo [T1560]\n2025-09-12 12:10:22 UTC | sts.amazonaws.com | j.mitchell | 203.0.113.77 | GetCallerIdentity [T1082]\n2025-09-12 12:12:22 UTC | s3.amazonaws.com | j.mitchell | 203.0.113.77 | PutObject [T1041]",
   "key_iocs": {
@@ -27,9 +28,9 @@
   "gaps": [
     {
       "type": "time_gap",
-      "group_id": "cg-2481d0dc6a",
-      "from_event": "5788f053bb50-a9c29042",
-      "to_event": "3e56a52c4b37-6d47a2f5",
+      "group_id": "cg-72b420d040",
+      "from_event": "5788f053bb50-4b8ec904",
+      "to_event": "3e56a52c4b37-ecdd1d7a",
       "from_ts": "2025-09-12T08:17:34+00:00",
       "to_ts": "2025-09-12T09:36:22+00:00",
       "gap_seconds": 4728,
@@ -41,9 +42,9 @@
     },
     {
       "type": "time_gap",
-      "group_id": "cg-2481d0dc6a",
-      "from_event": "a0bbd6bd602d-9de5451c",
-      "to_event": "1a74aa4d443a-8e0c7059",
+      "group_id": "cg-72b420d040",
+      "from_event": "a0bbd6bd602d-05294139",
+      "to_event": "1a74aa4d443a-b9b058bb",
       "from_ts": "2025-09-12T09:39:20+00:00",
       "to_ts": "2025-09-12T10:19:22+00:00",
       "gap_seconds": 2402,
@@ -56,9 +57,9 @@
     },
     {
       "type": "time_gap",
-      "group_id": "cg-2481d0dc6a",
-      "from_event": "d225db9a4c61-080a143a",
-      "to_event": "7491fb59b422-31ed0180",
+      "group_id": "cg-72b420d040",
+      "from_event": "d225db9a4c61-5bb5c950",
+      "to_event": "7491fb59b422-fb1d21fd",
       "from_ts": "2025-09-12T10:19:22+00:00",
       "to_ts": "2025-09-12T11:54:22+00:00",
       "gap_seconds": 5700,
@@ -70,9 +71,9 @@
     },
     {
       "type": "time_gap",
-      "group_id": "cg-2481d0dc6a",
-      "from_event": "7491fb59b422-31ed0180",
-      "to_event": "34069da5a717-35d8ec49",
+      "group_id": "cg-72b420d040",
+      "from_event": "7491fb59b422-fb1d21fd",
+      "to_event": "34069da5a717-f98463ae",
       "from_ts": "2025-09-12T11:54:22+00:00",
       "to_ts": "2025-09-12T12:10:22+00:00",
       "gap_seconds": 960,
@@ -108,16 +109,16 @@
       "host": "lin-db-03",
       "bin_start_utc": "2025-09-12T13:20:00+00:00",
       "count": 38,
-      "z_score": 3.33,
-      "mean": 4.08,
+      "z_score": 3.32,
+      "mean": 4.23,
       "severity": "medium"
     }
   ],
   "chain_of_custody": [
     {
       "source": "auth.log",
-      "sha256": "1395a12b17d7a93b843fc61046a9cd1fc76fc8d14faebcb0c1ee2aba8f732451",
-      "events": 53,
+      "sha256": "0dad9cdeda0a8f0dad019b4ff759b4467b7938346cfa2a501e9ba5bf0f643219",
+      "events": 55,
       "parser": "0.1.0"
     },
     {
