@@ -10,6 +10,7 @@ import { Inspector } from "@/components/chronos/inspector";
 import { KillChain } from "@/components/chronos/kill-chain";
 import { Kpis } from "@/components/chronos/kpis";
 import { Narrative } from "@/components/chronos/narrative";
+import { VolumeHistogram } from "@/components/chronos/volume-histogram";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -308,6 +309,7 @@ ${report.manifest.map((m) => `- ${m.source} [${m.sha256}] (${m.events} events)`)
               <Narrative />
               <HostGraph />
             </div>
+            <VolumeHistogram />
             <Anomalies />
           </div>
         )}
@@ -316,6 +318,7 @@ ${report.manifest.map((m) => `- ${m.source} [${m.sha256}] (${m.events} events)`)
           <div className="grid gap-4 lg:grid-cols-[minmax(0,1.6fr)_minmax(260px,0.9fr)]">
             <div className="space-y-4">
               <AttackTimeline selectedId={selected?.event_id} onSelect={setSelected} />
+              <VolumeHistogram />
               <EventTable
                 rows={attackerEvents}
                 selectedId={selected?.event_id}
