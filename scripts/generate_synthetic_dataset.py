@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 import random
 import hashlib
 from datetime import datetime, timedelta, timezone
@@ -20,6 +21,14 @@ from pathlib import Path
 from typing import List, Dict, Any, Tuple
 from zoneinfo import ZoneInfo
 import argparse
+
+# Ensure UTF-8 output on Windows consoles
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
 
 # ---------------------------------------------------------------------------
 # Scenario constants
@@ -33,6 +42,13 @@ WINDOWS_HOST = "WIN-ENG-07"
 LINUX_HOST = "lin-db-03"
 WEB_HOST = "web-portal-01"
 FIREWALL = "fw-edge-01"
+
+# Internal IPs — real ASA logs always show dotted IPs, never hostnames, in
+# interface descriptors. Also doubles as a legitimate "asset inventory"
+# IP<->host mapping (something a real security team genuinely knows about
+# its own infrastructure, unlike an attacker's clock).
+WINDOWS_HOST_IP = "10.10.6.40"
+LINUX_HOST_IP = "10.10.8.33"
 AWS_ACCOUNT = "123456789012"
 S3_BUCKET = "aero-design-archives"
 
@@ -55,6 +71,41 @@ T0 = datetime(2025, 9, 12, 8, 14, 22, tzinfo=timezone.utc)  # phishing email ope
 
 def ensure_dir(p: Path) -> None:
     p.mkdir(parents=True, exist_ok=True)
+
+
+# ---------------------------------------------------------------------------
+# Genuine local-time helpers
+#
+# NOTE (fix): earlier revisions of this generator wrote every "local"
+# timestamp field via `t.astimezone(ZoneInfo("UTC"))` — a no-op — so despite
+# HOST_TZ claiming non-UTC zones for three of the four hosts, nothing in the
+# actual log files ever required real offset inference. These helpers
+# perform a genuine conversion into each host's IANA zone so the emitted
+# strings reflect real local wall-clock time (including DST), and only
+# `ground_truth.json` retains the true UTC value for after-the-fact grading.
+# ---------------------------------------------------------------------------
+
+def local_naive_str(t_utc: datetime, tz_name: str, fmt: str) -> str:
+    """Genuine conversion to a host's local wall-clock time, offset stripped.
+
+    Mirrors two real-world sources of timestamp ambiguity:
+      - default syslog/rsyslog output (no NTP/timezone directive configured)
+      - Windows Event Viewer / wevtutil exports displayed in local time
+        instead of UTC (a well-known DFIR pitfall — EVTX SystemTime is
+        stored in UTC internally, but tooling frequently renders it local).
+    """
+    local_dt = t_utc.astimezone(ZoneInfo(tz_name))
+    return local_dt.strftime(fmt)
+
+
+def apache_local_ts(t_utc: datetime, tz_name: str) -> str:
+    """Genuine Apache/Nginx combined-log timestamp: real local time WITH the
+    correct seasonal numeric offset (e.g. Europe/London is +0100 under BST
+    in September, not +0000) — this is what a real webserver in that zone
+    would actually write.
+    """
+    local_dt = t_utc.astimezone(ZoneInfo(tz_name))
+    return local_dt.strftime("%d/%b/%Y:%H:%M:%S %z")
 
 
 def sha256_file(path: Path) -> str:
@@ -138,7 +189,7 @@ def stage_initial_access() -> Tuple[List[Dict], List[Dict], List[Dict]]:
     apache.append({
         "src_ip": ATTACKER_IP,
         "user": "-",
-        "ts_apache": t.strftime("%d/%b/%Y:%H:%M:%S +0000"),
+        "ts_apache": apache_local_ts(t, HOST_TZ[WEB_HOST]),
         "method": "GET",
         "path": "/login",
         "status": 200,
@@ -153,7 +204,7 @@ def stage_initial_access() -> Tuple[List[Dict], List[Dict], List[Dict]]:
     apache.append({
         "src_ip": ATTACKER_IP,
         "user": COMPROMISED_USER,
-        "ts_apache": t.strftime("%d/%b/%Y:%H:%M:%S +0000"),
+        "ts_apache": apache_local_ts(t, HOST_TZ[WEB_HOST]),
         "method": "POST",
         "path": "/login",
         "status": 302,
@@ -163,10 +214,11 @@ def stage_initial_access() -> Tuple[List[Dict], List[Dict], List[Dict]]:
         "host": WEB_HOST,
     })
 
-    # Firewall allows the inbound connection
+    # Firewall allows the inbound connection (default syslog: local device
+    # time, no offset marker — genuinely ambiguous, like a real ASA box)
     cisco.append({
         "pri": "166",
-        "ts_syslog": t.strftime("%b %d %H:%M:%S"),
+        "ts_syslog": local_naive_str(t, HOST_TZ[FIREWALL], "%b %d %H:%M:%S"),
         "host": FIREWALL,
         "msg": f"%ASA-6-302013: Built inbound TCP connection 88421 for outside:{ATTACKER_IP}/44345 "
                f"({ATTACKER_IP}/44345) to inside:10.10.5.20/443 (10.10.5.20/443)",
@@ -185,12 +237,34 @@ def stage_credential_dump() -> Tuple[List[Dict], List[Dict]]:
     # Linux auth events that show the same user later
 
     # Logon type 10 (RemoteInteractive) – attacker lands on WIN-ENG-07
+    #
+    # NOTE: real EVTX stores SystemTime in UTC internally, but this JSON
+    # stand-in simulates the *export/display* path (Get-WinEvent / Event
+    # Viewer default view), which very commonly renders local machine time
+    # with no offset marker — a well-known DFIR pitfall. We also bake in
+    # the deliberate +47s clock-skew here, so the naive local string alone
+    # is not enough to recover true UTC even after the zone is inferred.
     t = T0 + timedelta(hours=1, minutes=22)
-    # Apply deliberate clock skew for the Windows host
     skewed = t + timedelta(seconds=CLOCK_SKEW_SECONDS[WINDOWS_HOST])
+
+    # The firewall observes the inbound RDP connection at the *true*,
+    # unskewed instant (its own clock is accurate) — this is the network-
+    # flow anchor that lets Chronos independently detect the Windows host's
+    # clock drift, rather than reading it from an answer key.
+    rdp_cisco_entries: List[Dict] = [{
+        "pri": "166",
+        "ts_syslog": local_naive_str(t, HOST_TZ[FIREWALL], "%b %d %H:%M:%S"),
+        "host": FIREWALL,
+        "msg": f"%ASA-6-302013: Built inbound TCP connection 88500 for outside:{ATTACKER_IP}/51900 "
+               f"({ATTACKER_IP}/51900) to inside:{WINDOWS_HOST_IP}/3389 ({WINDOWS_HOST_IP}/3389)",
+        "utc": t,
+        "src_ip": ATTACKER_IP,
+        "dst_ip": WINDOWS_HOST_IP,
+    }]
+
     evtx.append({
         "EventID": 4624,
-        "TimeCreated": skewed.isoformat(),
+        "TimeCreated": local_naive_str(skewed, HOST_TZ[WINDOWS_HOST], "%Y-%m-%dT%H:%M:%S"),
         "Computer": WINDOWS_HOST,
         "SubjectUserName": COMPROMISED_USER,
         "IpAddress": ATTACKER_IP,
@@ -205,7 +279,7 @@ def stage_credential_dump() -> Tuple[List[Dict], List[Dict]]:
     skewed2 = t2 + timedelta(seconds=CLOCK_SKEW_SECONDS[WINDOWS_HOST])
     evtx.append({
         "EventID": 4672,
-        "TimeCreated": skewed2.isoformat(),
+        "TimeCreated": local_naive_str(skewed2, HOST_TZ[WINDOWS_HOST], "%Y-%m-%dT%H:%M:%S"),
         "Computer": WINDOWS_HOST,
         "SubjectUserName": COMPROMISED_USER,
         "PrivilegeList": "SeDebugPrivilege SeImpersonatePrivilege",
@@ -218,7 +292,7 @@ def stage_credential_dump() -> Tuple[List[Dict], List[Dict]]:
     skewed3 = t3 + timedelta(seconds=CLOCK_SKEW_SECONDS[WINDOWS_HOST])
     evtx.append({
         "EventID": 4688,
-        "TimeCreated": skewed3.isoformat(),
+        "TimeCreated": local_naive_str(skewed3, HOST_TZ[WINDOWS_HOST], "%Y-%m-%dT%H:%M:%S"),
         "Computer": WINDOWS_HOST,
         "SubjectUserName": COMPROMISED_USER,
         "NewProcessName": "C:\\Users\\j.mitchell\\AppData\\Local\\Temp\\mimi.exe",
@@ -227,7 +301,7 @@ def stage_credential_dump() -> Tuple[List[Dict], List[Dict]]:
         "action": "Process creation (credential dump)",
     })
 
-    return evtx, []
+    return evtx, rdp_cisco_entries
 
 
 def stage_lateral_movement() -> Tuple[List[Dict], List[Dict], List[Dict]]:
@@ -235,9 +309,10 @@ def stage_lateral_movement() -> Tuple[List[Dict], List[Dict], List[Dict]]:
     auth, cisco, evtx = [], [], []
 
     t = T0 + timedelta(hours=2, minutes=5)
-    # SSH success on lin-db-03 (auth.log – no TZ, no year)
-    # Format as syslog local time assuming UTC host
-    local = t.astimezone(ZoneInfo("UTC"))
+    # SSH success on lin-db-03 (auth.log – no year, no TZ marker).
+    # lin-db-03's real HOST_TZ *is* UTC, so this one is legitimately a
+    # trivial case — not every source in a real investigation is ambiguous.
+    local = t.astimezone(ZoneInfo(HOST_TZ[LINUX_HOST]))
     auth.append({
         "local_ts": local.strftime("%b %d %H:%M:%S"),
         "host": LINUX_HOST,
@@ -258,12 +333,13 @@ def stage_lateral_movement() -> Tuple[List[Dict], List[Dict], List[Dict]]:
     })
 
     # Firewall sees the outbound from Windows then inbound to Linux
+    # (genuine Los_Angeles local time, no offset marker)
     cisco.append({
         "pri": "166",
-        "ts_syslog": t.strftime("%b %d %H:%M:%S"),
+        "ts_syslog": local_naive_str(t, HOST_TZ[FIREWALL], "%b %d %H:%M:%S"),
         "host": FIREWALL,
         "msg": f"%ASA-6-302013: Built outbound TCP connection 89102 for inside:10.10.7.15/49821 "
-               f"(10.10.7.15/49821) to outside:{LINUX_HOST}/22 (10.10.8.33/22)",
+               f"(10.10.7.15/49821) to outside:{LINUX_HOST_IP}/22 ({LINUX_HOST_IP}/22)",
         "utc": t,
         "src_ip": "10.10.7.15",
         "dst_ip": "10.10.8.33",
@@ -276,9 +352,9 @@ def stage_staging_and_exfil() -> Tuple[List[Dict], List[Dict], List[Dict]]:
     """Archive collection + S3 exfiltration (T1560 / T1041)."""
     auth, cloudtrail, apache = [], [], []
 
-    # tar on the Linux host
+    # tar on the Linux host (lin-db-03 is genuinely UTC)
     t = T0 + timedelta(hours=3, minutes=40)
-    local = t.astimezone(ZoneInfo("UTC"))
+    local = t.astimezone(ZoneInfo(HOST_TZ[LINUX_HOST]))
     auth.append({
         "local_ts": local.strftime("%b %d %H:%M:%S"),
         "host": LINUX_HOST,
@@ -363,7 +439,7 @@ def add_benign_noise(scale: int = 1) -> Tuple[List, List, List, List, List]:
     # --- steady background ---
     for i in range(8 * scale):
         t = T0 + timedelta(minutes=rng.randint(5, 400))
-        local = t.astimezone(ZoneInfo("UTC"))
+        local = t.astimezone(ZoneInfo(HOST_TZ[LINUX_HOST]))
         auth.append({
             "local_ts": local.strftime("%b %d %H:%M:%S"),
             "host": LINUX_HOST,
@@ -379,7 +455,7 @@ def add_benign_noise(scale: int = 1) -> Tuple[List, List, List, List, List]:
         apache.append({
             "src_ip": f"10.10.2.{20 + (i % 30)}",
             "user": "-",
-            "ts_apache": t.strftime("%d/%b/%Y:%H:%M:%S +0000"),
+            "ts_apache": apache_local_ts(t, HOST_TZ[WEB_HOST]),
             "method": "GET",
             "path": "/static/logo.png" if i % 3 else "/health",
             "status": 200,
@@ -396,7 +472,7 @@ def add_benign_noise(scale: int = 1) -> Tuple[List, List, List, List, List]:
     spike_start = T0 + timedelta(hours=5, minutes=10)
     for i in range(40 * scale):
         t = spike_start + timedelta(seconds=i % 60)  # all within first minute of the bin
-        local = t.astimezone(ZoneInfo("UTC"))
+        local = t.astimezone(ZoneInfo(HOST_TZ[LINUX_HOST]))
         auth.append({
             "local_ts": local.strftime("%b %d %H:%M:%S"),
             "host": LINUX_HOST,
@@ -434,8 +510,9 @@ def main() -> None:
     all_cisco.extend(c)
 
     # Stage 2
-    e, _ = stage_credential_dump()
+    e, c = stage_credential_dump()
     all_evtx.extend(e)
+    all_cisco.extend(c)
 
     # Stage 3
     a, c, e = stage_lateral_movement()

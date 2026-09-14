@@ -25,12 +25,6 @@ class BaseParser(ABC):
     source_type: SourceType
     parser_version: str = PARSER_VERSION
 
-    def __init__(self, host_timezone: Optional[str] = None):
-        """
-        host_timezone: IANA name used when the log format lacks an explicit offset.
-        """
-        self.host_timezone = host_timezone
-
     @abstractmethod
     def parse(self, path: Path) -> Iterator[ChronosEvent]:
         """Yield ChronosEvent objects from the given file."""

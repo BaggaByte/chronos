@@ -6,7 +6,7 @@ time-gap analyzer (adaptive threshold).
 from __future__ import annotations
 
 from collections import defaultdict
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional, Tuple
 
 import statistics
@@ -65,7 +65,7 @@ class AnomalyDetector:
                     spikes.append({
                         "type": "execution_spike",
                         "host": host,
-                        "bin_start_utc": datetime.fromtimestamp(bin_id * 300, tz=datetime.now().astimezone().tzinfo).isoformat(),
+                        "bin_start_utc": datetime.fromtimestamp(bin_id * 300, tz=timezone.utc).isoformat(),
                         "count": cnt,
                         "z_score": round(z, 2),
                         "mean": round(mean, 2),

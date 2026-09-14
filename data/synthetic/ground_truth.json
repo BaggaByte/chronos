@@ -56,7 +56,7 @@
   "file_counts": {
     "auth.log": 51,
     "access.log": 22,
-    "cisco.log": 2,
+    "cisco.log": 3,
     "windows_events.json": 3,
     "cloudtrail.jsonl": 2
   }

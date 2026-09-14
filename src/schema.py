@@ -59,6 +59,8 @@ class ChronosEvent:
     session_id: Optional[str] = None
     raw_ref: Optional[str] = None                     # pointer back to original line/record
     offset_inferred: bool = False                     # True if timezone offset was assumed
+    offset_confidence: Optional[str] = None           # correlated | prior | prior_confirmed | defaulted_utc
+    inferred_utc_offset_minutes: Optional[int] = None # Inferred offset in minutes
     clock_skew_flag: bool = False
     attack_techniques: List[str] = field(default_factory=list)
     correlation_group_id: Optional[str] = None

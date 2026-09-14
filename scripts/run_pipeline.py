@@ -12,7 +12,18 @@ from __future__ import annotations
 import json
 import sys
 import time
+from datetime import datetime
 from pathlib import Path
+
+# Ensure UTF-8 output on Windows consoles
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+
+import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
@@ -37,14 +48,30 @@ DB_PATH = ROOT / "data" / "chronos_events.db"
 REPORT_PATH = ROOT / "data" / "forensic_report.json"
 MANIFEST_PATH = ROOT / "data" / "ingest_manifest.json"
 EXPORT_DIR = ROOT / "data" / "exports"
+ASSET_INVENTORY_PATH = ROOT / "config" / "asset_inventory.yaml"
 
 
 def load_ground_truth():
+    """Used ONLY for the post-hoc grading printout at the end of the run —
+    never as an input to parsing, normalization, or inference above."""
     gt_path = DATA_DIR / "ground_truth.json"
     if gt_path.exists():
         with open(gt_path) as f:
             return json.load(f)
     return {}
+
+
+def load_asset_inventory():
+    """Legitimate analyst-supplied prior (see config/asset_inventory.yaml) —
+    distinct from ground truth. Used as a correlation fallback only."""
+    if not ASSET_INVENTORY_PATH.exists():
+        return {}, {}
+    with open(ASSET_INVENTORY_PATH) as f:
+        inv = yaml.safe_load(f) or {}
+    hosts = inv.get("hosts", {})
+    prior_map = {h: v.get("timezone") for h, v in hosts.items() if v.get("timezone")}
+    ip_map = {h: v.get("internal_ip") for h, v in hosts.items() if v.get("internal_ip")}
+    return prior_map, ip_map
 
 
 def main() -> None:
@@ -53,13 +80,7 @@ def main() -> None:
     print("  CHRONOS Forensics Engine – Pipeline Run")
     print("=" * 70)
 
-    gt = load_ground_truth()
-    host_tz = gt.get("host_timezones", {
-        "WIN-ENG-07": "America/New_York",
-        "lin-db-03": "UTC",
-        "web-portal-01": "Europe/London",
-        "fw-edge-01": "America/Los_Angeles",
-    })
+    prior_map, asset_ip_map = load_asset_inventory()
     default_year = 2025
 
     # ------------------------------------------------------------------
@@ -67,10 +88,10 @@ def main() -> None:
     # ------------------------------------------------------------------
     print("\n[1] Ingestion & Integrity")
     parser_map = {
-        DATA_DIR / "auth.log": (AuthLogParser(host_timezone=host_tz.get("lin-db-03")), SourceType.AUTH_LOG),
-        DATA_DIR / "access.log": (ApacheParser(host_timezone=host_tz.get("web-portal-01")), SourceType.APACHE),
-        DATA_DIR / "cisco.log": (CiscoSyslogParser(host_timezone=host_tz.get("fw-edge-01")), SourceType.CISCO_SYSLOG),
-        DATA_DIR / "windows_events.json": (EvtxParser(host_timezone=host_tz.get("WIN-ENG-07")), SourceType.EVTX),
+        DATA_DIR / "auth.log": (AuthLogParser(), SourceType.AUTH_LOG),
+        DATA_DIR / "access.log": (ApacheParser(), SourceType.APACHE),
+        DATA_DIR / "cisco.log": (CiscoSyslogParser(), SourceType.CISCO_SYSLOG),
+        DATA_DIR / "windows_events.json": (EvtxParser(), SourceType.EVTX),
         DATA_DIR / "cloudtrail.jsonl": (CloudTrailParser(), SourceType.AWS_CLOUDTRAIL),
     }
 
@@ -96,27 +117,32 @@ def main() -> None:
             "events": entry.event_count,
             "parser": entry.parser_version,
         })
-        print(f"  OK {path.name:25s}  SHA-256={entry.sha256[:16]}...  events={entry.event_count}")
+        print(f"  ✓ {path.name:25s}  SHA-256={entry.sha256[:16]}…  events={entry.event_count}")
 
     write_manifest(manifest_entries, MANIFEST_PATH)
-    print(f"  Manifest written -> {MANIFEST_PATH.name}")
+    print(f"  Manifest written → {MANIFEST_PATH.name}")
     print(f"  Total raw events: {len(all_events)}")
 
     # ------------------------------------------------------------------
     # 2. UTC Normalization
     # ------------------------------------------------------------------
-    print("\n[2] UTC Normalization")
-    normalizer = UTCNormalizer(default_year=default_year, host_timezones=host_tz)
-    for e in all_events:
-        normalizer.normalize(e)
+    print("\n[2] UTC Normalization  (blind — no ground truth used as input)")
+    normalizer = UTCNormalizer(default_year=default_year)
+    host_results = normalizer.normalize_batch(
+        all_events, prior_map=prior_map, asset_ip_map=asset_ip_map
+    )
 
     normalized = [e for e in all_events if e.utc_timestamp is not None]
     inferred = sum(1 for e in normalized if e.offset_inferred)
     print(f"  Normalized: {len(normalized)} / {len(all_events)}")
-    print(f"  Offset-inferred (flagged): {inferred}")
+    print(f"  Offset-inferred (naive-timestamp hosts): {inferred}")
+    print("  Per-host offset resolution:")
+    for host, r in sorted(host_results.items()):
+        skew_note = f"  [clock skew ≈{r.residual_seconds:.0f}s]" if r.skew_flag else ""
+        print(f"    {host:15s} offset={r.offset_minutes:+5d}min  confidence={r.confidence:10s}  {r.basis}{skew_note}")
 
     for e in sorted(normalized, key=lambda x: x.utc_timestamp)[:3]:  # type: ignore
-        flag = " [INFERRED]" if e.offset_inferred else ""
+        flag = f" [{e.offset_confidence}]" if e.offset_inferred else ""
         print(f"    {e.utc_timestamp.isoformat()}  {e.host:15s}  {e.action}{flag}")
 
     # ------------------------------------------------------------------
@@ -166,7 +192,7 @@ def main() -> None:
         DB_PATH.unlink()
     store = SQLiteStore(DB_PATH)
     n = store.write_events(normalized)
-    print(f"  Inserted {n} events -> {DB_PATH.name}")
+    print(f"  Inserted {n} events → {DB_PATH.name}")
 
     # ------------------------------------------------------------------
     # 7. Forensic Narrative
@@ -177,7 +203,7 @@ def main() -> None:
         primary = max(groups, key=lambda g: len(g.event_ids))
         print(primary.narrative)
         print("-" * 70)
-        print(f"  Group span: {primary.start_utc} -> {primary.end_utc}")
+        print(f"  Group span: {primary.start_utc} → {primary.end_utc}")
         print(f"  Techniques: {primary.techniques}")
         benign = len(normalized) - len(primary.event_ids)
         print(f"  Attacker-thread events: {len(primary.event_ids)}  |  Benign excluded: {benign}")
@@ -206,9 +232,14 @@ def main() -> None:
         ],
         "spikes": spikes,
         "gaps": gaps,
-        "ground_truth_match": {
-            "attacker_ip_seen": any(e.src_ip == gt.get("attacker_ip") for e in normalized),
-            "compromised_user_seen": any(e.user == gt.get("compromised_user") for e in normalized),
+        "host_offset_resolution": {
+            host: {
+                "offset_minutes": r.offset_minutes,
+                "confidence": r.confidence,
+                "basis": r.basis,
+                "skew_seconds": r.residual_seconds if r.skew_flag else None,
+            }
+            for host, r in host_results.items()
         },
     }
     with open(REPORT_PATH, "w") as f:
@@ -216,25 +247,57 @@ def main() -> None:
 
     event_dicts = [e.to_dict() for e in normalized]
     export_paths = export_all(report, event_dicts, EXPORT_DIR)
-    
-    ui_data_dir = ROOT / "ui" / "src" / "data"
-    ui_paths = export_ui_data(report, event_dicts, ui_data_dir)
-    
-    print(f"\n[8] Exports -> {EXPORT_DIR}")
+    print(f"\n[8] Exports → {EXPORT_DIR}")
     for k, p in export_paths.items():
         print(f"    {k}: {p.name}")
-    print(f"\n    UI Data -> {ui_data_dir}")
-    for k, p in ui_paths.items():
-        print(f"    {k}: {p.name}")
+
+    # Full event list for the interactive UI (separate from the summary
+    # report above, which only carries correlation-group narratives).
+    events_full_path = EXPORT_DIR / "events_full.json"
+    with open(events_full_path, "w") as f:
+        json.dump(
+            sorted(event_dicts, key=lambda d: d["utc_timestamp"] or ""),
+            f, indent=2, default=str,
+        )
+    print(f"    ui_events: {events_full_path.name}")
+
+    ui_data_dir = ROOT / "ui" / "src" / "data"
+    if ui_data_dir.exists():
+        export_ui_data(report, event_dicts, ui_data_dir)
+        print(f"    ui_data: synchronized → {ui_data_dir.relative_to(ROOT)}")
 
     v = verify_manifest(MANIFEST_PATH, base_dir=DATA_DIR)
     print(f"\n[9] Manifest verification: ok={v['ok']}  checked={v['checked']}  mismatches={len(v['mismatches'])}")
 
+    # ------------------------------------------------------------------
+    # 10. GRADING — ground truth is read here ONLY, purely to report how
+    # well the blind inference above did. It was never passed to any
+    # parser, the normalizer, or the inference engine.
+    # ------------------------------------------------------------------
+    gt = load_ground_truth()
+    if gt:
+        print("\n[10] Grading against ground truth (NOT used as pipeline input)")
+        actual_tz = gt.get("host_timezones", {})
+        actual_skew = gt.get("clock_skew_seconds", {})
+        for host, r in sorted(host_results.items()):
+            try:
+                from zoneinfo import ZoneInfo
+                actual_offset = int(
+                    datetime(2025, 9, 12, 12, 0, 0, tzinfo=ZoneInfo(actual_tz.get(host, "UTC"))).utcoffset().total_seconds() // 60
+                ) if host in actual_tz else None
+            except Exception:
+                actual_offset = None
+            match = "✓" if actual_offset == r.offset_minutes else "?"
+            skew_actual = actual_skew.get(host)
+            detected_str = f"{r.residual_seconds:.0f}s" if r.residual_seconds is not None else "n/a"
+            skew_note = f"  actual_skew={skew_actual}s  detected≈{detected_str}" if skew_actual else ""
+            print(f"    {host:15s} recovered={r.offset_minutes:+5d}min  actual≈{actual_offset}min  {match}{skew_note}")
+
     store.close()
     elapsed = time.perf_counter() - t0
     print(f"\nDone in {elapsed:.2f}s.")
-    print(f"UI Integration: Data populated at {ui_data_dir}")
-    print(f"To run the Enhanced UI:\n  cd {ROOT / 'ui'}\n  npm install\n  npm run dev")
+    print(f"Open UI:  file://{ROOT / 'src' / 'ui' / 'timeline.html'}")
+    print(f"Or serve:  python3 -m http.server 8000 --directory {ROOT}")
 
 
 if __name__ == "__main__":

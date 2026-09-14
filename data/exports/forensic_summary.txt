@@ -6,6 +6,8 @@ EXECUTIVE NARRATIVE
 ----------------------------------------
 2025-09-12 08:14:22 UTC | web-portal-01 | - | 203.0.113.77 | GET /login [T1190,T1566]
 2025-09-12 08:17:34 UTC | web-portal-01 | j.mitchell | 203.0.113.77 | POST /login [T1190,T1566]
+2025-09-12 08:17:34 UTC | fw-edge-01 | - | 203.0.113.77 | built_inbound_tcp
+2025-09-12 09:36:22 UTC | fw-edge-01 | - | 203.0.113.77 | built_inbound_tcp
 2025-09-12 09:37:09 UTC | WIN-ENG-07 | j.mitchell | 203.0.113.77 | Successful logon
 2025-09-12 09:37:13 UTC | WIN-ENG-07 | j.mitchell | - | Special privileges assigned
 2025-09-12 09:39:20 UTC | WIN-ENG-07 | j.mitchell | - | Process creation (credential dump) [T1003]
@@ -14,12 +16,11 @@ EXECUTIVE NARRATIVE
 2025-09-12 11:54:22 UTC | lin-db-03 | j.mitchell | - | sudo [T1560]
 2025-09-12 12:10:22 UTC | sts.amazonaws.com | j.mitchell | 203.0.113.77 | GetCallerIdentity [T1082]
 2025-09-12 12:12:22 UTC | s3.amazonaws.com | j.mitchell | 203.0.113.77 | PutObject [T1041]
-2025-09-12 15:17:34 UTC | fw-edge-01 | - | 203.0.113.77 | built_inbound_tcp
 
 STATISTICS
 ----------------------------------------
-Total events           : 80
-Attacker-thread events : 11
+Total events           : 81
+Attacker-thread events : 12
 Benign events excluded : 69
 Techniques             : ['T1021', 'T1078', 'T1560', 'T1190', 'T1566', 'T1003', 'T1082', 'T1041']
 Gaps flagged           : 4
@@ -27,8 +28,8 @@ Spikes flagged         : 3
 
 CHAIN OF CUSTODY
 ----------------------------------------
-  auth.log                   47badb0f476eafd5a26f5c34fe0390fb2d4a27d111b2891ed7385bb8aac4c9b0
-  access.log                 dac742492f7efed477431cd71e9b5d736f28ec26024bacb8fb1150039241a4f0
-  cisco.log                  c0d8b9b8a32b44d628373032013ac957380ef914b40b65489c22c6cbaade7457
-  windows_events.json        3a47c60cbc17a5b393f89bcf837b4188729a5977943cb56c78f2e3a08e4f8219
-  cloudtrail.jsonl           bb4cfac1bdee6437a9abc791b9d91004c9f087891a1e02cb3635ae36fb0c776e
+  auth.log                   425c70284e7df8f90718953b4fd9dba26a4a5a8e63e5356925fb65f612214d97
+  access.log                 13705031f03780414906f49cd786f0f9b86a526761e6dffa9ed3cb9cbe544df3
+  cisco.log                  5fff2646554f573c33b154e701625ae5b7df88189f29c1420ed15167a80c31d6
+  windows_events.json        77e3e3fd635a08272772457a33c89425f259f7b4cac69d1cbafdf8698708e905
+  cloudtrail.jsonl           20d363548742f3cd01f17c1b33ae8276041503cc6ba25a26f7fa2160f15e8f3f

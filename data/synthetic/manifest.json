@@ -1,37 +1,37 @@
 [
   {
     "source_path": "auth.log",
-    "sha256": "47badb0f476eafd5a26f5c34fe0390fb2d4a27d111b2891ed7385bb8aac4c9b0",
+    "sha256": "425c70284e7df8f90718953b4fd9dba26a4a5a8e63e5356925fb65f612214d97",
     "source_type": "auth.log",
-    "size_bytes": 5795,
+    "size_bytes": 5846,
     "event_count_approx": 51
   },
   {
     "source_path": "access.log",
-    "sha256": "dac742492f7efed477431cd71e9b5d736f28ec26024bacb8fb1150039241a4f0",
+    "sha256": "13705031f03780414906f49cd786f0f9b86a526761e6dffa9ed3cb9cbe544df3",
     "source_type": "apache",
-    "size_bytes": 2292,
+    "size_bytes": 2314,
     "event_count_approx": 22
   },
   {
     "source_path": "cisco.log",
-    "sha256": "c0d8b9b8a32b44d628373032013ac957380ef914b40b65489c22c6cbaade7457",
+    "sha256": "5fff2646554f573c33b154e701625ae5b7df88189f29c1420ed15167a80c31d6",
     "source_type": "cisco_syslog",
-    "size_bytes": 346,
-    "event_count_approx": 2
+    "size_bytes": 528,
+    "event_count_approx": 3
   },
   {
     "source_path": "windows_events.json",
-    "sha256": "3a47c60cbc17a5b393f89bcf837b4188729a5977943cb56c78f2e3a08e4f8219",
+    "sha256": "77e3e3fd635a08272772457a33c89425f259f7b4cac69d1cbafdf8698708e905",
     "source_type": "evtx",
-    "size_bytes": 1106,
+    "size_bytes": 1121,
     "event_count_approx": 3
   },
   {
     "source_path": "cloudtrail.jsonl",
-    "sha256": "bb4cfac1bdee6437a9abc791b9d91004c9f087891a1e02cb3635ae36fb0c776e",
+    "sha256": "20d363548742f3cd01f17c1b33ae8276041503cc6ba25a26f7fa2160f15e8f3f",
     "source_type": "aws_cloudtrail",
-    "size_bytes": 1322,
+    "size_bytes": 1324,
     "event_count_approx": 2
   }
 ]
