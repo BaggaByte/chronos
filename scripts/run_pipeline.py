@@ -133,6 +133,9 @@ def run_pipeline(data_dir: Path = DATA_DIR) -> bool:
     )
 
     normalized = [e for e in all_events if e.utc_timestamp is not None]
+    # Critical: Chronological sort across all hosts for streaming correlation & anomaly detection
+    normalized.sort(key=lambda e: e.utc_timestamp)
+
     inferred = sum(1 for e in normalized if e.offset_inferred)
     print(f"  Normalized: {len(normalized)} / {len(all_events)}")
     print(f"  Offset-inferred (naive-timestamp hosts): {inferred}")
@@ -141,7 +144,7 @@ def run_pipeline(data_dir: Path = DATA_DIR) -> bool:
         skew_note = f"  [clock skew ≈{r.residual_seconds:.0f}s]" if r.skew_flag else ""
         print(f"    {host:15s} offset={r.offset_minutes:+5d}min  confidence={r.confidence:10s}  {r.basis}{skew_note}")
 
-    for e in sorted(normalized, key=lambda x: x.utc_timestamp)[:3]:  # type: ignore
+    for e in normalized[:3]:
         flag = f" [{e.offset_confidence}]" if e.offset_inferred else ""
         print(f"    {e.utc_timestamp.isoformat()}  {e.host:15s}  {e.action}{flag}")
 
@@ -228,7 +231,7 @@ def run_pipeline(data_dir: Path = DATA_DIR) -> bool:
                 "end": g.end_utc.isoformat() if g.end_utc else None,
                 "narrative": g.narrative,
             }
-            for g in groups
+            for g in sorted(groups, key=lambda g: len(g.event_ids), reverse=True)
         ],
         "spikes": spikes,
         "gaps": gaps,

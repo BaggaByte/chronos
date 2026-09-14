@@ -59,12 +59,16 @@ class CorrelationEngine:
         self.window = timedelta(seconds=time_window_seconds)
 
     def correlate(self, events_stream: Iterable[ChronosEvent]) -> Iterator[CorrelationGroup]:
+        # Always sort events chronologically before sliding-window processing
+        # to ensure cross-source events from different log parsers form coherent chains.
+        sorted_stream = sorted(
+            [e for e in events_stream if e.utc_timestamp],
+            key=lambda e: e.utc_timestamp,
+        )
         buffer: List[ChronosEvent] = []
         claimed: Set[str] = set()
         
-        for e in events_stream:
-            if not e.utc_timestamp:
-                continue
+        for e in sorted_stream:
                 
             buffer.append(e)
             

@@ -81,7 +81,12 @@ export type ForensicReport = {
 export const events = eventsJson as ChronosEvent[];
 export const report = reportJson as ForensicReport;
 
-export const primaryGroup = report.correlation_groups?.[0];
+export const primaryGroup =
+  report.correlation_groups && report.correlation_groups.length > 0
+    ? report.correlation_groups.reduce((max, g) =>
+        g.event_count > max.event_count ? g : max,
+      )
+    : report.correlation_groups?.[0];
 
 export const attackerEvents = events
   .filter((e) => e.correlation_group_id === primaryGroup?.group_id)

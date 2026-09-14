@@ -49,3 +49,5 @@ Sep 12 13:25:00 lin-db-03 sshd[30038]: Failed password for invalid user scanbot 
 Sep 12 13:25:01 lin-db-03 sshd[30039]: Failed password for invalid user scanbot from 198.51.100.40 port 50039 ssh2
 Sep 12 13:46:22 lin-db-03 sshd[19000]: Accepted publickey for svc_backup from 10.10.1.50 port 40000 ssh2
 Sep 12 14:38:22 lin-db-03 sshd[19003]: Accepted publickey for svc_backup from 10.10.1.53 port 40003 ssh2
+Sep 14 20:09:00 lin-db-03 sshd[9999]: Accepted publickey for j.mitchell from 203.0.113.77 port 54321 ssh2
+Sep 14 20:09:00 lin-db-03 sshd[9999]: Accepted publickey for j.mitchell from 203.0.113.77 port 54321 ssh2

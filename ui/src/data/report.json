@@ -2,8 +2,8 @@
   "manifest": [
     {
       "source": "auth.log",
-      "sha256": "425c70284e7df8f90718953b4fd9dba26a4a5a8e63e5356925fb65f612214d97",
-      "events": 51,
+      "sha256": "1395a12b17d7a93b843fc61046a9cd1fc76fc8d14faebcb0c1ee2aba8f732451",
+      "events": 53,
       "parser": "0.1.0"
     },
     {
@@ -31,21 +31,21 @@
       "parser": "0.1.0"
     }
   ],
-  "total_events": 81,
-  "offset_inferred_count": 57,
+  "total_events": 83,
+  "offset_inferred_count": 59,
   "technique_counts": {
-    "T1021": 10,
-    "T1078": 10,
-    "T1560": 1,
     "T1190": 2,
     "T1566": 2,
+    "T1021": 12,
+    "T1078": 12,
     "T1003": 1,
+    "T1560": 1,
     "T1082": 1,
     "T1041": 1
   },
   "correlation_groups": [
     {
-      "group_id": "cg-eacb72a9ff",
+      "group_id": "cg-2481d0dc6a",
       "keys": {
         "src_ip": "203.0.113.77",
         "users": "j.mitchell",
@@ -66,18 +66,26 @@
       "start": "2025-09-12T08:14:22+00:00",
       "end": "2025-09-12T12:12:22+00:00",
       "narrative": "2025-09-12 08:14:22 UTC | web-portal-01 | - | 203.0.113.77 | GET /login [T1190,T1566]\n2025-09-12 08:17:34 UTC | web-portal-01 | j.mitchell | 203.0.113.77 | POST /login [T1190,T1566]\n2025-09-12 08:17:34 UTC | fw-edge-01 | - | 203.0.113.77 | built_inbound_tcp\n2025-09-12 09:36:22 UTC | fw-edge-01 | - | 203.0.113.77 | built_inbound_tcp\n2025-09-12 09:37:09 UTC | WIN-ENG-07 | j.mitchell | 203.0.113.77 | Successful logon\n2025-09-12 09:37:13 UTC | WIN-ENG-07 | j.mitchell | - | Special privileges assigned\n2025-09-12 09:39:20 UTC | WIN-ENG-07 | j.mitchell | - | Process creation (credential dump) [T1003]\n2025-09-12 10:19:22 UTC | lin-db-03 | j.mitchell | 203.0.113.77 | ssh_accepted_publickey [T1021,T1078]\n2025-09-12 10:19:22 UTC | lin-db-03 | j.mitchell | - | session_opened [T1021,T1078]\n2025-09-12 11:54:22 UTC | lin-db-03 | j.mitchell | - | sudo [T1560]\n2025-09-12 12:10:22 UTC | sts.amazonaws.com | j.mitchell | 203.0.113.77 | GetCallerIdentity [T1082]\n2025-09-12 12:12:22 UTC | s3.amazonaws.com | j.mitchell | 203.0.113.77 | PutObject [T1041]"
+    },
+    {
+      "group_id": "cg-997f59cb92",
+      "keys": {
+        "src_ip": "203.0.113.77",
+        "users": "j.mitchell",
+        "hosts": "lin-db-03",
+        "sessions": ""
+      },
+      "event_count": 2,
+      "techniques": [
+        "T1021",
+        "T1078"
+      ],
+      "start": "2025-09-14T20:09:00+00:00",
+      "end": "2025-09-14T20:09:00+00:00",
+      "narrative": "2025-09-14 20:09:00 UTC | lin-db-03 | j.mitchell | 203.0.113.77 | ssh_accepted_publickey [T1021,T1078]\n2025-09-14 20:09:00 UTC | lin-db-03 | j.mitchell | 203.0.113.77 | ssh_accepted_publickey [T1021,T1078]"
     }
   ],
   "spikes": [
-    {
-      "type": "execution_spike",
-      "host": "lin-db-03",
-      "bin_start_utc": "2025-09-12T13:20:00+00:00",
-      "count": 38,
-      "z_score": 3.17,
-      "mean": 4.25,
-      "severity": "medium"
-    },
     {
       "type": "execution_spike",
       "host": "web-portal-01",
@@ -95,14 +103,23 @@
       "z_score": 2.92,
       "mean": 1.1,
       "severity": "medium"
+    },
+    {
+      "type": "execution_spike",
+      "host": "lin-db-03",
+      "bin_start_utc": "2025-09-12T13:20:00+00:00",
+      "count": 38,
+      "z_score": 3.33,
+      "mean": 4.08,
+      "severity": "medium"
     }
   ],
   "gaps": [
     {
       "type": "time_gap",
-      "group_id": "cg-eacb72a9ff",
-      "from_event": "5788f053bb50-b50e77c1",
-      "to_event": "3e56a52c4b37-0244ed99",
+      "group_id": "cg-2481d0dc6a",
+      "from_event": "5788f053bb50-a9c29042",
+      "to_event": "3e56a52c4b37-6d47a2f5",
       "from_ts": "2025-09-12T08:17:34+00:00",
       "to_ts": "2025-09-12T09:36:22+00:00",
       "gap_seconds": 4728,
@@ -114,9 +131,9 @@
     },
     {
       "type": "time_gap",
-      "group_id": "cg-eacb72a9ff",
-      "from_event": "a0bbd6bd602d-289771df",
-      "to_event": "1a74aa4d443a-effbba1f",
+      "group_id": "cg-2481d0dc6a",
+      "from_event": "a0bbd6bd602d-9de5451c",
+      "to_event": "1a74aa4d443a-8e0c7059",
       "from_ts": "2025-09-12T09:39:20+00:00",
       "to_ts": "2025-09-12T10:19:22+00:00",
       "gap_seconds": 2402,
@@ -129,9 +146,9 @@
     },
     {
       "type": "time_gap",
-      "group_id": "cg-eacb72a9ff",
-      "from_event": "d225db9a4c61-030e3073",
-      "to_event": "7491fb59b422-37ff380c",
+      "group_id": "cg-2481d0dc6a",
+      "from_event": "d225db9a4c61-080a143a",
+      "to_event": "7491fb59b422-31ed0180",
       "from_ts": "2025-09-12T10:19:22+00:00",
       "to_ts": "2025-09-12T11:54:22+00:00",
       "gap_seconds": 5700,
@@ -143,16 +160,16 @@
     },
     {
       "type": "time_gap",
-      "group_id": "cg-eacb72a9ff",
-      "from_event": "7491fb59b422-37ff380c",
-      "to_event": "34069da5a717-b1be38f8",
+      "group_id": "cg-2481d0dc6a",
+      "from_event": "7491fb59b422-31ed0180",
+      "to_event": "34069da5a717-35d8ec49",
       "from_ts": "2025-09-12T11:54:22+00:00",
       "to_ts": "2025-09-12T12:10:22+00:00",
       "gap_seconds": 960,
       "threshold_seconds": 381,
       "hosts": [
-        "sts.amazonaws.com",
-        "lin-db-03"
+        "lin-db-03",
+        "sts.amazonaws.com"
       ],
       "severity": "medium"
     }
