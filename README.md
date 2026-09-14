@@ -8,7 +8,7 @@
 [![Vite](https://img.shields.io/badge/Vite-6.0-646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![MITRE ATT&CK](https://img.shields.io/badge/MITRE%20ATT%26CK-v14-red.svg?style=for-the-badge)](https://attack.mitre.org/)
-[![Tests](https://img.shields.io/badge/Tests-20%20Passing-brightgreen.svg?style=for-the-badge)](https://github.com/BaggaByte/chronos)
+[![Tests](https://img.shields.io/badge/Tests-24%20Passing-brightgreen.svg?style=for-the-badge)](https://github.com/BaggaByte/chronos)
 
 <p align="center">
   <b>Reconstruct complex multi-stage cyber breaches from raw, heterogeneous logs into defensible, chronologically accurate attacker narratives.</b>
@@ -35,11 +35,12 @@ Following a data breach or exfiltration incident, incident responders and digita
 ### The Solution: Chronos
 **Chronos** is an automated digital forensics and incident response (DFIR) platform that:
 1. Cryptographically seals and streams heterogeneous log files (SHA-256 chain-of-custody).
-2. Automatically normalizes all timestamps to universal UTC, explicitly flagging timezone inferences and clock drifts.
-3. Tags MITRE ATT&CK tactics and techniques using rule-driven signature engines.
-4. Correlates cross-host, multi-system events into unified **Attacker Narrative Threads**.
-5. Flags statistical anomalies, execution volume spikes (z-score), and suspicious dwell-time gaps.
-6. Presents findings in an **interactive, zoomable chronological dashboard** with exportable court- and executive-ready forensic reports.
+2. **Blindly infers timezone offsets and hardware clock drift** across unaligned hosts using algorithmic network-flow correlation (Module 2b) without ground-truth leaks.
+3. Automatically normalizes all timestamps to universal UTC, explicitly flagging timezone inferences (`offset_confidence`).
+4. Tags MITRE ATT&CK tactics and techniques using rule-driven signature engines.
+5. Correlates cross-host, multi-system events into unified **Attacker Narrative Threads**.
+6. Flags statistical anomalies, execution volume spikes (z-score), and suspicious dwell-time gaps.
+7. Presents findings in an **interactive, zoomable chronological dashboard** with exportable court- and executive-ready forensic reports.
 
 ---
 
@@ -54,10 +55,13 @@ Following a data breach or exfiltration incident, incident responders and digita
   - **Cloud Audit Logs (AWS CloudTrail)**: S3 `PutObject` exfiltration, IAM enumeration, AssumeRole calls.
 - **Evidentiary Integrity**: Raw files are hashed (SHA-256) upon first intake; an immutable `ingest_manifest.json` tracks source hashes, file sizes, and record counts.
 
-### 2. Universal UTC Normalization Engine
-- Automatically parses RFC 3339 / ISO 8601, Unix epoch timestamps, Apache date-time format, and legacy BSD syslog headers.
-- Infers missing timezone offsets based on declared host metadata while flagging them as `offset_inferred: true` for analyst defensibility.
-- Identifies and tags un-synchronized host clocks (e.g., +47s drift).
+### 2. Universal UTC Normalization & Blind Offset Inference Engine (Module 2 & 2b)
+- **Two-Phase Resolution**: Explicit-offset/epoch events (Apache `+0100`, CloudTrail `Z`, Unix epoch) seed the anchor pool with zero assumptions.
+- **Algorithmic Offset Search**: Evaluates a 15-minute grid (-12:00 to +14:00) against network-flow correlations (firewall connections, web access, internal asset mapping).
+- **Separation Ratio Margin Test**: Requires top candidate to outperform runners-up by margin tests, guarding against accidental coincidences.
+- **Iterative Anchor Propagation**: Newly resolved hosts become anchors for subsequent passes (e.g. Apache → Firewall → Windows / Linux DB).
+- **Hardware Clock Drift Flagging**: Residual offsets below 1 hour are reported as clock skew (e.g. +47s drift on `WIN-ENG-07`) rather than masked as timezone errors.
+- **Asset Inventory Prior Fallback**: Seamless fallback to CMDB/asset prior (`config/asset_inventory.yaml`) if no flow anchor is available.
 
 ### 3. MITRE ATT&CK Categorization & Tagging
 - Tagging engine maps raw forensic events to explicit ATT&CK techniques:
@@ -166,7 +170,7 @@ npm run dev
 
 Open your browser at:
 ```
-http://localhost:5173
+http://localhost:8080
 ```
 
 ---

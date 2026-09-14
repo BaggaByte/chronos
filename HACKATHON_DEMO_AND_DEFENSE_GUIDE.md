@@ -53,7 +53,7 @@ Chronos is an automated DFIR engine and interactive visualization suite that:
 - **Data Persistence:** SQLite (`sqlite3`) with time-indexed nano-second precision (`utc_epoch_ns`) and an abstract `StorageBackend` interface designed for Elasticsearch/OpenSearch drop-in.
 - **Rule Engine:** PyYAML (`config/attack_mappings.yaml`) for decoupled MITRE ATT&CK signature matching.
 - **Statistical Engine:** NumPy / pure-math rolling z-score spike calculations and median-based dwell-time gap detection.
-- **Test Suite:** Standard library `unittest` and `pytest` with 20 comprehensive unit and end-to-end integration tests.
+- **Test Suite:** Standard library `unittest` and `pytest` with 24 comprehensive unit and end-to-end integration tests.
 
 ### Frontend Visualizer & Dashboard
 - **Framework:** React 19 + TypeScript.
@@ -115,14 +115,17 @@ Chronos is an automated DFIR engine and interactive visualization suite that:
 * **Forensic Significance:** Evidence admitted in court requires strict chain-of-custody documentation. Chronos reads files in read-only mode and computes a SHA-256 hash across 64 KB streaming blocks before passing lines to any regex or JSON parser.
 * **Tamper Verification:** The module provides `verify_manifest()`, which recalculates the cryptographic hashes against live disk files at any time to guarantee that logs were never modified.
 
-### Pillar 2: Universal UTC Timezone Normalization Engine
-* **Implementation:** [`src/normalization/utc.py`](file:///d:/Hackathon/chronos/chronos/src/normalization/utc.py).
-* **The Challenge:** Apache logs write `[14/Sep/2026:08:12:00 +0100]`, Linux `auth.log` writes `Sep 14 07:15:00` (no year, no offset), Windows writes ISO strings with localized time, and CloudTrail uses UTC `Z`.
-* **The Solution:** 
-  1. Resolves missing years using ingestion-context anchors.
-  2. Applies IANA timezone lookups (handling Daylight Saving Time transitions automatically via `zoneinfo`).
-  3. Where an offset must be inferred from host metadata, Chronos permanently sets `offset_inferred = True`. This gives investigators transparency into which timestamps are absolute facts vs. forensic inferences.
-  4. Identifies known machine clock skews (e.g. +47s drift on `WIN-ENG-07`) and flags them for timeline synchronization.
+### Pillar 2: Universal UTC Timezone Normalization & Blind Offset Inference Engine
+* **Implementation:** [`src/normalization/utc.py`](file:///d:/Hackathon/chronos/chronos/src/normalization/utc.py) & [`src/normalization/tz_infer.py`](file:///d:/Hackathon/chronos/chronos/src/normalization/tz_infer.py).
+* **The Challenge:** Apache logs write `[12/Sep/2025:08:14:22 +0100]`, Linux `auth.log` writes `Sep 12 08:14:22` (no year, no offset), Windows writes ISO strings with localized wall-clock time, and CloudTrail uses UTC `Z`. Furthermore, physical hardware drift (e.g. +47s on `WIN-ENG-07`) creates forensic misalignments.
+* **The Chronos Breakthrough (Module 2b):**
+  1. **Phase A (Zero-Assumption Seeding):** Explicit-offset sources (Apache numeric offsets, CloudTrail `Z`, Unix epoch) seed the resolved UTC anchor pool without making any assumptions.
+  2. **Phase B (Algorithmic Network-Flow Correlation):** For naive-timestamp hosts, Chronos searches a 15-minute resolution grid (-12:00 to +14:00) against cross-host network flow anchors (e.g., firewall connection logs, web sessions, and internal asset mappings).
+  3. **Strict Margin Testing:** Enforces `MIN_SEPARATION_RATIO = 4.0` between the top candidate and runner-up, preventing false positives from coincidental activity.
+  4. **Iterative Multi-Pass Propagation:** Newly resolved hosts become anchors for subsequent passes, allowing resolution to cascade across tiers (Web → Firewall → Internal Workstation / Database).
+  5. **Hardware Clock Skew Isolation:** Sub-hour residuals (e.g. +47.0s on `WIN-ENG-07`) are flagged as clock drift rather than improperly swallowed into the timezone offset.
+  6. **Asset Inventory Fallback:** Only if no flow anchor exists does Chronos gracefully fall back to an analyst CMDB prior (`config/asset_inventory.yaml`), flagging confidence as `prior` or `defaulted_utc`.
+* **Evidentiary Defensibility:** Every event tracks `offset_inferred: bool` and `offset_confidence: str` (`explicit | correlated | prior | defaulted_utc`), ensuring court admissibility.
 
 ### Pillar 3: MITRE ATT&CK Technique-Level Tagging
 * **Implementation:** [`src/anomaly/tagger.py`](file:///d:/Hackathon/chronos/chronos/src/anomaly/tagger.py) and [`config/attack_mappings.yaml`](file:///d:/Hackathon/chronos/chronos/config/attack_mappings.yaml).
@@ -138,16 +141,16 @@ Chronos is an automated DFIR engine and interactive visualization suite that:
 ### Pillar 4: 4-Dimensional Cross-Host Correlation Engine
 * **Implementation:** [`src/correlation/engine.py`](file:///d:/Hackathon/chronos/chronos/src/correlation/engine.py).
 * **How It Works:** Rather than requiring an expensive graph database, Chronos implements a multi-hop entity join:
-  1. **Hop 1 (External to Web):** External Attacker IP `198.51.100.42` hits `web-portal-01`.
-  2. **Hop 2 (Web to Internal Pivot):** Firewall log matches outbound traffic from `web-portal-01` to internal engineer workstation `10.0.1.15` (`WIN-ENG-07`).
+  1. **Hop 1 (External to Web):** External Attacker IP `203.0.113.77` hits `web-portal-01`.
+  2. **Hop 2 (Web to Internal Pivot):** Firewall log matches inbound traffic from `203.0.113.77` to internal engineer workstation `10.10.6.40` (`WIN-ENG-07`).
   3. **Hop 3 (Pivot to Credentials):** Workstation log records credential dumping for user `j.mitchell`.
-  4. **Hop 4 (Credentials to Database):** Linux server `lin-db-03` logs an incoming SSH session from `10.0.1.15` authenticated as `j.mitchell`.
-  5. **Hop 5 (Database to Cloud Exfiltration):** CloudTrail logs record credentials used to exfiltrate database archives to an external S3 bucket (`s3-aerospace-vault`).
-* **Noise Filtration:** Out of 80 total events in the dataset, Chronos cleanly filters out 69 benign routine events (system crons, admin logins, health checks) and bundles the 11 malicious events into a single, cohesive attacker narrative.
+  4. **Hop 4 (Credentials to Database):** Linux server `lin-db-03` logs an incoming SSH session from `203.0.113.77` authenticated as `j.mitchell`.
+  5. **Hop 5 (Database to Cloud Exfiltration):** CloudTrail logs record credentials used to exfiltrate database archives to an external S3 bucket (`aero-design-archives`).
+* **Noise Filtration:** Out of 81 total events in the dataset, Chronos cleanly filters out 69 benign routine events (system crons, admin logins, health checks) and bundles the 12 attacker thread events into a single, cohesive attacker narrative.
 
 ### Pillar 5: Statistical Anomaly & Suspicious Time-Gap Detection
 * **Implementation:** [`src/anomaly/detector.py`](file:///d:/Hackathon/chronos/chronos/src/anomaly/detector.py).
-* **Z-Score Spike Detection:** Evaluates event rates in tumbling 5-minute windows. If an event frequency exceeds the rolling mean by more than 2.5 standard deviations ($Z > 2.5$), it is flagged as an execution spike. This automatically catches the 36-attempt SSH brute-force storm on `lin-db-03` ($Z \approx 3.06$).
+* **Z-Score Spike Detection:** Evaluates event rates in tumbling 5-minute windows. If an event frequency exceeds the rolling mean by more than 2.5 standard deviations ($Z > 2.5$), it is flagged as an execution spike. This automatically catches the 40-attempt SSH brute-force storm on `lin-db-03` ($Z \approx 3.17$).
 * **Dwell-Time Gap Detection:** Calculates the time delta between consecutive malicious actions. If a gap significantly exceeds expected automated tool latency (e.g., a 45-minute pause while the adversary analyzes stolen database tables before exfiltrating), it flags a "Suspicious Dwell Gap", pointing analysts directly to manual operator interaction.
 
 ---
@@ -158,8 +161,8 @@ Follow this scripted 3-to-4 minute walkthrough to present Chronos smoothly to ha
 
 ### Preparation Checklist Before Presentation:
 - Open Terminal 1 in project root: `d:\Hackathon\chronos\chronos`
-- Open Terminal 2 in UI directory: `npm run dev` running at `http://localhost:5173`
-- Have browser tab ready at `http://localhost:5173`
+- Open Terminal 2 in UI directory: `npm run dev` running at `http://localhost:8080`
+- Have browser tab ready at `http://localhost:8080`
 - Have code editor or terminal open to run Python scripts
 
 ---
