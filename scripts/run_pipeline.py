@@ -51,10 +51,10 @@ EXPORT_DIR = ROOT / "data" / "exports"
 ASSET_INVENTORY_PATH = ROOT / "config" / "asset_inventory.yaml"
 
 
-def load_ground_truth():
+def load_ground_truth(data_dir: Path = DATA_DIR):
     """Used ONLY for the post-hoc grading printout at the end of the run —
     never as an input to parsing, normalization, or inference above."""
-    gt_path = DATA_DIR / "ground_truth.json"
+    gt_path = data_dir / "ground_truth.json"
     if gt_path.exists():
         with open(gt_path) as f:
             return json.load(f)
@@ -74,10 +74,10 @@ def load_asset_inventory():
     return prior_map, ip_map
 
 
-def main() -> None:
+def run_pipeline(data_dir: Path = DATA_DIR) -> bool:
     t0 = time.perf_counter()
     print("=" * 70)
-    print("  CHRONOS Forensics Engine – Pipeline Run")
+    print(f"  CHRONOS Forensics Engine – Pipeline Run [{data_dir.name}]")
     print("=" * 70)
 
     prior_map, asset_ip_map = load_asset_inventory()
@@ -88,11 +88,11 @@ def main() -> None:
     # ------------------------------------------------------------------
     print("\n[1] Ingestion & Integrity")
     parser_map = {
-        DATA_DIR / "auth.log": (AuthLogParser(), SourceType.AUTH_LOG),
-        DATA_DIR / "access.log": (ApacheParser(), SourceType.APACHE),
-        DATA_DIR / "cisco.log": (CiscoSyslogParser(), SourceType.CISCO_SYSLOG),
-        DATA_DIR / "windows_events.json": (EvtxParser(), SourceType.EVTX),
-        DATA_DIR / "cloudtrail.jsonl": (CloudTrailParser(), SourceType.AWS_CLOUDTRAIL),
+        data_dir / "auth.log": (AuthLogParser(), SourceType.AUTH_LOG),
+        data_dir / "access.log": (ApacheParser(), SourceType.APACHE),
+        data_dir / "cisco.log": (CiscoSyslogParser(), SourceType.CISCO_SYSLOG),
+        data_dir / "windows_events.json": (EvtxParser(), SourceType.EVTX),
+        data_dir / "cloudtrail.jsonl": (CloudTrailParser(), SourceType.AWS_CLOUDTRAIL),
     }
 
     all_events: list[ChronosEvent] = []
@@ -266,7 +266,7 @@ def main() -> None:
         export_ui_data(report, event_dicts, ui_data_dir)
         print(f"    ui_data: synchronized → {ui_data_dir.relative_to(ROOT)}")
 
-    v = verify_manifest(MANIFEST_PATH, base_dir=DATA_DIR)
+    v = verify_manifest(MANIFEST_PATH, base_dir=data_dir)
     print(f"\n[9] Manifest verification: ok={v['ok']}  checked={v['checked']}  mismatches={len(v['mismatches'])}")
 
     # ------------------------------------------------------------------
@@ -274,7 +274,7 @@ def main() -> None:
     # well the blind inference above did. It was never passed to any
     # parser, the normalizer, or the inference engine.
     # ------------------------------------------------------------------
-    gt = load_ground_truth()
+    gt = load_ground_truth(data_dir)
     if gt:
         print("\n[10] Grading against ground truth (NOT used as pipeline input)")
         actual_tz = gt.get("host_timezones", {})
@@ -296,8 +296,78 @@ def main() -> None:
     store.close()
     elapsed = time.perf_counter() - t0
     print(f"\nDone in {elapsed:.2f}s.")
-    print(f"Open UI:  file://{ROOT / 'src' / 'ui' / 'timeline.html'}")
-    print(f"Or serve:  python3 -m http.server 8000 --directory {ROOT}")
+    print(f"Interactive UI running at: http://localhost:8080/")
+    return True
+
+
+def main() -> None:
+    import argparse
+    parser = argparse.ArgumentParser(description="Chronos Forensics Engine - Pipeline Runner")
+    parser.add_argument(
+        "--data-dir",
+        type=Path,
+        default=DATA_DIR,
+        help=f"Directory containing raw log files to ingest (default: {DATA_DIR})",
+    )
+    parser.add_argument(
+        "--watch",
+        action="store_true",
+        help="Continuously monitor data directory for changes and live-ingest telemetry in real time",
+    )
+    parser.add_argument(
+        "--interval",
+        type=float,
+        default=2.0,
+        help="Polling interval in seconds for --watch mode (default: 2.0s)",
+    )
+    args = parser.parse_args()
+
+    data_dir = args.data_dir.resolve()
+    if not data_dir.exists():
+        print(f"Error: Data directory does not exist: {data_dir}", file=sys.stderr)
+        sys.exit(1)
+
+    if not args.watch:
+        run_pipeline(data_dir)
+        return
+
+    # Continuous Live-Ingestion Watcher Mode
+    print("=" * 70)
+    print("  CHRONOS Live Ingestion Watcher")
+    print("=" * 70)
+    print(f"[*] Target log directory : {data_dir}")
+    print(f"[*] Polling interval     : {args.interval}s")
+    print(f"[*] Dashboard URL        : http://localhost:8080/")
+    print(f"[*] Status               : Active. Press Ctrl+C to stop.\n")
+
+    def get_dir_state(d: Path) -> dict[str, tuple[float, int]]:
+        state = {}
+        for p in d.glob("*"):
+            if p.is_file() and not p.name.startswith("."):
+                try:
+                    stat = p.stat()
+                    state[p.name] = (stat.st_mtime, stat.st_size)
+                except OSError:
+                    pass
+        return state
+
+    last_state = get_dir_state(data_dir)
+    run_pipeline(data_dir)
+
+    try:
+        while True:
+            time.sleep(args.interval)
+            current_state = get_dir_state(data_dir)
+            if current_state != last_state:
+                changed = [
+                    k for k in current_state
+                    if k not in last_state or current_state[k] != last_state[k]
+                ]
+                print(f"\n⚡ [LIVE INGESTION] Change detected in {', '.join(changed)} at {datetime.now().strftime('%H:%M:%S')}")
+                last_state = current_state
+                run_pipeline(data_dir)
+    except KeyboardInterrupt:
+        print("\n[*] Chronos live ingestion watcher stopped.")
 
 
 if __name__ == "__main__":
