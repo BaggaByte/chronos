@@ -67,6 +67,19 @@
   }
 }
 
+@keyframes flow-line {
+  from {
+    stroke-dashoffset: 20;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-flow {
+  animation: flow-line 1.2s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -76,3 +89,4 @@
     transition-duration: 0.01ms !important;
   }
 }
+

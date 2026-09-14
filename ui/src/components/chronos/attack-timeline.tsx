@@ -207,35 +207,49 @@ export function AttackTimeline({
               onMouseLeave={() => setHover(null)}
               onClick={() => onSelect(ev)}
             >
+              {/* Radar targeting pulse when selected (pure SVG animation to prevent coordinate drift) */}
+              {selected && (
+                <>
+                  <circle
+                    cx={x}
+                    cy={80}
+                    r={6}
+                    className={cn(tone, "pointer-events-none")}
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                  >
+                    <animate attributeName="r" values="6;22" dur="1.3s" repeatCount="indefinite" />
+                    <animate attributeName="opacity" values="0.85;0" dur="1.3s" repeatCount="indefinite" />
+                  </circle>
+                  <circle
+                    cx={x}
+                    cy={80}
+                    r={10}
+                    className={cn(tone, "opacity-25 pointer-events-none")}
+                    fill="currentColor"
+                  />
+                </>
+              )}
               <circle
                 cx={x}
                 cy={80}
-                r={selected ? 8 : 5}
-                className={cn(tone)}
+                r={selected ? 7 : 4.5}
+                className={cn(tone, "transition-all duration-200")}
                 fill="currentColor"
               />
               {selected ? (
                 <text
-                  x={Math.min(Math.max(x, 90), WIDTH - 90)}
+                  x={Math.min(Math.max(x, 130), WIDTH - 130)}
                   y={22}
                   textAnchor="middle"
-                  className="fill-fg"
+                  className="fill-fg font-medium"
                   fontSize="11"
                   fontFamily="IBM Plex Sans, sans-serif"
                 >
-                  {formatUtc(ev.utc_timestamp, false)} · {ev.action}
+                  #{i + 1} · {formatUtc(ev.utc_timestamp, false)} · {ev.action}
                 </text>
               ) : null}
-              <text
-                x={x}
-                y={190}
-                textAnchor="middle"
-                className="fill-subtle"
-                fontSize="9"
-                fontFamily="IBM Plex Mono, monospace"
-              >
-                {i + 1}
-              </text>
             </g>
           );
         })}

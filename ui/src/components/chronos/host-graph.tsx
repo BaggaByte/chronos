@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ATTACKER_IP, attackerEvents } from "@/lib/incident";
+import { ATTACKER_IP, type ChronosEvent } from "@/lib/incident";
 import { cn } from "@/lib/utils";
 import { Network } from "lucide-react";
 
@@ -15,7 +15,7 @@ type HostNode = {
   status: "compromised" | "attacker" | "exfiltration";
 };
 
-export function HostGraph() {
+export function HostGraph({ activeEvent }: { activeEvent?: ChronosEvent | null } = {}) {
   const [selectedHost, setSelectedHost] = useState<string | null>(null);
 
   const width = 560;
@@ -88,7 +88,30 @@ export function HostGraph() {
     { from: nodes[3], to: nodes[4], label: "4. S3 PutObject" },
   ];
 
-  const activeNode = nodes.find((n) => n.id === selectedHost) || null;
+  const currentEventHost = activeEvent?.host;
+  const isActorEvent =
+    activeEvent?.src_ip === ATTACKER_IP &&
+    (!currentEventHost ||
+      activeEvent?.action?.toLowerCase().includes("recon") ||
+      activeEvent?.action?.toLowerCase().includes("scan"));
+  const isS3Event =
+    currentEventHost === "s3.amazonaws.com" ||
+    currentEventHost === "sts.amazonaws.com" ||
+    Boolean(currentEventHost?.includes("amazonaws.com")) ||
+    Boolean(activeEvent?.action?.toLowerCase().includes("s3")) ||
+    Boolean(activeEvent?.action?.toLowerCase().includes("exfil"));
+  const isFirewallEdge = currentEventHost === "fw-edge-01";
+
+  const telemetryHostId = isActorEvent
+    ? "actor"
+    : isS3Event
+      ? "s3.amazonaws.com"
+      : isFirewallEdge
+        ? "web-portal-01"
+        : currentEventHost || null;
+
+  const activeNode =
+    nodes.find((n) => n.id === (selectedHost || telemetryHostId)) || null;
 
   return (
     <div className="rounded-lg border border-border bg-surface p-3 shadow-panel sm:p-4">
@@ -138,9 +161,9 @@ export function HostGraph() {
                   d={pathD}
                   fill="none"
                   stroke="currentColor"
-                  className="text-danger/40 transition-colors hover:text-danger"
+                  className="text-danger/40 animate-flow transition-colors hover:text-danger"
                   strokeWidth="2"
-                  strokeDasharray="4 3"
+                  strokeDasharray="5 3"
                 />
                 <circle r="3" className="fill-danger animate-pulse">
                   <animateMotion path={pathD} dur={`${3 + i * 0.5}s`} repeatCount="indefinite" />
@@ -152,6 +175,8 @@ export function HostGraph() {
           {/* Nodes */}
           {nodes.map((n) => {
             const isHovered = selectedHost === n.id;
+            const isTelemetryActive = telemetryHostId === n.id;
+            const isFocused = isHovered || isTelemetryActive;
             const isAttacker = n.status === "attacker";
             const isExfil = n.status === "exfiltration";
 
@@ -162,11 +187,26 @@ export function HostGraph() {
                 onMouseEnter={() => setSelectedHost(n.id)}
                 onMouseLeave={() => setSelectedHost(null)}
               >
+                {/* Active telemetry radar ping (pure SVG animation to prevent coordinate drift) */}
+                {isTelemetryActive && (
+                  <circle
+                    cx={n.x}
+                    cy={n.y}
+                    r={18}
+                    className="stroke-danger pointer-events-none"
+                    fill="none"
+                    strokeWidth="1.5"
+                  >
+                    <animate attributeName="r" values="18;34" dur="1.4s" repeatCount="indefinite" />
+                    <animate attributeName="opacity" values="0.85;0" dur="1.4s" repeatCount="indefinite" />
+                  </circle>
+                )}
+
                 {/* Outer halo */}
                 <circle
                   cx={n.x}
                   cy={n.y}
-                  r={isHovered ? 24 : 18}
+                  r={isFocused ? 24 : 18}
                   className={cn(
                     "transition-all duration-200",
                     isAttacker
@@ -174,9 +214,10 @@ export function HostGraph() {
                       : isExfil
                         ? "fill-warn/20 stroke-warn"
                         : "fill-elevated stroke-border",
-                    isHovered && "stroke-accent-fg stroke-2",
+                    isFocused && "stroke-accent-fg stroke-2",
+                    isTelemetryActive && "stroke-danger stroke-2",
                   )}
-                  strokeWidth={isHovered ? 2 : 1.5}
+                  strokeWidth={isFocused ? 2 : 1.5}
                 />
 
                 {/* Node icon label */}

@@ -61,6 +61,18 @@ export function Dashboard() {
     return idx >= 0 ? idx + 1 : 1;
   }, [selected]);
 
+  const activeStageId = useMemo(() => {
+    if (!selected) return undefined;
+    const match = STAGES.find(
+      (s) =>
+        (selected.attack_techniques || []).some((t) =>
+          (s.tactics as readonly string[]).includes(t),
+        ) ||
+        (selected.utc_timestamp >= s.start && selected.utc_timestamp <= s.end),
+    );
+    return match?.id;
+  }, [selected]);
+
   useEffect(() => {
     if (!isPlaying) return;
     const timer = setInterval(() => {
@@ -239,75 +251,84 @@ ${report.manifest.map((m) => `- ${m.source} [${m.sha256}] (${m.events} events)`)
         <Kpis />
 
         {/* Live Attack Playback Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border bg-surface p-3 shadow-panel">
-          <div className="flex items-center gap-2">
-            <span className="flex items-center gap-1.5 font-mono text-xs font-semibold text-accent-fg uppercase tracking-wider">
-              <ShieldAlert className="size-4 text-danger" />
-              Incident Replay:
-            </span>
-            <span className="rounded bg-elevated px-2 py-0.5 font-mono text-xs text-fg border border-border">
-              Step {currentStep} / {attackerEvents.length}
-            </span>
-            <span className="text-xs text-muted truncate max-w-[320px]">
-              {selected?.action} ({selected?.host})
-            </span>
+        <div className="rounded-lg border border-border bg-surface p-3 shadow-panel">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <span className="flex items-center gap-1.5 font-mono text-xs font-semibold text-accent-fg uppercase tracking-wider">
+                <ShieldAlert className="size-4 text-danger animate-pulse" />
+                Incident Replay:
+              </span>
+              <span className="rounded bg-elevated px-2 py-0.5 font-mono text-xs text-fg border border-border">
+                Step {currentStep} / {attackerEvents.length}
+              </span>
+              <span className="text-xs text-muted truncate max-w-[320px]">
+                {selected?.action} ({selected?.host})
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handlePrev}
+                disabled={isPlaying}
+                title="Step to previous event"
+              >
+                ⏮ Prev
+              </Button>
+              <Button
+                variant={isPlaying ? "primary" : "outline"}
+                size="sm"
+                onClick={() => setIsPlaying(!isPlaying)}
+                className={cn("gap-1.5", isPlaying && "bg-danger text-white hover:bg-danger/90 animate-pulse")}
+              >
+                {isPlaying ? (
+                  <>
+                    <Pause className="size-3.5" /> Pause
+                  </>
+                ) : (
+                  <>
+                    <Play className="size-3.5" /> Replay Incident
+                  </>
+                )}
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleNext}
+                disabled={isPlaying}
+                title="Step to next event"
+              >
+                Next ⏭
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  setIsPlaying(false);
+                  setSelected(attackerEvents[0]);
+                }}
+                title="Reset to beginning"
+              >
+                <RotateCcw className="size-3.5" />
+              </Button>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handlePrev}
-              disabled={isPlaying}
-              title="Step to previous event"
-            >
-              ⏮ Prev
-            </Button>
-            <Button
-              variant={isPlaying ? "primary" : "outline"}
-              size="sm"
-              onClick={() => setIsPlaying(!isPlaying)}
-              className={cn("gap-1.5", isPlaying && "bg-danger text-white hover:bg-danger/90")}
-            >
-              {isPlaying ? (
-                <>
-                  <Pause className="size-3.5" /> Pause
-                </>
-              ) : (
-                <>
-                  <Play className="size-3.5" /> Replay Incident
-                </>
-              )}
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleNext}
-              disabled={isPlaying}
-              title="Step to next event"
-            >
-              Next ⏭
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => {
-                setIsPlaying(false);
-                setSelected(attackerEvents[0]);
-              }}
-              title="Reset to beginning"
-            >
-              <RotateCcw className="size-3.5" />
-            </Button>
+          {/* Animated Replay Progress Bar */}
+          <div className="mt-2.5 h-1 w-full overflow-hidden rounded-full bg-border/40">
+            <div
+              className="h-full bg-danger transition-all duration-300 ease-out"
+              style={{ width: `${(currentStep / attackerEvents.length) * 100}%` }}
+            />
           </div>
         </div>
 
         {view === "overview" && (
           <div className="space-y-4">
-            <KillChain />
+            <KillChain activeId={activeStageId} />
             <AttackTimeline selectedId={selected?.event_id} onSelect={setSelected} />
             <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
               <Narrative />
-              <HostGraph />
+              <HostGraph activeEvent={selected} />
             </div>
             <VolumeHistogram />
             <Anomalies />
@@ -333,7 +354,7 @@ ${report.manifest.map((m) => `- ${m.source} [${m.sha256}] (${m.events} events)`)
           <div className="grid gap-4 lg:grid-cols-[1fr_1.2fr]">
             <AttackMatrix />
             <div className="space-y-4">
-              <KillChain />
+              <KillChain activeId={activeStageId} />
               <Anomalies />
             </div>
           </div>
