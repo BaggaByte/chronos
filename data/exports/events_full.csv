@@ -1,82 +1,82 @@
 event_id,utc_timestamp,host,user,src_ip,dst_ip,action,source_type,severity,attack_techniques,correlation_group_id,offset_inferred,raw_ref
-d35ff2881056-d46575c6,2025-09-12T08:31:22+00:00,lin-db-03,svc_backup,10.10.1.52,,ssh_accepted_publickey,auth.log,medium,T1021|T1078,,True,line:1
-3942afa4a313-1c2f573e,2025-09-12T09:16:22+00:00,lin-db-03,svc_backup,10.10.1.51,,ssh_accepted_publickey,auth.log,medium,T1021|T1078,,True,line:2
-95623c7c6191-b3bdbd95,2025-09-12T09:30:22+00:00,lin-db-03,svc_backup,10.10.1.57,,ssh_accepted_publickey,auth.log,medium,T1021|T1078,,True,line:3
-48ad62cd39f3-c11e9066,2025-09-12T10:13:22+00:00,lin-db-03,svc_backup,10.10.1.56,,ssh_accepted_publickey,auth.log,medium,T1021|T1078,,True,line:4
-1a74aa4d443a-19a2a432,2025-09-12T10:19:22+00:00,lin-db-03,j.mitchell,203.0.113.77,,ssh_accepted_publickey,auth.log,medium,T1021|T1078,cg-e0325a63ad,True,line:5
-d225db9a4c61-af9cd0ed,2025-09-12T10:19:22+00:00,lin-db-03,j.mitchell,,,session_opened,auth.log,medium,T1021|T1078,cg-e0325a63ad,True,line:6
-8ebd4f377a93-46e7ce89,2025-09-12T10:24:22+00:00,lin-db-03,svc_backup,10.10.1.55,,ssh_accepted_publickey,auth.log,medium,T1021|T1078,,True,line:7
-ed84fe478933-d0fb10a5,2025-09-12T10:39:22+00:00,lin-db-03,svc_backup,10.10.1.54,,ssh_accepted_publickey,auth.log,medium,T1021|T1078,,True,line:8
-7491fb59b422-9667fbe6,2025-09-12T11:54:22+00:00,lin-db-03,j.mitchell,,,sudo,auth.log,high,T1560,cg-e0325a63ad,True,line:9
-691b3e8a64f4-9f1bbffb,2025-09-12T13:24:22+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:10
-3f53204d0208-0a2d1ac5,2025-09-12T13:24:23+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:11
-979720d9a20e-cbf21ee3,2025-09-12T13:24:24+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:12
-341cbc171fa0-7aaca330,2025-09-12T13:24:25+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:13
-21b4cfafbe6f-27079efb,2025-09-12T13:24:26+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:14
-30a06ca35c20-e64d2246,2025-09-12T13:24:27+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:15
-31b0f743645a-e890c3f6,2025-09-12T13:24:28+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:16
-d904214635b0-7db265ab,2025-09-12T13:24:29+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:17
-5128a30dd12f-7c7c2f19,2025-09-12T13:24:30+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:18
-f5daf34593e7-342bbc1f,2025-09-12T13:24:31+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:19
-a954ff289271-492539bd,2025-09-12T13:24:32+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:20
-c2b19c56be4b-feb9d61c,2025-09-12T13:24:33+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:21
-aae45787d188-1357b8ac,2025-09-12T13:24:34+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:22
-272a7e0b258a-2d083716,2025-09-12T13:24:35+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:23
-f7f9a262b81f-5441afef,2025-09-12T13:24:36+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:24
-8986d5682a23-bd23f88d,2025-09-12T13:24:37+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:25
-2d772f197d9d-73762ae5,2025-09-12T13:24:38+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:26
-097599ee24c4-ac6dbb42,2025-09-12T13:24:39+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:27
-bdfcbf583788-746293ec,2025-09-12T13:24:40+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:28
-e75c4e324c6a-51301004,2025-09-12T13:24:41+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:29
-b28617c7f204-556ecde8,2025-09-12T13:24:42+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:30
-28f8dbd7d06c-7c5f8dfc,2025-09-12T13:24:43+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:31
-fe0468f204be-a2b22bba,2025-09-12T13:24:44+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:32
-a4f84098b921-93ad8c19,2025-09-12T13:24:45+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:33
-2957368ec0d6-80e9c98a,2025-09-12T13:24:46+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:34
-a37813f78bc3-dc57097f,2025-09-12T13:24:47+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:35
-4a7fd677b200-b415f7f0,2025-09-12T13:24:48+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:36
-b8e46fde2dc3-e4d1bbe0,2025-09-12T13:24:49+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:37
-7224f663f049-fddc3618,2025-09-12T13:24:50+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:38
-74845b783283-d67db3e0,2025-09-12T13:24:51+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:39
-fec246a1870c-2c7a2dc8,2025-09-12T13:24:52+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:40
-109507c8eff0-6f3ad5b7,2025-09-12T13:24:53+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:41
-19924256351c-d4de3889,2025-09-12T13:24:54+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:42
-191485934b74-d85846fb,2025-09-12T13:24:55+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:43
-d6aac90eb6fa-51787279,2025-09-12T13:24:56+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:44
-ed64fe06a3c0-f27a8f97,2025-09-12T13:24:57+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:45
-2028f349d6d2-16a28ead,2025-09-12T13:24:58+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:46
-be21ea813d91-e0c9eeea,2025-09-12T13:24:59+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:47
-f62631fd4c74-865074e9,2025-09-12T13:25:00+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:48
-4249e8584164-29dd5a7b,2025-09-12T13:25:01+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:49
-d2c245fe537a-7e6a252f,2025-09-12T13:46:22+00:00,lin-db-03,svc_backup,10.10.1.50,,ssh_accepted_publickey,auth.log,medium,T1021|T1078,,True,line:50
-69b6b196c553-6bec3d69,2025-09-12T14:38:22+00:00,lin-db-03,svc_backup,10.10.1.53,,ssh_accepted_publickey,auth.log,medium,T1021|T1078,,True,line:51
-19a85d25e7c6-8f9b662a,2025-09-12T08:14:22+00:00,web-portal-01,,203.0.113.77,,GET /login,apache,medium,T1190|T1566,cg-e0325a63ad,False,line:1
-03b1f270d770-3a777442,2025-09-12T08:17:34+00:00,web-portal-01,j.mitchell,203.0.113.77,,POST /login,apache,medium,T1190|T1566,cg-e0325a63ad,False,line:2
-608bafcf7657-4701796f,2025-09-12T08:27:22+00:00,web-portal-01,,10.10.2.35,,GET /health,apache,info,,,False,line:3
-c623d6f736ac-74daec9d,2025-09-12T08:29:22+00:00,web-portal-01,,10.10.2.29,,GET /health,apache,info,,,False,line:4
-445ca4a19c7f-8a3771f3,2025-09-12T08:30:22+00:00,web-portal-01,,10.10.2.28,,GET /static/logo.png,apache,info,,,False,line:5
-077c313702ea-8087f396,2025-09-12T08:58:22+00:00,web-portal-01,,10.10.2.25,,GET /static/logo.png,apache,info,,,False,line:6
-6fc9e0e1d582-ffeb9f84,2025-09-12T09:01:22+00:00,web-portal-01,,10.10.2.30,,GET /static/logo.png,apache,info,,,False,line:7
-6164ce8c277b-59b4e3d5,2025-09-12T09:06:22+00:00,web-portal-01,,10.10.2.21,,GET /static/logo.png,apache,info,,,False,line:8
-346006cb1d81-5ef662ce,2025-09-12T09:55:22+00:00,web-portal-01,,10.10.2.37,,GET /static/logo.png,apache,info,,,False,line:9
-ae1460b9e0d1-95fc3dcd,2025-09-12T10:05:22+00:00,web-portal-01,,10.10.2.31,,GET /static/logo.png,apache,info,,,False,line:10
-f66aef05ef67-04f1c7d0,2025-09-12T10:13:22+00:00,web-portal-01,,10.10.2.32,,GET /health,apache,info,,,False,line:11
-bc648bb58a4b-a6dd5ece,2025-09-12T11:50:22+00:00,web-portal-01,,10.10.2.27,,GET /static/logo.png,apache,info,,,False,line:12
-4a42a871e364-780103b1,2025-09-12T12:32:22+00:00,web-portal-01,,10.10.2.33,,GET /static/logo.png,apache,info,,,False,line:13
-7fcd8adfb4b3-6e28eb04,2025-09-12T12:53:22+00:00,web-portal-01,,10.10.2.24,,GET /static/logo.png,apache,info,,,False,line:14
-11b98202b684-7d40321c,2025-09-12T13:01:22+00:00,web-portal-01,,10.10.2.36,,GET /static/logo.png,apache,info,,,False,line:15
-9bbab7ba2909-32a53fab,2025-09-12T13:16:22+00:00,web-portal-01,,10.10.2.26,,GET /health,apache,info,,,False,line:16
-b526291a89e6-b5c95f8f,2025-09-12T13:22:22+00:00,web-portal-01,,10.10.2.34,,GET /static/logo.png,apache,info,,,False,line:17
-e295fc5be91b-01151dd6,2025-09-12T13:46:22+00:00,web-portal-01,,10.10.2.39,,GET /static/logo.png,apache,info,,,False,line:18
-870901621e52-ae2810d0,2025-09-12T14:00:22+00:00,web-portal-01,,10.10.2.22,,GET /static/logo.png,apache,info,,,False,line:19
-fbcf23981691-a7a4bcc7,2025-09-12T14:20:22+00:00,web-portal-01,,10.10.2.38,,GET /health,apache,info,,,False,line:20
-0f50245a4c59-22428859,2025-09-12T14:31:22+00:00,web-portal-01,,10.10.2.20,,GET /health,apache,info,,,False,line:21
-4424d3cb91c5-46f48712,2025-09-12T14:33:22+00:00,web-portal-01,,10.10.2.23,,GET /health,apache,info,,,False,line:22
-5788f053bb50-698304aa,2025-09-12T08:17:34+00:00,fw-edge-01,,203.0.113.77,10.10.5.20,built_inbound_tcp,cisco_syslog,info,,cg-e0325a63ad,True,line:1
-3e56a52c4b37-a1ebd08a,2025-09-12T09:36:22+00:00,fw-edge-01,,203.0.113.77,10.10.6.40,built_inbound_tcp,cisco_syslog,info,,cg-e0325a63ad,True,line:2
-e79888fc6e56-7eaf30f5,2025-09-12T10:19:22+00:00,fw-edge-01,,10.10.7.15,10.10.8.33,built_outbound_tcp,cisco_syslog,info,,,True,line:3
-5ad0a289219c-51639c93,2025-09-12T09:37:09+00:00,WIN-ENG-07,j.mitchell,203.0.113.77,,Successful logon,evtx,info,,cg-e0325a63ad,True,record:0
-7f84033a95af-e0c8a1c8,2025-09-12T09:37:13+00:00,WIN-ENG-07,j.mitchell,,,Special privileges assigned,evtx,info,,cg-e0325a63ad,True,record:1
-a0bbd6bd602d-a6fdda55,2025-09-12T09:39:20+00:00,WIN-ENG-07,j.mitchell,,,Process creation (credential dump),evtx,high,T1003,cg-e0325a63ad,True,record:2
-34069da5a717-858b2cd1,2025-09-12T12:10:22+00:00,sts.amazonaws.com,j.mitchell,203.0.113.77,,GetCallerIdentity,aws_cloudtrail,info,T1082,cg-e0325a63ad,False,record:1
-94cfa8d91334-9a190480,2025-09-12T12:12:22+00:00,s3.amazonaws.com,j.mitchell,203.0.113.77,,PutObject,aws_cloudtrail,high,T1041,cg-e0325a63ad,False,record:2
+d35ff2881056-4742170e,2025-09-12T08:31:22+00:00,lin-db-03,svc_backup,10.10.1.52,,ssh_accepted_publickey,auth.log,medium,T1021|T1078,,True,line:1
+3942afa4a313-5c007813,2025-09-12T09:16:22+00:00,lin-db-03,svc_backup,10.10.1.51,,ssh_accepted_publickey,auth.log,medium,T1021|T1078,,True,line:2
+95623c7c6191-963d1eca,2025-09-12T09:30:22+00:00,lin-db-03,svc_backup,10.10.1.57,,ssh_accepted_publickey,auth.log,medium,T1021|T1078,,True,line:3
+48ad62cd39f3-cd447188,2025-09-12T10:13:22+00:00,lin-db-03,svc_backup,10.10.1.56,,ssh_accepted_publickey,auth.log,medium,T1021|T1078,,True,line:4
+1a74aa4d443a-dcf4657e,2025-09-12T10:19:22+00:00,lin-db-03,j.mitchell,203.0.113.77,,ssh_accepted_publickey,auth.log,medium,T1021|T1078,cg-83126dc476,True,line:5
+d225db9a4c61-d90e4221,2025-09-12T10:19:22+00:00,lin-db-03,j.mitchell,,,session_opened,auth.log,medium,T1021|T1078,cg-83126dc476,True,line:6
+8ebd4f377a93-8bd92944,2025-09-12T10:24:22+00:00,lin-db-03,svc_backup,10.10.1.55,,ssh_accepted_publickey,auth.log,medium,T1021|T1078,,True,line:7
+ed84fe478933-e624c23d,2025-09-12T10:39:22+00:00,lin-db-03,svc_backup,10.10.1.54,,ssh_accepted_publickey,auth.log,medium,T1021|T1078,,True,line:8
+7491fb59b422-8a4341cb,2025-09-12T11:54:22+00:00,lin-db-03,j.mitchell,,,sudo,auth.log,high,T1560,cg-83126dc476,True,line:9
+691b3e8a64f4-163ddbaf,2025-09-12T13:24:22+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:10
+3f53204d0208-a0247f57,2025-09-12T13:24:23+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:11
+979720d9a20e-2f5103f9,2025-09-12T13:24:24+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:12
+341cbc171fa0-8e76cf92,2025-09-12T13:24:25+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:13
+21b4cfafbe6f-78e27112,2025-09-12T13:24:26+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:14
+30a06ca35c20-8016383d,2025-09-12T13:24:27+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:15
+31b0f743645a-6f8239d0,2025-09-12T13:24:28+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:16
+d904214635b0-a4b3e4db,2025-09-12T13:24:29+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:17
+5128a30dd12f-c20d1389,2025-09-12T13:24:30+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:18
+f5daf34593e7-940d8901,2025-09-12T13:24:31+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:19
+a954ff289271-a2d9f377,2025-09-12T13:24:32+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:20
+c2b19c56be4b-13aed58c,2025-09-12T13:24:33+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:21
+aae45787d188-5d7e61e6,2025-09-12T13:24:34+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:22
+272a7e0b258a-7bc38360,2025-09-12T13:24:35+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:23
+f7f9a262b81f-6c1901cb,2025-09-12T13:24:36+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:24
+8986d5682a23-521fac5f,2025-09-12T13:24:37+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:25
+2d772f197d9d-cc318ecf,2025-09-12T13:24:38+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:26
+097599ee24c4-c6912475,2025-09-12T13:24:39+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:27
+bdfcbf583788-5cd14f87,2025-09-12T13:24:40+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:28
+e75c4e324c6a-ae0aab36,2025-09-12T13:24:41+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:29
+b28617c7f204-c9fbbd28,2025-09-12T13:24:42+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:30
+28f8dbd7d06c-7b0b7799,2025-09-12T13:24:43+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:31
+fe0468f204be-6b73ddaa,2025-09-12T13:24:44+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:32
+a4f84098b921-807cd61d,2025-09-12T13:24:45+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:33
+2957368ec0d6-c84117b1,2025-09-12T13:24:46+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:34
+a37813f78bc3-979f465d,2025-09-12T13:24:47+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:35
+4a7fd677b200-9ad23262,2025-09-12T13:24:48+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:36
+b8e46fde2dc3-dc05c12d,2025-09-12T13:24:49+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:37
+7224f663f049-bf045c05,2025-09-12T13:24:50+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:38
+74845b783283-5526f4b5,2025-09-12T13:24:51+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:39
+fec246a1870c-e620b516,2025-09-12T13:24:52+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:40
+109507c8eff0-a64fc356,2025-09-12T13:24:53+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:41
+19924256351c-9fece4f2,2025-09-12T13:24:54+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:42
+191485934b74-ed5acfbc,2025-09-12T13:24:55+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:43
+d6aac90eb6fa-a0e172dc,2025-09-12T13:24:56+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:44
+ed64fe06a3c0-ed50b2cf,2025-09-12T13:24:57+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:45
+2028f349d6d2-2810e6bc,2025-09-12T13:24:58+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:46
+be21ea813d91-317422db,2025-09-12T13:24:59+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:47
+f62631fd4c74-cc214210,2025-09-12T13:25:00+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:48
+4249e8584164-fa5bc841,2025-09-12T13:25:01+00:00,lin-db-03,,,,other,auth.log,info,,,True,line:49
+d2c245fe537a-7b638aa6,2025-09-12T13:46:22+00:00,lin-db-03,svc_backup,10.10.1.50,,ssh_accepted_publickey,auth.log,medium,T1021|T1078,,True,line:50
+69b6b196c553-e326fcd3,2025-09-12T14:38:22+00:00,lin-db-03,svc_backup,10.10.1.53,,ssh_accepted_publickey,auth.log,medium,T1021|T1078,,True,line:51
+19a85d25e7c6-c0e32f67,2025-09-12T08:14:22+00:00,web-portal-01,,203.0.113.77,,GET /login,apache,medium,T1190|T1566,cg-83126dc476,False,line:1
+03b1f270d770-2e44d2bc,2025-09-12T08:17:34+00:00,web-portal-01,j.mitchell,203.0.113.77,,POST /login,apache,medium,T1190|T1566,cg-83126dc476,False,line:2
+608bafcf7657-4bb2da4a,2025-09-12T08:27:22+00:00,web-portal-01,,10.10.2.35,,GET /health,apache,info,,,False,line:3
+c623d6f736ac-847ebac7,2025-09-12T08:29:22+00:00,web-portal-01,,10.10.2.29,,GET /health,apache,info,,,False,line:4
+445ca4a19c7f-21f02905,2025-09-12T08:30:22+00:00,web-portal-01,,10.10.2.28,,GET /static/logo.png,apache,info,,,False,line:5
+077c313702ea-bed0742e,2025-09-12T08:58:22+00:00,web-portal-01,,10.10.2.25,,GET /static/logo.png,apache,info,,,False,line:6
+6fc9e0e1d582-678d5439,2025-09-12T09:01:22+00:00,web-portal-01,,10.10.2.30,,GET /static/logo.png,apache,info,,,False,line:7
+6164ce8c277b-4b1450e4,2025-09-12T09:06:22+00:00,web-portal-01,,10.10.2.21,,GET /static/logo.png,apache,info,,,False,line:8
+346006cb1d81-4288e0c4,2025-09-12T09:55:22+00:00,web-portal-01,,10.10.2.37,,GET /static/logo.png,apache,info,,,False,line:9
+ae1460b9e0d1-db83dc63,2025-09-12T10:05:22+00:00,web-portal-01,,10.10.2.31,,GET /static/logo.png,apache,info,,,False,line:10
+f66aef05ef67-5ad4d07b,2025-09-12T10:13:22+00:00,web-portal-01,,10.10.2.32,,GET /health,apache,info,,,False,line:11
+bc648bb58a4b-a8affb73,2025-09-12T11:50:22+00:00,web-portal-01,,10.10.2.27,,GET /static/logo.png,apache,info,,,False,line:12
+4a42a871e364-8ee418b1,2025-09-12T12:32:22+00:00,web-portal-01,,10.10.2.33,,GET /static/logo.png,apache,info,,,False,line:13
+7fcd8adfb4b3-aa0242cb,2025-09-12T12:53:22+00:00,web-portal-01,,10.10.2.24,,GET /static/logo.png,apache,info,,,False,line:14
+11b98202b684-a2494370,2025-09-12T13:01:22+00:00,web-portal-01,,10.10.2.36,,GET /static/logo.png,apache,info,,,False,line:15
+9bbab7ba2909-7a0c7f48,2025-09-12T13:16:22+00:00,web-portal-01,,10.10.2.26,,GET /health,apache,info,,,False,line:16
+b526291a89e6-8289b069,2025-09-12T13:22:22+00:00,web-portal-01,,10.10.2.34,,GET /static/logo.png,apache,info,,,False,line:17
+e295fc5be91b-89cfaee4,2025-09-12T13:46:22+00:00,web-portal-01,,10.10.2.39,,GET /static/logo.png,apache,info,,,False,line:18
+870901621e52-9467074f,2025-09-12T14:00:22+00:00,web-portal-01,,10.10.2.22,,GET /static/logo.png,apache,info,,,False,line:19
+fbcf23981691-c1e91c91,2025-09-12T14:20:22+00:00,web-portal-01,,10.10.2.38,,GET /health,apache,info,,,False,line:20
+0f50245a4c59-01991982,2025-09-12T14:31:22+00:00,web-portal-01,,10.10.2.20,,GET /health,apache,info,,,False,line:21
+4424d3cb91c5-036e3db8,2025-09-12T14:33:22+00:00,web-portal-01,,10.10.2.23,,GET /health,apache,info,,,False,line:22
+5788f053bb50-4d5d9b9a,2025-09-12T08:17:34+00:00,fw-edge-01,,203.0.113.77,10.10.5.20,built_inbound_tcp,cisco_syslog,info,,cg-83126dc476,True,line:1
+3e56a52c4b37-9701ec67,2025-09-12T09:36:22+00:00,fw-edge-01,,203.0.113.77,10.10.6.40,built_inbound_tcp,cisco_syslog,info,,cg-83126dc476,True,line:2
+e79888fc6e56-46a297a6,2025-09-12T10:19:22+00:00,fw-edge-01,,10.10.7.15,10.10.8.33,built_outbound_tcp,cisco_syslog,info,,,True,line:3
+5ad0a289219c-65260c59,2025-09-12T09:37:09+00:00,WIN-ENG-07,j.mitchell,203.0.113.77,,Successful logon,evtx,info,,cg-83126dc476,True,record:0
+7f84033a95af-4187022e,2025-09-12T09:37:13+00:00,WIN-ENG-07,j.mitchell,,,Special privileges assigned,evtx,info,,cg-83126dc476,True,record:1
+a0bbd6bd602d-1fc83680,2025-09-12T09:39:20+00:00,WIN-ENG-07,j.mitchell,,,Process creation (credential dump),evtx,high,T1003,cg-83126dc476,True,record:2
+34069da5a717-db1fc3fa,2025-09-12T12:10:22+00:00,sts.amazonaws.com,j.mitchell,203.0.113.77,,GetCallerIdentity,aws_cloudtrail,info,T1082,cg-83126dc476,False,record:1
+94cfa8d91334-9e2ef373,2025-09-12T12:12:22+00:00,s3.amazonaws.com,j.mitchell,203.0.113.77,,PutObject,aws_cloudtrail,high,T1041,cg-83126dc476,False,record:2

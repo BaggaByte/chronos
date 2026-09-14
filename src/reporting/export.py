@@ -103,42 +103,59 @@ def export_simple_pdf_summary(
     groups = report.get("correlation_groups") or []
     primary = max(groups, key=lambda g: g.get("event_count", 0)) if groups else {}
 
-    pdf = FPDF()
-    pdf.set_auto_page_break(auto=True, margin=15)
-    pdf.add_page()
-    pdf.set_font("Helvetica", "B", 16)
-    pdf.cell(0, 10, "Chronos Forensic Summary", ln=True)
-    pdf.set_font("Helvetica", "", 10)
-    pdf.cell(0, 6, "Aerospace Data-Exfiltration Incident", ln=True)
-    pdf.ln(4)
+    try:
+        pdf = FPDF()
+        pdf.set_auto_page_break(auto=True, margin=15)
+        pdf.add_page()
+        pdf.set_font("Helvetica", "B", 16)
+        pdf.cell(0, 10, "Chronos Forensic Summary")
+        pdf.ln(10)
+        pdf.set_font("Helvetica", "", 10)
+        pdf.cell(0, 6, "Aerospace Data-Exfiltration Incident")
+        pdf.ln(8)
 
-    pdf.set_font("Helvetica", "B", 12)
-    pdf.cell(0, 8, "Executive Narrative", ln=True)
-    pdf.set_font("Helvetica", "", 9)
-    narrative = primary.get("narrative") or "(no primary group)"
-    for line in narrative.splitlines():
-        pdf.multi_cell(0, 5, line)
-    pdf.ln(4)
+        pdf.set_font("Helvetica", "B", 12)
+        pdf.cell(0, 8, "Executive Narrative")
+        pdf.ln(8)
+        pdf.set_font("Helvetica", "", 9)
+        narrative = primary.get("narrative") or "(no primary group)"
+        for line in narrative.splitlines():
+            pdf.set_x(pdf.l_margin)
+            clean_line = line.encode("latin-1", "replace").decode("latin-1")
+            pdf.multi_cell(0, 5, clean_line)
+            pdf.set_x(pdf.l_margin)
+        pdf.ln(4)
 
-    pdf.set_font("Helvetica", "B", 12)
-    pdf.cell(0, 8, "Key Statistics", ln=True)
-    pdf.set_font("Helvetica", "", 9)
-    pdf.cell(0, 5, f"Total events ingested : {report.get('total_events')}", ln=True)
-    pdf.cell(0, 5, f"Attacker-thread events: {primary.get('event_count')}", ln=True)
-    pdf.cell(0, 5, f"Techniques observed   : {list((report.get('technique_counts') or {}).keys())}", ln=True)
-    pdf.cell(0, 5, f"Time gaps flagged     : {len(report.get('gaps') or [])}", ln=True)
-    pdf.cell(0, 5, f"Execution spikes      : {len(report.get('spikes') or [])}", ln=True)
+        pdf.set_font("Helvetica", "B", 12)
+        pdf.cell(0, 8, "Key Statistics")
+        pdf.ln(8)
+        pdf.set_font("Helvetica", "", 9)
+        pdf.cell(0, 5, f"Total events ingested : {report.get('total_events')}")
+        pdf.ln(5)
+        pdf.cell(0, 5, f"Attacker-thread events: {primary.get('event_count')}")
+        pdf.ln(5)
+        pdf.cell(0, 5, f"Techniques observed   : {list((report.get('technique_counts') or {}).keys())}")
+        pdf.ln(5)
+        pdf.cell(0, 5, f"Time gaps flagged     : {len(report.get('gaps') or [])}")
+        pdf.ln(5)
+        pdf.cell(0, 5, f"Execution spikes      : {len(report.get('spikes') or [])}")
+        pdf.ln(6)
 
-    pdf.ln(4)
-    pdf.set_font("Helvetica", "B", 12)
-    pdf.cell(0, 8, "Chain of Custody (ingest hashes)", ln=True)
-    pdf.set_font("Helvetica", "", 8)
-    for m in report.get("manifest") or []:
-        pdf.cell(0, 4, f"{m.get('source', '?')}: {m.get('sha256', '')[:32]}…", ln=True)
+        pdf.set_font("Helvetica", "B", 12)
+        pdf.cell(0, 8, "Chain of Custody (ingest hashes)")
+        pdf.ln(8)
+        pdf.set_font("Helvetica", "", 8)
+        for m in report.get("manifest") or []:
+            pdf.cell(0, 4, f"{m.get('source', '?')}: {m.get('sha256', '')[:32]}...")
+            pdf.ln(4)
 
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    pdf.output(str(output_path))
-    return output_path
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        pdf.output(str(output_path))
+        return output_path
+    except Exception as exc:
+        import logging
+        logging.warning("PDF export encountered an error, falling back to text summary: %s", exc)
+        return _export_text_summary(report, output_path.with_suffix(".txt"))
 
 
 def _export_text_summary(report: Dict[str, Any], output_path: Path) -> Path:

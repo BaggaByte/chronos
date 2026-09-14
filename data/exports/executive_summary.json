@@ -1,6 +1,6 @@
 {
   "title": "Chronos Forensic Summary \u2013 Aerospace Exfiltration Incident",
-  "generated_at": "2026-09-14T14:13:23.809598Z",
+  "generated_at": "2026-09-14T14:29:36.274183Z",
   "total_events": 81,
   "attacker_thread_events": 12,
   "benign_events_excluded": 69,
@@ -27,9 +27,9 @@
   "gaps": [
     {
       "type": "time_gap",
-      "group_id": "cg-e0325a63ad",
-      "from_event": "5788f053bb50-698304aa",
-      "to_event": "3e56a52c4b37-a1ebd08a",
+      "group_id": "cg-83126dc476",
+      "from_event": "5788f053bb50-4d5d9b9a",
+      "to_event": "3e56a52c4b37-9701ec67",
       "from_ts": "2025-09-12T08:17:34+00:00",
       "to_ts": "2025-09-12T09:36:22+00:00",
       "gap_seconds": 4728,
@@ -41,9 +41,9 @@
     },
     {
       "type": "time_gap",
-      "group_id": "cg-e0325a63ad",
-      "from_event": "a0bbd6bd602d-a6fdda55",
-      "to_event": "1a74aa4d443a-19a2a432",
+      "group_id": "cg-83126dc476",
+      "from_event": "a0bbd6bd602d-1fc83680",
+      "to_event": "1a74aa4d443a-dcf4657e",
       "from_ts": "2025-09-12T09:39:20+00:00",
       "to_ts": "2025-09-12T10:19:22+00:00",
       "gap_seconds": 2402,
@@ -56,9 +56,9 @@
     },
     {
       "type": "time_gap",
-      "group_id": "cg-e0325a63ad",
-      "from_event": "d225db9a4c61-af9cd0ed",
-      "to_event": "7491fb59b422-9667fbe6",
+      "group_id": "cg-83126dc476",
+      "from_event": "d225db9a4c61-d90e4221",
+      "to_event": "7491fb59b422-8a4341cb",
       "from_ts": "2025-09-12T10:19:22+00:00",
       "to_ts": "2025-09-12T11:54:22+00:00",
       "gap_seconds": 5700,
@@ -70,16 +70,16 @@
     },
     {
       "type": "time_gap",
-      "group_id": "cg-e0325a63ad",
-      "from_event": "7491fb59b422-9667fbe6",
-      "to_event": "34069da5a717-858b2cd1",
+      "group_id": "cg-83126dc476",
+      "from_event": "7491fb59b422-8a4341cb",
+      "to_event": "34069da5a717-db1fc3fa",
       "from_ts": "2025-09-12T11:54:22+00:00",
       "to_ts": "2025-09-12T12:10:22+00:00",
       "gap_seconds": 960,
       "threshold_seconds": 381,
       "hosts": [
-        "lin-db-03",
-        "sts.amazonaws.com"
+        "sts.amazonaws.com",
+        "lin-db-03"
       ],
       "severity": "medium"
     }

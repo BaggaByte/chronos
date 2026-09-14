@@ -1,6 +1,6 @@
 [
   {
-    "event_id": "d35ff2881056-d46575c6",
+    "event_id": "d35ff2881056-4742170e",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 08:31:22",
@@ -30,7 +30,7 @@
     }
   },
   {
-    "event_id": "3942afa4a313-1c2f573e",
+    "event_id": "3942afa4a313-5c007813",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 09:16:22",
@@ -60,7 +60,7 @@
     }
   },
   {
-    "event_id": "95623c7c6191-b3bdbd95",
+    "event_id": "95623c7c6191-963d1eca",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 09:30:22",
@@ -90,7 +90,7 @@
     }
   },
   {
-    "event_id": "48ad62cd39f3-c11e9066",
+    "event_id": "48ad62cd39f3-cd447188",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 10:13:22",
@@ -120,7 +120,7 @@
     }
   },
   {
-    "event_id": "1a74aa4d443a-19a2a432",
+    "event_id": "1a74aa4d443a-dcf4657e",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 10:19:22",
@@ -142,7 +142,7 @@
       "T1021",
       "T1078"
     ],
-    "correlation_group_id": "cg-e0325a63ad",
+    "correlation_group_id": "cg-83126dc476",
     "severity": "medium",
     "extra": {
       "port": "51234",
@@ -150,7 +150,7 @@
     }
   },
   {
-    "event_id": "d225db9a4c61-af9cd0ed",
+    "event_id": "d225db9a4c61-d90e4221",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 10:19:22",
@@ -172,12 +172,12 @@
       "T1021",
       "T1078"
     ],
-    "correlation_group_id": "cg-e0325a63ad",
+    "correlation_group_id": "cg-83126dc476",
     "severity": "medium",
     "extra": {}
   },
   {
-    "event_id": "8ebd4f377a93-46e7ce89",
+    "event_id": "8ebd4f377a93-8bd92944",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 10:24:22",
@@ -207,7 +207,7 @@
     }
   },
   {
-    "event_id": "ed84fe478933-d0fb10a5",
+    "event_id": "ed84fe478933-e624c23d",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 10:39:22",
@@ -237,7 +237,7 @@
     }
   },
   {
-    "event_id": "7491fb59b422-9667fbe6",
+    "event_id": "7491fb59b422-8a4341cb",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 11:54:22",
@@ -258,14 +258,14 @@
     "attack_techniques": [
       "T1560"
     ],
-    "correlation_group_id": "cg-e0325a63ad",
+    "correlation_group_id": "cg-83126dc476",
     "severity": "high",
     "extra": {
       "command": "/bin/tar czf /tmp/designs.tgz /opt/aero/designs"
     }
   },
   {
-    "event_id": "691b3e8a64f4-9f1bbffb",
+    "event_id": "691b3e8a64f4-163ddbaf",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:22",
@@ -291,7 +291,7 @@
     }
   },
   {
-    "event_id": "3f53204d0208-0a2d1ac5",
+    "event_id": "3f53204d0208-a0247f57",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:23",
@@ -317,7 +317,7 @@
     }
   },
   {
-    "event_id": "979720d9a20e-cbf21ee3",
+    "event_id": "979720d9a20e-2f5103f9",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:24",
@@ -343,7 +343,7 @@
     }
   },
   {
-    "event_id": "341cbc171fa0-7aaca330",
+    "event_id": "341cbc171fa0-8e76cf92",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:25",
@@ -369,7 +369,7 @@
     }
   },
   {
-    "event_id": "21b4cfafbe6f-27079efb",
+    "event_id": "21b4cfafbe6f-78e27112",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:26",
@@ -395,7 +395,7 @@
     }
   },
   {
-    "event_id": "30a06ca35c20-e64d2246",
+    "event_id": "30a06ca35c20-8016383d",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:27",
@@ -421,7 +421,7 @@
     }
   },
   {
-    "event_id": "31b0f743645a-e890c3f6",
+    "event_id": "31b0f743645a-6f8239d0",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:28",
@@ -447,7 +447,7 @@
     }
   },
   {
-    "event_id": "d904214635b0-7db265ab",
+    "event_id": "d904214635b0-a4b3e4db",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:29",
@@ -473,7 +473,7 @@
     }
   },
   {
-    "event_id": "5128a30dd12f-7c7c2f19",
+    "event_id": "5128a30dd12f-c20d1389",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:30",
@@ -499,7 +499,7 @@
     }
   },
   {
-    "event_id": "f5daf34593e7-342bbc1f",
+    "event_id": "f5daf34593e7-940d8901",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:31",
@@ -525,7 +525,7 @@
     }
   },
   {
-    "event_id": "a954ff289271-492539bd",
+    "event_id": "a954ff289271-a2d9f377",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:32",
@@ -551,7 +551,7 @@
     }
   },
   {
-    "event_id": "c2b19c56be4b-feb9d61c",
+    "event_id": "c2b19c56be4b-13aed58c",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:33",
@@ -577,7 +577,7 @@
     }
   },
   {
-    "event_id": "aae45787d188-1357b8ac",
+    "event_id": "aae45787d188-5d7e61e6",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:34",
@@ -603,7 +603,7 @@
     }
   },
   {
-    "event_id": "272a7e0b258a-2d083716",
+    "event_id": "272a7e0b258a-7bc38360",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:35",
@@ -629,7 +629,7 @@
     }
   },
   {
-    "event_id": "f7f9a262b81f-5441afef",
+    "event_id": "f7f9a262b81f-6c1901cb",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:36",
@@ -655,7 +655,7 @@
     }
   },
   {
-    "event_id": "8986d5682a23-bd23f88d",
+    "event_id": "8986d5682a23-521fac5f",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:37",
@@ -681,7 +681,7 @@
     }
   },
   {
-    "event_id": "2d772f197d9d-73762ae5",
+    "event_id": "2d772f197d9d-cc318ecf",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:38",
@@ -707,7 +707,7 @@
     }
   },
   {
-    "event_id": "097599ee24c4-ac6dbb42",
+    "event_id": "097599ee24c4-c6912475",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:39",
@@ -733,7 +733,7 @@
     }
   },
   {
-    "event_id": "bdfcbf583788-746293ec",
+    "event_id": "bdfcbf583788-5cd14f87",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:40",
@@ -759,7 +759,7 @@
     }
   },
   {
-    "event_id": "e75c4e324c6a-51301004",
+    "event_id": "e75c4e324c6a-ae0aab36",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:41",
@@ -785,7 +785,7 @@
     }
   },
   {
-    "event_id": "b28617c7f204-556ecde8",
+    "event_id": "b28617c7f204-c9fbbd28",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:42",
@@ -811,7 +811,7 @@
     }
   },
   {
-    "event_id": "28f8dbd7d06c-7c5f8dfc",
+    "event_id": "28f8dbd7d06c-7b0b7799",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:43",
@@ -837,7 +837,7 @@
     }
   },
   {
-    "event_id": "fe0468f204be-a2b22bba",
+    "event_id": "fe0468f204be-6b73ddaa",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:44",
@@ -863,7 +863,7 @@
     }
   },
   {
-    "event_id": "a4f84098b921-93ad8c19",
+    "event_id": "a4f84098b921-807cd61d",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:45",
@@ -889,7 +889,7 @@
     }
   },
   {
-    "event_id": "2957368ec0d6-80e9c98a",
+    "event_id": "2957368ec0d6-c84117b1",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:46",
@@ -915,7 +915,7 @@
     }
   },
   {
-    "event_id": "a37813f78bc3-dc57097f",
+    "event_id": "a37813f78bc3-979f465d",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:47",
@@ -941,7 +941,7 @@
     }
   },
   {
-    "event_id": "4a7fd677b200-b415f7f0",
+    "event_id": "4a7fd677b200-9ad23262",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:48",
@@ -967,7 +967,7 @@
     }
   },
   {
-    "event_id": "b8e46fde2dc3-e4d1bbe0",
+    "event_id": "b8e46fde2dc3-dc05c12d",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:49",
@@ -993,7 +993,7 @@
     }
   },
   {
-    "event_id": "7224f663f049-fddc3618",
+    "event_id": "7224f663f049-bf045c05",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:50",
@@ -1019,7 +1019,7 @@
     }
   },
   {
-    "event_id": "74845b783283-d67db3e0",
+    "event_id": "74845b783283-5526f4b5",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:51",
@@ -1045,7 +1045,7 @@
     }
   },
   {
-    "event_id": "fec246a1870c-2c7a2dc8",
+    "event_id": "fec246a1870c-e620b516",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:52",
@@ -1071,7 +1071,7 @@
     }
   },
   {
-    "event_id": "109507c8eff0-6f3ad5b7",
+    "event_id": "109507c8eff0-a64fc356",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:53",
@@ -1097,7 +1097,7 @@
     }
   },
   {
-    "event_id": "19924256351c-d4de3889",
+    "event_id": "19924256351c-9fece4f2",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:54",
@@ -1123,7 +1123,7 @@
     }
   },
   {
-    "event_id": "191485934b74-d85846fb",
+    "event_id": "191485934b74-ed5acfbc",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:55",
@@ -1149,7 +1149,7 @@
     }
   },
   {
-    "event_id": "d6aac90eb6fa-51787279",
+    "event_id": "d6aac90eb6fa-a0e172dc",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:56",
@@ -1175,7 +1175,7 @@
     }
   },
   {
-    "event_id": "ed64fe06a3c0-f27a8f97",
+    "event_id": "ed64fe06a3c0-ed50b2cf",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:57",
@@ -1201,7 +1201,7 @@
     }
   },
   {
-    "event_id": "2028f349d6d2-16a28ead",
+    "event_id": "2028f349d6d2-2810e6bc",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:58",
@@ -1227,7 +1227,7 @@
     }
   },
   {
-    "event_id": "be21ea813d91-e0c9eeea",
+    "event_id": "be21ea813d91-317422db",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:24:59",
@@ -1253,7 +1253,7 @@
     }
   },
   {
-    "event_id": "f62631fd4c74-865074e9",
+    "event_id": "f62631fd4c74-cc214210",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:25:00",
@@ -1279,7 +1279,7 @@
     }
   },
   {
-    "event_id": "4249e8584164-29dd5a7b",
+    "event_id": "4249e8584164-fa5bc841",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:25:01",
@@ -1305,7 +1305,7 @@
     }
   },
   {
-    "event_id": "d2c245fe537a-7e6a252f",
+    "event_id": "d2c245fe537a-7b638aa6",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 13:46:22",
@@ -1335,7 +1335,7 @@
     }
   },
   {
-    "event_id": "69b6b196c553-6bec3d69",
+    "event_id": "69b6b196c553-e326fcd3",
     "source_type": "auth.log",
     "host": "lin-db-03",
     "raw_timestamp": "Sep 12 14:38:22",
@@ -1365,7 +1365,7 @@
     }
   },
   {
-    "event_id": "19a85d25e7c6-8f9b662a",
+    "event_id": "19a85d25e7c6-c0e32f67",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:09:14:22 +0100",
@@ -1387,7 +1387,7 @@
       "T1190",
       "T1566"
     ],
-    "correlation_group_id": "cg-e0325a63ad",
+    "correlation_group_id": "cg-83126dc476",
     "severity": "medium",
     "extra": {
       "method": "GET",
@@ -1398,7 +1398,7 @@
     }
   },
   {
-    "event_id": "03b1f270d770-3a777442",
+    "event_id": "03b1f270d770-2e44d2bc",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:09:17:34 +0100",
@@ -1420,7 +1420,7 @@
       "T1190",
       "T1566"
     ],
-    "correlation_group_id": "cg-e0325a63ad",
+    "correlation_group_id": "cg-83126dc476",
     "severity": "medium",
     "extra": {
       "method": "POST",
@@ -1431,7 +1431,7 @@
     }
   },
   {
-    "event_id": "608bafcf7657-4701796f",
+    "event_id": "608bafcf7657-4bb2da4a",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:09:27:22 +0100",
@@ -1461,7 +1461,7 @@
     }
   },
   {
-    "event_id": "c623d6f736ac-74daec9d",
+    "event_id": "c623d6f736ac-847ebac7",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:09:29:22 +0100",
@@ -1491,7 +1491,7 @@
     }
   },
   {
-    "event_id": "445ca4a19c7f-8a3771f3",
+    "event_id": "445ca4a19c7f-21f02905",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:09:30:22 +0100",
@@ -1521,7 +1521,7 @@
     }
   },
   {
-    "event_id": "077c313702ea-8087f396",
+    "event_id": "077c313702ea-bed0742e",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:09:58:22 +0100",
@@ -1551,7 +1551,7 @@
     }
   },
   {
-    "event_id": "6fc9e0e1d582-ffeb9f84",
+    "event_id": "6fc9e0e1d582-678d5439",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:10:01:22 +0100",
@@ -1581,7 +1581,7 @@
     }
   },
   {
-    "event_id": "6164ce8c277b-59b4e3d5",
+    "event_id": "6164ce8c277b-4b1450e4",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:10:06:22 +0100",
@@ -1611,7 +1611,7 @@
     }
   },
   {
-    "event_id": "346006cb1d81-5ef662ce",
+    "event_id": "346006cb1d81-4288e0c4",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:10:55:22 +0100",
@@ -1641,7 +1641,7 @@
     }
   },
   {
-    "event_id": "ae1460b9e0d1-95fc3dcd",
+    "event_id": "ae1460b9e0d1-db83dc63",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:11:05:22 +0100",
@@ -1671,7 +1671,7 @@
     }
   },
   {
-    "event_id": "f66aef05ef67-04f1c7d0",
+    "event_id": "f66aef05ef67-5ad4d07b",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:11:13:22 +0100",
@@ -1701,7 +1701,7 @@
     }
   },
   {
-    "event_id": "bc648bb58a4b-a6dd5ece",
+    "event_id": "bc648bb58a4b-a8affb73",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:12:50:22 +0100",
@@ -1731,7 +1731,7 @@
     }
   },
   {
-    "event_id": "4a42a871e364-780103b1",
+    "event_id": "4a42a871e364-8ee418b1",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:13:32:22 +0100",
@@ -1761,7 +1761,7 @@
     }
   },
   {
-    "event_id": "7fcd8adfb4b3-6e28eb04",
+    "event_id": "7fcd8adfb4b3-aa0242cb",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:13:53:22 +0100",
@@ -1791,7 +1791,7 @@
     }
   },
   {
-    "event_id": "11b98202b684-7d40321c",
+    "event_id": "11b98202b684-a2494370",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:14:01:22 +0100",
@@ -1821,7 +1821,7 @@
     }
   },
   {
-    "event_id": "9bbab7ba2909-32a53fab",
+    "event_id": "9bbab7ba2909-7a0c7f48",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:14:16:22 +0100",
@@ -1851,7 +1851,7 @@
     }
   },
   {
-    "event_id": "b526291a89e6-b5c95f8f",
+    "event_id": "b526291a89e6-8289b069",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:14:22:22 +0100",
@@ -1881,7 +1881,7 @@
     }
   },
   {
-    "event_id": "e295fc5be91b-01151dd6",
+    "event_id": "e295fc5be91b-89cfaee4",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:14:46:22 +0100",
@@ -1911,7 +1911,7 @@
     }
   },
   {
-    "event_id": "870901621e52-ae2810d0",
+    "event_id": "870901621e52-9467074f",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:15:00:22 +0100",
@@ -1941,7 +1941,7 @@
     }
   },
   {
-    "event_id": "fbcf23981691-a7a4bcc7",
+    "event_id": "fbcf23981691-c1e91c91",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:15:20:22 +0100",
@@ -1971,7 +1971,7 @@
     }
   },
   {
-    "event_id": "0f50245a4c59-22428859",
+    "event_id": "0f50245a4c59-01991982",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:15:31:22 +0100",
@@ -2001,7 +2001,7 @@
     }
   },
   {
-    "event_id": "4424d3cb91c5-46f48712",
+    "event_id": "4424d3cb91c5-036e3db8",
     "source_type": "apache",
     "host": "web-portal-01",
     "raw_timestamp": "12/Sep/2025:15:33:22 +0100",
@@ -2031,7 +2031,7 @@
     }
   },
   {
-    "event_id": "5788f053bb50-698304aa",
+    "event_id": "5788f053bb50-4d5d9b9a",
     "source_type": "cisco_syslog",
     "host": "fw-edge-01",
     "raw_timestamp": "Sep 12 01:17:34",
@@ -2050,7 +2050,7 @@
     "clock_skew_flag": false,
     "estimated_skew_seconds": null,
     "attack_techniques": [],
-    "correlation_group_id": "cg-e0325a63ad",
+    "correlation_group_id": "cg-83126dc476",
     "severity": "info",
     "extra": {
       "raw_msg": "%ASA-6-302013: Built inbound TCP connection 88421 for outside:203.0.113.77/44345 (203.0.113.77/44345) to inside:10.10.5.20/443 (10.10.5.20/443)",
@@ -2058,7 +2058,7 @@
     }
   },
   {
-    "event_id": "3e56a52c4b37-a1ebd08a",
+    "event_id": "3e56a52c4b37-9701ec67",
     "source_type": "cisco_syslog",
     "host": "fw-edge-01",
     "raw_timestamp": "Sep 12 02:36:22",
@@ -2077,7 +2077,7 @@
     "clock_skew_flag": false,
     "estimated_skew_seconds": null,
     "attack_techniques": [],
-    "correlation_group_id": "cg-e0325a63ad",
+    "correlation_group_id": "cg-83126dc476",
     "severity": "info",
     "extra": {
       "raw_msg": "%ASA-6-302013: Built inbound TCP connection 88500 for outside:203.0.113.77/51900 (203.0.113.77/51900) to inside:10.10.6.40/3389 (10.10.6.40/3389)",
@@ -2085,7 +2085,7 @@
     }
   },
   {
-    "event_id": "e79888fc6e56-7eaf30f5",
+    "event_id": "e79888fc6e56-46a297a6",
     "source_type": "cisco_syslog",
     "host": "fw-edge-01",
     "raw_timestamp": "Sep 12 03:19:22",
@@ -2112,7 +2112,7 @@
     }
   },
   {
-    "event_id": "5ad0a289219c-51639c93",
+    "event_id": "5ad0a289219c-65260c59",
     "source_type": "evtx",
     "host": "WIN-ENG-07",
     "raw_timestamp": "2025-09-12T05:37:09",
@@ -2131,7 +2131,7 @@
     "clock_skew_flag": true,
     "estimated_skew_seconds": 47.0,
     "attack_techniques": [],
-    "correlation_group_id": "cg-e0325a63ad",
+    "correlation_group_id": "cg-83126dc476",
     "severity": "info",
     "extra": {
       "LogonType": 10,
@@ -2139,7 +2139,7 @@
     }
   },
   {
-    "event_id": "7f84033a95af-e0c8a1c8",
+    "event_id": "7f84033a95af-4187022e",
     "source_type": "evtx",
     "host": "WIN-ENG-07",
     "raw_timestamp": "2025-09-12T05:37:13",
@@ -2158,7 +2158,7 @@
     "clock_skew_flag": true,
     "estimated_skew_seconds": 47.0,
     "attack_techniques": [],
-    "correlation_group_id": "cg-e0325a63ad",
+    "correlation_group_id": "cg-83126dc476",
     "severity": "info",
     "extra": {
       "PrivilegeList": "SeDebugPrivilege SeImpersonatePrivilege",
@@ -2166,7 +2166,7 @@
     }
   },
   {
-    "event_id": "a0bbd6bd602d-a6fdda55",
+    "event_id": "a0bbd6bd602d-1fc83680",
     "source_type": "evtx",
     "host": "WIN-ENG-07",
     "raw_timestamp": "2025-09-12T05:39:20",
@@ -2187,7 +2187,7 @@
     "attack_techniques": [
       "T1003"
     ],
-    "correlation_group_id": "cg-e0325a63ad",
+    "correlation_group_id": "cg-83126dc476",
     "severity": "high",
     "extra": {
       "CommandLine": "mimi.exe privilege::debug sekurlsa::logonpasswords",
@@ -2195,7 +2195,7 @@
     }
   },
   {
-    "event_id": "34069da5a717-858b2cd1",
+    "event_id": "34069da5a717-db1fc3fa",
     "source_type": "aws_cloudtrail",
     "host": "sts.amazonaws.com",
     "raw_timestamp": "2025-09-12T12:10:22Z",
@@ -2216,7 +2216,7 @@
     "attack_techniques": [
       "T1082"
     ],
-    "correlation_group_id": "cg-e0325a63ad",
+    "correlation_group_id": "cg-83126dc476",
     "severity": "info",
     "extra": {
       "aws_region": "us-east-1",
@@ -2226,7 +2226,7 @@
     }
   },
   {
-    "event_id": "94cfa8d91334-9a190480",
+    "event_id": "94cfa8d91334-9e2ef373",
     "source_type": "aws_cloudtrail",
     "host": "s3.amazonaws.com",
     "raw_timestamp": "2025-09-12T12:12:22Z",
@@ -2247,7 +2247,7 @@
     "attack_techniques": [
       "T1041"
     ],
-    "correlation_group_id": "cg-e0325a63ad",
+    "correlation_group_id": "cg-83126dc476",
     "severity": "high",
     "extra": {
       "aws_region": "us-east-1",
