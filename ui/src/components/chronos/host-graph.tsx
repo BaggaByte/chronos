@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ATTACKER_IP, type ChronosEvent } from "@/lib/incident";
+import { ATTACKER_IP, attackerEvents, type ChronosEvent } from "@/lib/incident";
 import { cn } from "@/lib/utils";
 import { Network } from "lucide-react";
 
@@ -21,6 +21,85 @@ export function HostGraph({ activeEvent }: { activeEvent?: ChronosEvent | null }
   const width = 560;
   const height = 240;
 
+  const hostEvents = (hostName: string) =>
+    attackerEvents.filter(
+      (e) =>
+        e.host === hostName ||
+        (hostName === "s3.amazonaws.com" && Boolean(e.host?.includes("amazonaws.com"))),
+    );
+
+  const hostTechniques = (hostName: string) => {
+    const s = new Set<string>();
+    hostEvents(hostName).forEach((e) => e.attack_techniques?.forEach((t) => s.add(t)));
+    return Array.from(s);
+  };
+
+  const allTechniques = Array.from(
+    new Set(attackerEvents.flatMap((e) => e.attack_techniques || [])),
+  );
+
+  const rawHosts = Array.from(
+    new Set(
+      attackerEvents
+        .map((e) => {
+          if (!e.host) return null;
+          if (e.host.includes("amazonaws.com") || e.action?.toLowerCase().includes("s3")) {
+            return "s3.amazonaws.com";
+          }
+          if (e.host === "fw-edge-01") return null;
+          return e.host;
+        })
+        .filter((h): h is string => Boolean(h)),
+    ),
+  );
+
+  const distinctHosts =
+    rawHosts.length > 0
+      ? rawHosts
+      : ["web-portal-01", "WIN-ENG-07", "lin-db-03", "s3.amazonaws.com"];
+
+  function getHostMeta(host: string) {
+    const h = host.toLowerCase();
+    if (h.includes("s3") || h.includes("aws") || h.includes("cloud")) {
+      return {
+        label: host === "s3.amazonaws.com" ? "s3-vault" : host,
+        role: "AWS S3 Bucket",
+        tier: "Cloud Storage",
+        status: "exfiltration" as const,
+      };
+    }
+    if (h.includes("db") || h.includes("sql") || h.includes("data")) {
+      return {
+        label: host,
+        role: "Core DB Server",
+        tier: "Secure Zone",
+        status: "compromised" as const,
+      };
+    }
+    if (h.includes("eng") || h.includes("win") || h.includes("pc") || h.includes("work")) {
+      return {
+        label: host,
+        role: "Engineer Workstation",
+        tier: "Internal LAN",
+        status: "compromised" as const,
+      };
+    }
+    if (h.includes("web") || h.includes("portal") || h.includes("dmz") || h.includes("proxy") || h.includes("nginx")) {
+      return {
+        label: host,
+        role: "DMZ Web App",
+        tier: "Perimeter",
+        status: "compromised" as const,
+      };
+    }
+    return {
+      label: host,
+      role: "Internal Host",
+      tier: "Internal Network",
+      status: "compromised" as const,
+    };
+  }
+
   // Topological breach flow coordinates
   const nodes: HostNode[] = [
     {
@@ -28,65 +107,41 @@ export function HostGraph({ activeEvent }: { activeEvent?: ChronosEvent | null }
       label: ATTACKER_IP,
       role: "Threat Actor",
       tier: "Internet Edge",
-      eventsCount: 11,
-      techniques: ["T1190", "T1003", "T1021", "T1041"],
+      eventsCount: attackerEvents.length,
+      techniques: allTechniques,
       x: 55,
       y: 120,
       status: "attacker",
     },
-    {
-      id: "web-portal-01",
-      label: "web-portal-01",
-      role: "DMZ Web App",
-      tier: "Perimeter",
-      eventsCount: 2,
-      techniques: ["T1190", "T1566"],
-      x: 175,
-      y: 65,
-      status: "compromised",
-    },
-    {
-      id: "WIN-ENG-07",
-      label: "WIN-ENG-07",
-      role: "Engineer Workstation",
-      tier: "Internal LAN",
-      eventsCount: 3,
-      techniques: ["T1003", "T1078"],
-      x: 295,
-      y: 165,
-      status: "compromised",
-    },
-    {
-      id: "lin-db-03",
-      label: "lin-db-03",
-      role: "Core DB Server",
-      tier: "Secure Zone",
-      eventsCount: 3,
-      techniques: ["T1021", "T1560"],
-      x: 415,
-      y: 75,
-      status: "compromised",
-    },
-    {
-      id: "s3.amazonaws.com",
-      label: "s3-vault",
-      role: "AWS S3 Bucket",
-      tier: "Cloud Storage",
-      eventsCount: 2,
-      techniques: ["T1041", "T1082"],
-      x: 510,
-      y: 140,
-      status: "exfiltration",
-    },
+    ...distinctHosts.map((hostName, i) => {
+      const meta = getHostMeta(hostName);
+      const x = 55 + ((i + 1) / (distinctHosts.length + 0.35)) * (width - 85);
+      const y = i % 2 === 0 ? 65 : 155;
+      return {
+        id: hostName,
+        label: meta.label,
+        role: meta.role,
+        tier: meta.tier,
+        eventsCount: hostEvents(hostName).length,
+        techniques: hostTechniques(hostName),
+        x: Math.round(x),
+        y,
+        status: meta.status,
+      };
+    }),
   ];
 
-  // Hop connections
-  const edges = [
-    { from: nodes[0], to: nodes[1], label: "1. Web Exploit" },
-    { from: nodes[1], to: nodes[2], label: "2. Firewall Pivot" },
-    { from: nodes[2], to: nodes[3], label: "3. SSH Lateral" },
-    { from: nodes[3], to: nodes[4], label: "4. S3 PutObject" },
-  ];
+  // Dynamically constructed hop connections
+  const edges = nodes.slice(0, -1).map((node, i) => {
+    const nextNode = nodes[i + 1];
+    const label =
+      i === 0
+        ? "1. Initial Access"
+        : i === nodes.length - 2
+          ? `${i + 1}. Exfiltration`
+          : `${i + 1}. Lateral Pivot`;
+    return { from: node, to: nextNode, label };
+  });
 
   const currentEventHost = activeEvent?.host;
   const isActorEvent =
@@ -107,7 +162,7 @@ export function HostGraph({ activeEvent }: { activeEvent?: ChronosEvent | null }
     : isS3Event
       ? "s3.amazonaws.com"
       : isFirewallEdge
-        ? "web-portal-01"
+        ? distinctHosts[0]
         : currentEventHost || null;
 
   const activeNode =
@@ -121,7 +176,7 @@ export function HostGraph({ activeEvent }: { activeEvent?: ChronosEvent | null }
           <h2 className="text-sm font-medium text-fg">Topological Lateral Movement</h2>
         </div>
         <span className="font-mono text-[10px] text-muted uppercase tracking-wider">
-          4-Hop Pivot Chain
+          {nodes.length - 1}-Hop Pivot Chain
         </span>
       </div>
       <p className="mb-2 text-xs text-muted">

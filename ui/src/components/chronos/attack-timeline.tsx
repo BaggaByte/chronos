@@ -80,11 +80,20 @@ export function AttackTimeline({
   };
 
   const ticks = useMemo(() => {
-    const hours = [8, 9, 10, 11, 12, 13, 14, 15];
-    return hours.map((h) => {
-      const iso = `2025-09-12T${String(h).padStart(2, "0")}:00:00Z`;
-      return { label: `${h}:00Z`, x: xOf(iso, WIDTH - PAD * 2) + PAD };
-    });
+    const result: { label: string; x: number }[] = [];
+    const startHour = Math.floor(timelineStart / 3600000) * 3600000;
+    const endHour = Math.ceil(timelineEnd / 3600000) * 3600000;
+    for (let t = startHour; t <= endHour; t += 3600000) {
+      const d = new Date(t);
+      const x = xOf(d.toISOString(), WIDTH - PAD * 2) + PAD;
+      if (x >= PAD - 5 && x <= WIDTH - PAD + 5) {
+        result.push({
+          label: `${String(d.getUTCHours()).padStart(2, "0")}:00Z`,
+          x,
+        });
+      }
+    }
+    return result;
   }, []);
 
   return (

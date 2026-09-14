@@ -81,10 +81,31 @@ export type ForensicReport = {
 export const events = eventsJson as ChronosEvent[];
 export const report = reportJson as ForensicReport;
 
-export const CASE_ID = "AERO-2025-0912-EXFIL";
-export const CASE_TITLE = "Aerospace design archive exfiltration";
-export const ATTACKER_IP = "203.0.113.77";
-export const COMPROMISED_USER = "j.mitchell";
+export const primaryGroup = report.correlation_groups?.[0];
+
+export const attackerEvents = events
+  .filter((e) => e.correlation_group_id === primaryGroup?.group_id)
+  .sort((a, b) => a.utc_timestamp.localeCompare(b.utc_timestamp));
+
+const firstDateStr = attackerEvents[0]?.utc_timestamp
+  ? attackerEvents[0].utc_timestamp.slice(0, 10).replace(/-/g, "")
+  : "20250912";
+
+export const CASE_ID = primaryGroup?.group_id
+  ? `CASE-${firstDateStr}-${primaryGroup.group_id.toUpperCase()}`
+  : "CASE-20250912-CORR-001";
+export const CASE_TITLE = "Multi-Stage Attack & Exfiltration Timeline";
+export const ATTACKER_IP = primaryGroup?.keys?.src_ip || "203.0.113.77";
+export const COMPROMISED_USER = primaryGroup?.keys?.users || "j.mitchell";
+
+export const dwellDurationSeconds =
+  attackerEvents.length > 1
+    ? Math.floor(
+        (new Date(attackerEvents[attackerEvents.length - 1].utc_timestamp).getTime() -
+          new Date(attackerEvents[0].utc_timestamp).getTime()) /
+          1000,
+      )
+    : 0;
 
 export const TECHNIQUE_META: Record<
   string,
@@ -100,52 +121,54 @@ export const TECHNIQUE_META: Record<
   T1082: { name: "System Information Discovery", tactic: "Discovery" },
 };
 
-export const STAGES = [
+const BASE_STAGES = [
   {
     id: "access",
     label: "Initial Access",
     tactics: ["T1566", "T1190"],
-    start: "2025-09-12T08:14:22+00:00",
-    end: "2025-09-12T08:17:34+00:00",
   },
   {
     id: "dump",
     label: "Credential Dump",
     tactics: ["T1003"],
-    start: "2025-09-12T09:37:09+00:00",
-    end: "2025-09-12T09:39:20+00:00",
   },
   {
     id: "lateral",
     label: "Lateral Movement",
     tactics: ["T1021", "T1078"],
-    start: "2025-09-12T10:19:22+00:00",
-    end: "2025-09-12T10:19:22+00:00",
   },
   {
     id: "stage",
     label: "Staging",
     tactics: ["T1560"],
-    start: "2025-09-12T11:54:22+00:00",
-    end: "2025-09-12T11:54:22+00:00",
   },
   {
     id: "exfil",
     label: "Exfiltration",
     tactics: ["T1041", "T1082"],
-    start: "2025-09-12T12:10:22+00:00",
-    end: "2025-09-12T12:12:22+00:00",
   },
 ] as const;
 
-export const primaryGroup = report.correlation_groups[0];
+export const STAGES = BASE_STAGES.map((stage) => {
+  const stageEvents = attackerEvents.filter((e) =>
+    e.attack_techniques?.some((t) => (stage.tactics as readonly string[]).includes(t)),
+  );
+  return {
+    ...stage,
+    start: stageEvents[0]?.utc_timestamp || "",
+    end: stageEvents[stageEvents.length - 1]?.utc_timestamp || "",
+  };
+});
 
-export const attackerEvents = events
-  .filter((e) => e.correlation_group_id === primaryGroup.group_id)
-  .sort((a, b) => a.utc_timestamp.localeCompare(b.utc_timestamp));
+export const timelineStart =
+  attackerEvents.length > 0
+    ? new Date(attackerEvents[0].utc_timestamp).getTime() - 15 * 60 * 1000
+    : new Date("2025-09-12T08:00:00Z").getTime();
 
-export const timelineStart = new Date("2025-09-12T08:00:00Z").getTime();
-export const timelineEnd = new Date("2025-09-12T15:30:00Z").getTime();
+export const timelineEnd =
+  attackerEvents.length > 0
+    ? new Date(attackerEvents[attackerEvents.length - 1].utc_timestamp).getTime() + 15 * 60 * 1000
+    : new Date("2025-09-12T15:30:00Z").getTime();
 
 export function formatUtc(iso: string, withDate = true) {
   const d = new Date(iso);

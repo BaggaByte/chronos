@@ -19,7 +19,9 @@ import {
   ATTACKER_IP,
   COMPROMISED_USER,
   attackerEvents,
+  dwellDurationSeconds,
   events,
+  formatDuration,
   primaryGroup,
   report,
   STAGES,
@@ -187,7 +189,7 @@ ${report.manifest.map((m) => `- ${m.source} [${m.sha256}] (${m.events} events)`)
           <div className="flex flex-wrap items-center gap-2">
             <div className="flex items-center gap-1.5 rounded-md border border-border bg-surface px-2.5 py-1 text-xs text-muted">
               <Clock className="size-3.5 text-accent-fg" />
-              <span>Dwell: <strong className="text-fg">4h 13m</strong></span>
+              <span>Dwell: <strong className="text-fg">{formatDuration(dwellDurationSeconds)}</strong></span>
             </div>
             <Badge tone="high">exfiltration</Badge>
             <Badge tone="medium">offset inferred {report.offset_inferred_count}</Badge>

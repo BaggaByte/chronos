@@ -98,10 +98,10 @@ export function VolumeHistogram() {
         </div>
         <div className="flex items-center gap-3 text-xs text-muted">
           <span className="flex items-center gap-1">
-            <span className="size-2 rounded-sm bg-muted/40"></span> Benign logs (69)
+            <span className="size-2 rounded-sm bg-muted/40"></span> Benign logs ({events.length - attackerEvents.length})
           </span>
           <span className="flex items-center gap-1">
-            <span className="size-2 rounded-sm bg-danger"></span> Attacker thread (11)
+            <span className="size-2 rounded-sm bg-danger"></span> Attacker thread ({attackerEvents.length})
           </span>
           <span className="flex items-center gap-1 text-danger font-medium">
             <AlertTriangle className="size-3" /> Z-Score Spike ($Z &gt; 2.5$)
