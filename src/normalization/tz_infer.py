@@ -103,11 +103,24 @@ def _try_correlate_host(
     host's naive events with already-resolved anchor events sharing an
     IP-based key, via a margin test rather than an absolute threshold.
     """
+    own_ip = asset_ip_map.get(host)
+    has_own_ip_anchors = False
+    if own_ip:
+        for a in resolved_pool:
+            if a.src_ip == own_ip or a.dst_ip == own_ip:
+                has_own_ip_anchors = True
+                break
+
     # Pre-index resolved anchors by every IP key they carry, for speed.
     anchors_by_key: Dict[str, List[ChronosEvent]] = defaultdict(list)
     for a in resolved_pool:
-        for k in _event_ip_keys(a, asset_ip_map):
-            anchors_by_key[k].append(a)
+        if a.src_ip:
+            anchors_by_key[a.src_ip].append(a)
+        if a.dst_ip:
+            anchors_by_key[a.dst_ip].append(a)
+        a_own = asset_ip_map.get(a.host)
+        if a_own:
+            anchors_by_key[a_own].append(a)
 
     # IMPORTANT: score by each event's SINGLE best-matching anchor, then
     # take the host's best-explained event — not an average over every
@@ -121,7 +134,18 @@ def _try_correlate_host(
         for e, naive_dt in naive_events:
             cand_utc = (naive_dt - timedelta(minutes=offset)).replace(tzinfo=timezone.utc)
             best_for_event: Optional[float] = None
-            for k in _event_ip_keys(e, asset_ip_map):
+            keys = set()
+            if has_own_ip_anchors and own_ip:
+                keys.add(own_ip)
+            else:
+                if e.src_ip:
+                    keys.add(e.src_ip)
+                if e.dst_ip:
+                    keys.add(e.dst_ip)
+                if own_ip:
+                    keys.add(own_ip)
+
+            for k in keys:
                 for a in anchors_by_key.get(k, []):
                     if a.utc_timestamp is None:
                         continue
@@ -132,7 +156,7 @@ def _try_correlate_host(
             if best_for_event is not None:
                 per_event_best.append(best_for_event)
         if per_event_best:
-            tight_pairs = sum(1 for d in per_event_best if d <= 30)
+            tight_pairs = sum(1 for d in per_event_best if d <= 60)
             scored.append((min(per_event_best), offset, max(tight_pairs, 1)))
 
     if not scored:

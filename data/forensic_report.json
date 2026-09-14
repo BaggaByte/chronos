@@ -45,7 +45,7 @@
   },
   "correlation_groups": [
     {
-      "group_id": "cg-d5d92dc6d2",
+      "group_id": "cg-d12cedd1c4",
       "keys": {
         "src_ip": "203.0.113.77",
         "users": "j.mitchell",
@@ -100,9 +100,9 @@
   "gaps": [
     {
       "type": "time_gap",
-      "group_id": "cg-d5d92dc6d2",
-      "from_event": "5788f053bb50-b2ba9545",
-      "to_event": "3e56a52c4b37-8aa771c2",
+      "group_id": "cg-d12cedd1c4",
+      "from_event": "5788f053bb50-a7b21f66",
+      "to_event": "3e56a52c4b37-6b498a3c",
       "from_ts": "2025-09-12T08:17:34+00:00",
       "to_ts": "2025-09-12T09:36:22+00:00",
       "gap_seconds": 4728,
@@ -114,9 +114,9 @@
     },
     {
       "type": "time_gap",
-      "group_id": "cg-d5d92dc6d2",
-      "from_event": "a0bbd6bd602d-1b56cb2f",
-      "to_event": "1a74aa4d443a-2ebc179e",
+      "group_id": "cg-d12cedd1c4",
+      "from_event": "a0bbd6bd602d-ac7c8fe3",
+      "to_event": "1a74aa4d443a-0df35fb9",
       "from_ts": "2025-09-12T09:39:20+00:00",
       "to_ts": "2025-09-12T10:19:22+00:00",
       "gap_seconds": 2402,
@@ -129,9 +129,9 @@
     },
     {
       "type": "time_gap",
-      "group_id": "cg-d5d92dc6d2",
-      "from_event": "d225db9a4c61-1179a9f0",
-      "to_event": "7491fb59b422-d9e266b1",
+      "group_id": "cg-d12cedd1c4",
+      "from_event": "d225db9a4c61-ff98ad2e",
+      "to_event": "7491fb59b422-c84d8023",
       "from_ts": "2025-09-12T10:19:22+00:00",
       "to_ts": "2025-09-12T11:54:22+00:00",
       "gap_seconds": 5700,
@@ -143,16 +143,16 @@
     },
     {
       "type": "time_gap",
-      "group_id": "cg-d5d92dc6d2",
-      "from_event": "7491fb59b422-d9e266b1",
-      "to_event": "34069da5a717-844e5bac",
+      "group_id": "cg-d12cedd1c4",
+      "from_event": "7491fb59b422-c84d8023",
+      "to_event": "34069da5a717-e8c6a24d",
       "from_ts": "2025-09-12T11:54:22+00:00",
       "to_ts": "2025-09-12T12:10:22+00:00",
       "gap_seconds": 960,
       "threshold_seconds": 381,
       "hosts": [
-        "lin-db-03",
-        "sts.amazonaws.com"
+        "sts.amazonaws.com",
+        "lin-db-03"
       ],
       "severity": "medium"
     }
@@ -164,17 +164,17 @@
       "basis": "network-flow correlation (1 shared-IP pair(s) within tolerance)",
       "skew_seconds": null
     },
-    "WIN-ENG-07": {
-      "offset_minutes": -240,
-      "confidence": "correlated",
-      "basis": "network-flow correlation (1 shared-IP pair(s) within tolerance)",
-      "skew_seconds": 47.0
-    },
     "lin-db-03": {
       "offset_minutes": 0,
       "confidence": "correlated",
       "basis": "network-flow correlation (2 shared-IP pair(s) within tolerance)",
       "skew_seconds": null
+    },
+    "WIN-ENG-07": {
+      "offset_minutes": -240,
+      "confidence": "correlated",
+      "basis": "network-flow correlation (2 shared-IP pair(s) within tolerance)",
+      "skew_seconds": 47.0
     }
   }
 }
