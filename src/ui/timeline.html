@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chronos – Incident Timeline</title>
+  <style>
+    :root {
+      --bg: #0f1419; --panel: #1a2332; --accent: #3b82f6;
+      --high: #ef4444; --medium: #f59e0b; --low: #22c55e;
+      --text: #e2e8f0; --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+      background: var(--bg); color: var(--text); min-height: 100vh; padding: 1.5rem;
+    }
+    h1 { font-size: 1.4rem; font-weight: 600; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+    .subtitle { color: var(--muted); font-size: 0.85rem; margin-bottom: 1.5rem; }
+    .controls { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+    .controls input, .controls select {
+      background: var(--panel); border: 1px solid #334155; color: var(--text);
+      padding: 0.4rem 0.6rem; border-radius: 6px; font-family: inherit; font-size: 0.8rem;
+    }
+    .timeline { position: relative; border-left: 2px solid #334155; margin-left: 1rem; padding-left: 1.5rem; }
+    .event {
+      position: relative; margin-bottom: 1.1rem; background: var(--panel);
+      border-radius: 8px; padding: 0.75rem 1rem; border: 1px solid #1e293b;
+    }
+    .event:hover { border-color: var(--accent); }
+    .event::before {
+      content: ""; position: absolute; left: -1.9rem; top: 1.1rem;
+      width: 10px; height: 10px; border-radius: 50%; background: var(--accent);
+      border: 2px solid var(--bg);
+    }
+    .event.high::before { background: var(--high); }
+    .event.medium::before { background: var(--medium); }
+    .ts { color: var(--muted); font-size: 0.75rem; }
+    .action { font-weight: 500; margin: 0.2rem 0; }
+    .meta { font-size: 0.75rem; color: var(--muted); display: flex; gap: 1rem; flex-wrap: wrap; }
+    .stats {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0.75rem; margin-bottom: 1.5rem;
+    }
+    .stat {
+      background: var(--panel); border-radius: 8px; padding: 0.75rem 1rem; border: 1px solid #1e293b;
+    }
+    .stat .label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; }
+    .stat .value { font-size: 1.3rem; font-weight: 600; margin-top: 0.2rem; }
+    #narrative {
+      background: var(--panel); border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem;
+      border: 1px solid #1e293b; white-space: pre-wrap; font-size: 0.8rem; line-height: 1.5;
+      max-height: 240px; overflow-y: auto;
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <h1>CHRONOS · Incident Timeline</h1>
+  <p class="subtitle">Aerospace data-exfiltration breach · reconstructed from multi-source logs</p>
+  <div class="stats" id="stats"></div>
+  <div id="narrative"></div>
+  <div class="controls">
+    <input type="text" id="filter" placeholder="Filter host / IP / user / action…" />
+    <select id="severity">
+      <option value="">All severities</option>
+      <option value="high">High</option>
+      <option value="medium">Medium</option>
+      <option value="info">Info</option>
+    </select>
+  </div>
+  <div class="timeline" id="timeline"></div>
+  <script>
+    let REPORT = null;
+    async function loadReport() {
+      const candidates = [
+        "../../data/forensic_report.json",
+        "../data/forensic_report.json",
+        "/data/forensic_report.json"
+      ];
+      for (const url of candidates) {
+        try {
+          const res = await fetch(url);
+          if (res.ok) { REPORT = await res.json(); break; }
+        } catch (e) {}
+      }
+      if (!REPORT) {
+        document.getElementById("narrative").textContent =
+          "Could not load forensic_report.json.\\nServe repo root:\\n  python3 -m http.server 8000 --directory .\\nOpen: http://localhost:8000/src/ui/timeline.html";
+        return;
+      }
+      render();
+    }
+    function render() {
+      const techs = REPORT.technique_counts || {};
+      const groups = REPORT.correlation_groups || [];
+      const primary = groups.length ? groups.reduce((a,b) => a.event_count > b.event_count ? a : b) : {};
+      document.getElementById("stats").innerHTML = `
+        <div class="stat"><div class="label">Events</div><div class="value">${REPORT.total_events||0}</div></div>
+        <div class="stat"><div class="label">Attacker thread</div><div class="value">${primary.event_count||0}</div></div>
+        <div class="stat"><div class="label">Techniques</div><div class="value">${Object.keys(techs).length}</div></div>
+        <div class="stat"><div class="label">Spikes</div><div class="value">${(REPORT.spikes||[]).length}</div></div>
+        <div class="stat"><div class="label">Gaps</div><div class="value">${(REPORT.gaps||[]).length}</div></div>
+        <div class="stat"><div class="label">Offset-inferred</div><div class="value">${REPORT.offset_inferred_count||0}</div></div>`;
+      document.getElementById("narrative").textContent = primary.narrative || "(no narrative)";
+      const lines = (primary.narrative || "").split("\\n").filter(l => l.trim());
+      const tl = document.getElementById("timeline");
+      tl.innerHTML = "";
+      lines.forEach(line => {
+        const parts = line.split("|").map(s => s.trim());
+        if (parts.length < 5) return;
+        const [ts, host, user, ip, action] = parts;
+        const sev = /T1003|T1041|T1560/.test(action) ? "high" : (/T\\d+/.test(action) ? "medium" : "info");
+        const div = document.createElement("div");
+        div.className = "event " + sev;
+        div.dataset.text = line.toLowerCase();
+        div.innerHTML = `<div class="ts">${ts}</div><div class="action">${action}</div>
+          <div class="meta"><span>host: ${host}</span><span>user: ${user}</span><span>ip: ${ip}</span></div>`;
+        tl.appendChild(div);
+      });
+      document.getElementById("filter").oninput = applyFilters;
+      document.getElementById("severity").onchange = applyFilters;
+    }
+    function applyFilters() {
+      const q = document.getElementById("filter").value.toLowerCase();
+      const sev = document.getElementById("severity").value;
+      document.querySelectorAll(".event").forEach(el => {
+        el.classList.toggle("hidden", !((!q || el.dataset.text.includes(q)) && (!sev || el.classList.contains(sev))));
+      });
+    }
+    loadReport();
+  </script>
+</body>
+</html>

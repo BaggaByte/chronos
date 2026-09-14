@@ -1,0 +1,37 @@
+{
+  "incident_id": "SCENARIO-B-VALIDATION",
+  "attacker_ip": "198.51.100.23",
+  "compromised_user": "r.chen",
+  "decoy_ip": "192.0.2.44",
+  "attacker_session_id": "0x3e7-r.chen-hr",
+  "attacker_event_ids": [
+    "att-0001",
+    "att-0002",
+    "att-0003",
+    "att-0004",
+    "att-0005",
+    "att-0006",
+    "att-0007",
+    "att-0008",
+    "att-0009",
+    "att-0010"
+  ],
+  "total_attacker_events": 10,
+  "total_decoy_events": 12,
+  "total_benign_events": 150,
+  "stages": [
+    "initial_access",
+    "discovery",
+    "credential_access",
+    "lateral_movement",
+    "exfiltration"
+  ],
+  "host_timezones": {
+    "portal-b02": "Asia/Kolkata",
+    "WIN-HR-04": "Australia/Sydney",
+    "lin-app-09": "UTC"
+  },
+  "clock_skew_seconds": {
+    "WIN-HR-04": 33
+  }
+}

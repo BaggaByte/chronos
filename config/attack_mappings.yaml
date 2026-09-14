@@ -1,0 +1,69 @@
+# ATT&CK technique mappings – data-driven, extensible.
+# Each rule: list of conditions (all must match) → list of technique IDs.
+# Conditions use simple field equality / substring / presence checks
+# evaluated by the tagger.
+
+rules:
+  - id: initial_access_web_login
+    techniques: [T1566, T1190]
+    description: "Phishing / external web exploitation via login path"
+    match:
+      source_type: [apache, nginx]
+      path_in: ["/login", "/wp-login.php", "/admin"]
+      status_in: [200, 302]
+
+  - id: initial_access_login_action
+    techniques: [T1190]
+    description: "Login-related action"
+    match:
+      action_contains: "login"
+
+  - id: credential_dump_mimikatz
+    techniques: [T1003]
+    description: "OS credential dumping (mimikatz-style process)"
+    match:
+      source_type: [evtx]
+      process_contains: "mimi"
+      # also catches CommandLine via extra
+
+  - id: credential_dump_special_privs
+    techniques: [T1003]
+    description: "Special privileges assigned (often precedes dump)"
+    match:
+      source_type: [evtx]
+      event_id: 4672
+
+  - id: lateral_ssh
+    techniques: [T1021, T1078]
+    description: "Remote services – SSH accept / session open"
+    match:
+      action_contains_any: ["ssh_accepted", "session_opened"]
+
+  - id: lateral_rdp_logon
+    techniques: [T1021]
+    description: "RemoteInteractive / Network logon (RDP-like)"
+    match:
+      source_type: [evtx]
+      event_id: 4624
+      logon_type_in: [3, 10]
+
+  - id: staging_tar
+    techniques: [T1560]
+    description: "Archive collected data via tar"
+    match:
+      action: "sudo"
+      command_contains: "tar"
+
+  - id: exfil_s3
+    techniques: [T1041]
+    description: "Exfiltration over C2 / cloud storage (S3 PutObject)"
+    match:
+      source_type: [aws_cloudtrail]
+      action_in: ["PutObject", "CopyObject", "UploadPart"]
+
+  - id: recon_sts
+    techniques: [T1082]
+    description: "System / identity discovery via STS"
+    match:
+      source_type: [aws_cloudtrail]
+      action: "GetCallerIdentity"

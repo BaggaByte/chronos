@@ -1,0 +1,165 @@
+{
+  "manifest": [
+    {
+      "source": "auth.log",
+      "sha256": "47badb0f476eafd5a26f5c34fe0390fb2d4a27d111b2891ed7385bb8aac4c9b0",
+      "events": 51,
+      "parser": "0.1.0"
+    },
+    {
+      "source": "access.log",
+      "sha256": "dac742492f7efed477431cd71e9b5d736f28ec26024bacb8fb1150039241a4f0",
+      "events": 22,
+      "parser": "0.1.0"
+    },
+    {
+      "source": "cisco.log",
+      "sha256": "c0d8b9b8a32b44d628373032013ac957380ef914b40b65489c22c6cbaade7457",
+      "events": 2,
+      "parser": "0.1.0"
+    },
+    {
+      "source": "windows_events.json",
+      "sha256": "3a47c60cbc17a5b393f89bcf837b4188729a5977943cb56c78f2e3a08e4f8219",
+      "events": 3,
+      "parser": "0.1.0"
+    },
+    {
+      "source": "cloudtrail.jsonl",
+      "sha256": "bb4cfac1bdee6437a9abc791b9d91004c9f087891a1e02cb3635ae36fb0c776e",
+      "events": 2,
+      "parser": "0.1.0"
+    }
+  ],
+  "total_events": 80,
+  "offset_inferred_count": 53,
+  "technique_counts": {
+    "T1021": 10,
+    "T1078": 10,
+    "T1560": 1,
+    "T1190": 2,
+    "T1566": 2,
+    "T1003": 1,
+    "T1082": 1,
+    "T1041": 1
+  },
+  "correlation_groups": [
+    {
+      "group_id": "cg-5c6d7c64f5",
+      "keys": {
+        "src_ip": "203.0.113.77",
+        "users": "j.mitchell",
+        "hosts": "WIN-ENG-07,fw-edge-01,lin-db-03,s3.amazonaws.com,sts.amazonaws.com,web-portal-01",
+        "sessions": ""
+      },
+      "event_count": 11,
+      "techniques": [
+        "T1003",
+        "T1021",
+        "T1041",
+        "T1078",
+        "T1082",
+        "T1190",
+        "T1560",
+        "T1566"
+      ],
+      "start": "2025-09-12T08:14:22+00:00",
+      "end": "2025-09-12T15:17:34+00:00",
+      "narrative": "2025-09-12 08:14:22 UTC | web-portal-01 | - | 203.0.113.77 | GET /login [T1190,T1566]\n2025-09-12 08:17:34 UTC | web-portal-01 | j.mitchell | 203.0.113.77 | POST /login [T1190,T1566]\n2025-09-12 09:37:09 UTC | WIN-ENG-07 | j.mitchell | 203.0.113.77 | Successful logon\n2025-09-12 09:37:13 UTC | WIN-ENG-07 | j.mitchell | - | Special privileges assigned\n2025-09-12 09:39:20 UTC | WIN-ENG-07 | j.mitchell | - | Process creation (credential dump) [T1003]\n2025-09-12 10:19:22 UTC | lin-db-03 | j.mitchell | 203.0.113.77 | ssh_accepted_publickey [T1021,T1078]\n2025-09-12 10:19:22 UTC | lin-db-03 | j.mitchell | - | session_opened [T1021,T1078]\n2025-09-12 11:54:22 UTC | lin-db-03 | j.mitchell | - | sudo [T1560]\n2025-09-12 12:10:22 UTC | sts.amazonaws.com | j.mitchell | 203.0.113.77 | GetCallerIdentity [T1082]\n2025-09-12 12:12:22 UTC | s3.amazonaws.com | j.mitchell | 203.0.113.77 | PutObject [T1041]\n2025-09-12 15:17:34 UTC | fw-edge-01 | - | 203.0.113.77 | built_inbound_tcp"
+    }
+  ],
+  "spikes": [
+    {
+      "type": "execution_spike",
+      "host": "lin-db-03",
+      "bin_start_utc": "2025-09-12T18:50:00+05:30",
+      "count": 38,
+      "z_score": 3.17,
+      "mean": 4.25,
+      "severity": "medium"
+    },
+    {
+      "type": "execution_spike",
+      "host": "web-portal-01",
+      "bin_start_utc": "2025-09-12T13:55:00+05:30",
+      "count": 2,
+      "z_score": 2.92,
+      "mean": 1.1,
+      "severity": "medium"
+    },
+    {
+      "type": "execution_spike",
+      "host": "web-portal-01",
+      "bin_start_utc": "2025-09-12T20:00:00+05:30",
+      "count": 2,
+      "z_score": 2.92,
+      "mean": 1.1,
+      "severity": "medium"
+    }
+  ],
+  "gaps": [
+    {
+      "type": "time_gap",
+      "group_id": "cg-5c6d7c64f5",
+      "from_event": "6501dc02abf1-d8ee0aec",
+      "to_event": "582e6565e9a5-1ef3f626",
+      "from_ts": "2025-09-12T08:17:34+00:00",
+      "to_ts": "2025-09-12T09:37:09+00:00",
+      "gap_seconds": 4775,
+      "threshold_seconds": 1728,
+      "hosts": [
+        "WIN-ENG-07",
+        "web-portal-01"
+      ],
+      "severity": "medium"
+    },
+    {
+      "type": "time_gap",
+      "group_id": "cg-5c6d7c64f5",
+      "from_event": "97b277fb34dd-a1589041",
+      "to_event": "1a74aa4d443a-7e621d9d",
+      "from_ts": "2025-09-12T09:39:20+00:00",
+      "to_ts": "2025-09-12T10:19:22+00:00",
+      "gap_seconds": 2402,
+      "threshold_seconds": 1728,
+      "hosts": [
+        "WIN-ENG-07",
+        "lin-db-03"
+      ],
+      "severity": "low"
+    },
+    {
+      "type": "time_gap",
+      "group_id": "cg-5c6d7c64f5",
+      "from_event": "d225db9a4c61-7c9521f9",
+      "to_event": "7491fb59b422-67b87649",
+      "from_ts": "2025-09-12T10:19:22+00:00",
+      "to_ts": "2025-09-12T11:54:22+00:00",
+      "gap_seconds": 5700,
+      "threshold_seconds": 1728,
+      "hosts": [
+        "lin-db-03"
+      ],
+      "severity": "medium"
+    },
+    {
+      "type": "time_gap",
+      "group_id": "cg-5c6d7c64f5",
+      "from_event": "94cfa8d91334-c953e9c9",
+      "to_event": "ff43507b6727-57f9fca8",
+      "from_ts": "2025-09-12T12:12:22+00:00",
+      "to_ts": "2025-09-12T15:17:34+00:00",
+      "gap_seconds": 11112,
+      "threshold_seconds": 1728,
+      "hosts": [
+        "s3.amazonaws.com",
+        "fw-edge-01"
+      ],
+      "severity": "medium"
+    }
+  ],
+  "ground_truth_match": {
+    "attacker_ip_seen": true,
+    "compromised_user_seen": true
+  }
+}

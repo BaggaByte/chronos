@@ -1,0 +1,63 @@
+{
+  "incident_id": "AERO-2025-0912-EXFIL",
+  "attacker_ip": "203.0.113.77",
+  "compromised_user": "j.mitchell",
+  "hosts": {
+    "windows": "WIN-ENG-07",
+    "linux": "lin-db-03",
+    "web": "web-portal-01",
+    "firewall": "fw-edge-01"
+  },
+  "host_timezones": {
+    "WIN-ENG-07": "America/New_York",
+    "lin-db-03": "UTC",
+    "web-portal-01": "Europe/London",
+    "fw-edge-01": "America/Los_Angeles"
+  },
+  "clock_skew_seconds": {
+    "WIN-ENG-07": 47
+  },
+  "stages": [
+    {
+      "name": "Initial Access",
+      "techniques": [
+        "T1566",
+        "T1190"
+      ],
+      "start_utc": "2025-09-12T08:14:22+00:00"
+    },
+    {
+      "name": "Credential Dumping",
+      "techniques": [
+        "T1003"
+      ],
+      "start_utc": "2025-09-12T09:36:22+00:00"
+    },
+    {
+      "name": "Lateral Movement",
+      "techniques": [
+        "T1021"
+      ],
+      "start_utc": "2025-09-12T10:19:22+00:00"
+    },
+    {
+      "name": "Data Staging & Exfiltration",
+      "techniques": [
+        "T1560",
+        "T1041"
+      ],
+      "start_utc": "2025-09-12T11:54:22+00:00"
+    }
+  ],
+  "expected_correlation_keys": {
+    "src_ip": "203.0.113.77",
+    "user": "j.mitchell"
+  },
+  "file_counts": {
+    "auth.log": 51,
+    "access.log": 22,
+    "cisco.log": 2,
+    "windows_events.json": 3,
+    "cloudtrail.jsonl": 2
+  }
+}

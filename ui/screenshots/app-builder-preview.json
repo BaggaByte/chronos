@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Chronos",
+      "hasCanvas": false,
+      "bodyTextLen": 2354,
+      "bodyTextHash": "6e69eb0d0f5ce083cefaf32376a82d8e421b03c4ae16dc35f7478d31d8c70e3b",
+      "bodyTextPrefix": "CR CHRONOS FORENSICS Aerospace design archive exfiltration AERO-",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Chronos",
+      "hasCanvas": false,
+      "bodyTextLen": 2354,
+      "bodyTextHash": "6e69eb0d0f5ce083cefaf32376a82d8e421b03c4ae16dc35f7478d31d8c70e3b",
+      "bodyTextPrefix": "CR CHRONOS FORENSICS Aerospace design archive exfiltration AERO-",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-preview.json"
+}
